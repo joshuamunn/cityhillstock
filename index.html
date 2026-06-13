@@ -12,7 +12,7 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:system-ui,sans-serif;background:#f5f5f3;color:#1a1a1a;font-size:14px;}
 
-/* â”€â”€ Gate â”€â”€ */
+/* ── Gate ── */
 #gate{position:fixed;inset:0;background:#f5f5f3;z-index:9999;display:flex;align-items:center;justify-content:center;}
 .gate-card{background:#fff;border:0.5px solid rgba(0,0,0,0.15);border-radius:16px;padding:36px 40px;width:100%;max-width:400px;box-shadow:0 4px 24px rgba(0,0,0,0.08);}
 .gate-logo{font-size:18px;font-weight:600;margin-bottom:4px;}
@@ -36,7 +36,7 @@ body{font-family:system-ui,sans-serif;background:#f5f5f3;color:#1a1a1a;font-size
 .sync-dot.ok{background:#639922;}
 .sync-dot.err{background:#A32D2D;}
 
-/* â”€â”€ App â”€â”€ */
+/* ── App ── */
 .topbar{background:#0B2545;border-bottom:none;padding:0;display:flex;flex-direction:column;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.3);}
 .topbar-brand-row{display:flex;align-items:center;gap:12px;padding:12px 24px;}
 .topbar-tabs-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap;padding:8px 24px 10px;border-top:1px solid rgba(255,255,255,0.08);background:rgba(0,0,0,0.12);}
@@ -112,17 +112,17 @@ textarea{font-family:monospace;font-size:11px;resize:vertical;}
 .import-label:hover{background:rgba(255,255,255,0.2);}
 .topbar-signout{font-size:11px;padding:5px 10px;color:rgba(255,255,255,0.7);border-color:rgba(255,255,255,0.25);background:transparent;}
 .topbar-signout:hover{background:rgba(255,255,255,0.12);color:#fff;}
-/* viewer mode â€” hide all edit controls */
+/* viewer mode — hide all edit controls */
 body.viewer .admin-only{display:none!important;}
 .viewer-badge{background:rgba(255,255,255,0.15);color:#fff;font-size:10px;padding:3px 8px;border-radius:20px;font-weight:500;}
 .dept-color-dot{width:10px;height:10px;border-radius:50%;display:inline-block;flex-shrink:0;}
-/* â”€â”€ Toggle buttons â”€â”€ */
+/* ── Toggle buttons ── */
 .toggle-group{display:flex;gap:0;border-radius:8px;overflow:hidden;border:1px solid rgba(0,0,0,0.15);}
 .toggle-btn{padding:5px 14px;font-size:11px;font-weight:600;border:none;background:#f0f4fb;color:#555;cursor:pointer;transition:all 0.15s;border-radius:0;}
 .toggle-btn.active{background:#0B2545;color:#fff;}
 .toggle-btn:first-child{border-radius:8px 0 0 8px;}
 .toggle-btn:last-child{border-radius:0 8px 8px 0;}
-/* â”€â”€ Paste preview grid â”€â”€ */
+/* ── Paste preview grid ── */
 #pastePreview{margin-top:12px;}
 .preview-section{margin-bottom:12px;border-radius:8px;overflow:hidden;border:1px solid rgba(0,0,0,0.1);}
 .preview-period-header{padding:8px 12px;font-size:12px;font-weight:700;background:linear-gradient(135deg,#0B2545,#1565C0);color:#fff;letter-spacing:0.3px;}
@@ -137,17 +137,17 @@ body.viewer .admin-only{display:none!important;}
 .preview-cell-edit{width:100%;border:none;background:transparent;font-size:11px;color:inherit;font-weight:inherit;}
 .preview-cell-edit:focus{outline:1px solid #0B2545;border-radius:3px;background:#f0f4fb;}
 .preview-warn .preview-cell-edit:focus{background:#fff0f0;}
-/* â”€â”€ Pie chart container â”€â”€ */
+/* ── Pie chart container ── */
 .pie-wrap{position:relative;width:100%;height:280px;}
 .recharges-top{display:grid;grid-template-columns:1fr 340px;gap:14px;margin-bottom:14px;align-items:start;}
 @media(max-width:900px){.recharges-top{grid-template-columns:1fr;}}
-/* â”€â”€ Category sections â”€â”€ */
+/* ── Category sections ── */
 .cat-header{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#EEF2F9;border-radius:6px;cursor:pointer;margin-bottom:4px;border-left:3px solid #0B2545;}
 .cat-header:hover{background:#e0e7f3;}
 .cat-title{font-size:12px;font-weight:700;color:#0B2545;text-transform:uppercase;letter-spacing:0.4px;}
 .cat-body{display:block;}
 .cat-body.collapsed{display:none;}
-/* â”€â”€ KPI card gradient variants â”€â”€ */
+/* ── KPI card gradient variants ── */
 .kpi.navy{background:linear-gradient(135deg,#0B2545 0%,#1565C0 100%);color:#fff;}
 .kpi.navy .kpi-label{color:rgba(255,255,255,0.75);}
 .kpi.navy .kpi-value{color:#fff;}
@@ -158,15 +158,15 @@ body.viewer .admin-only{display:none!important;}
 .kpi.orange{background:linear-gradient(135deg,#E65100 0%,#FF8F00 100%);color:#fff;}
 .kpi.orange .kpi-label,.kpi.orange .kpi-value,.kpi.orange .kpi-sub{color:#fff;}
 .kpi.orange .kpi-sub{color:rgba(255,255,255,0.7);}
-/* â”€â”€ Import confirm bar â”€â”€ */
+/* ── Import confirm bar ── */
 #confirmBar{display:none;position:sticky;bottom:0;background:#0B2545;color:#fff;padding:10px 16px;display:none;align-items:center;justify-content:space-between;gap:12px;border-radius:8px;margin-top:12px;}
 #confirmBar.visible{display:flex;}
-/* â”€â”€ Financial tabs (amber accent) â”€â”€ */
+/* ── Financial tabs (amber accent) ── */
 .tab.fin{background:rgba(255,183,0,0.12);color:rgba(255,210,80,0.8);}
 .tab.fin:hover{background:rgba(255,183,0,0.22);color:#FFD740;}
 .tab.fin.active{background:#FFB300;color:#0B2545;font-weight:700;box-shadow:0 1px 6px rgba(255,183,0,0.35);}
 .fin-divider{width:1px;background:rgba(255,255,255,0.2);height:22px;align-self:center;margin:0 2px;}
-/* â”€â”€ Reconciliation page â”€â”€ */
+/* ── Reconciliation page ── */
 .recon-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:20px;}
 .recon-card{background:#fff;border-radius:12px;padding:18px 20px;border:0.5px solid rgba(0,0,0,0.12);position:relative;overflow:hidden;}
 .recon-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;}
@@ -179,23 +179,23 @@ body.viewer .admin-only{display:none!important;}
 .recon-sub{font-size:11px;color:#888;margin-top:4px;}
 .recon-arrow{font-size:18px;color:#555;display:flex;align-items:center;justify-content:center;padding-top:20px;}
 .recon-eq{font-size:13px;font-weight:700;color:#0B2545;padding:10px 16px;background:#EEF2F9;border-radius:8px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
-/* â”€â”€ Purchases page â”€â”€ */
+/* ── Purchases page ── */
 .var-pos{color:#C62828;font-weight:600;}
 .var-neg{color:#2E7D32;font-weight:600;}
-/* â”€â”€ Inventory page â”€â”€ */
+/* ── Inventory page ── */
 .inv-total-bar{background:linear-gradient(135deg,#0B2545,#1565C0);color:#fff;border-radius:10px;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
 .inv-total-bar .label{font-size:12px;opacity:0.8;}
 .inv-total-bar .value{font-size:22px;font-weight:700;}
-/* â”€â”€ Open Requests tab â”€â”€ */
+/* ── Open Requests tab ── */
 .pending-count{display:inline-block;background:#E65100;color:#fff;border-radius:10px;font-size:9px;font-weight:700;padding:1px 5px;margin-left:4px;vertical-align:middle;}
 .pending-row td{vertical-align:middle;}
 .pending-close-form{background:#f9f6ee;border:1px solid #e6c96a;border-radius:8px;padding:10px 14px;margin-top:6px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
 .status-open{display:inline-block;background:#FFF3E0;color:#E65100;border:1px solid #FFCC80;border-radius:6px;font-size:10px;font-weight:700;padding:2px 8px;letter-spacing:0.3px;}
-/* â”€â”€ Stock level chart â”€â”€ */
+/* ── Stock level chart ── */
 .stock-item-pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
 .stock-pill{font-size:11px;padding:3px 10px;border-radius:12px;cursor:pointer;border:1.5px solid transparent;opacity:0.5;transition:opacity 0.15s,border-color 0.15s;}
 .stock-pill.active{opacity:1;border-color:currentColor;}
-/* â”€â”€ Current stock cards â”€â”€ */
+/* ── Current stock cards ── */
 .inv-level-card{background:#f8f9fb;border-radius:12px;padding:14px 16px;min-width:160px;flex:1;max-width:220px;border:1.5px solid transparent;position:relative;overflow:hidden;}
 .inv-level-card .ilc-name{font-size:11px;font-weight:600;color:#555;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .inv-level-card .ilc-qty{font-size:28px;font-weight:700;line-height:1;}
@@ -214,18 +214,18 @@ body.viewer .admin-only{display:none!important;}
 </head>
 <body>
 
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-     GATE â€” shown before login
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<!-- ═══════════════════════════════════════════════
+     GATE — shown before login
+════════════════════════════════════════════════ -->
 <div id="gate">
   <div class="gate-card" id="gateInner">
-    <div class="connecting"><div class="spinner"></div><p>Connectingâ€¦</p></div>
+    <div class="connecting"><div class="spinner"></div><p>Connecting…</p></div>
   </div>
 </div>
 
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-     APP â€” shown after login
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<!-- ═══════════════════════════════════════════════
+     APP — shown after login
+════════════════════════════════════════════════ -->
 <div id="app" style="display:none;">
 
 <div class="topbar">
@@ -283,7 +283,7 @@ body.viewer .admin-only{display:none!important;}
   <div class="card">
     <h2>Item summary</h2>
     <div class="ovx"><table><thead><tr><th>Item</th><th>Category</th><th>Unit cost (R)</th><th>Qty used</th><th>Total spend (R)</th><th>Target %</th><th>Savings potential (R)</th></tr></thead><tbody id="ovBody"></tbody></table></div>
-    <p style="font-size:10px;color:#888;margin-top:8px;">Edit the Target % column to model different savings scenarios â€” figures update instantly.</p>
+    <p style="font-size:10px;color:#888;margin-top:8px;">Edit the Target % column to model different savings scenarios — figures update instantly.</p>
   </div>
   <div class="card">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
@@ -298,7 +298,7 @@ body.viewer .admin-only{display:none!important;}
           <option value="qty">Quantity</option>
         </select>
         <select id="ovChartDept" onchange="renderOverviewChart()" style="width:auto;font-size:11px;display:none;">
-          <option value="">â€” Select department â€”</option>
+          <option value="">— Select department —</option>
         </select>
       </div>
     </div>
@@ -327,13 +327,13 @@ body.viewer .admin-only{display:none!important;}
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
         <h2 style="margin:0;">Spend breakdown</h2>
         <select id="rPieView" onchange="renderRechargesPie()" style="width:auto;font-size:11px;">
-          <option value="dept-spend">Departments â€” Rand</option>
-          <option value="dept-qty">Departments â€” Quantity</option>
-          <option value="item-spend">Top items â€” Rand</option>
-          <option value="item-qty">Top items â€” Quantity</option>
+          <option value="dept-spend">Departments — Rand</option>
+          <option value="dept-qty">Departments — Quantity</option>
+          <option value="item-spend">Top items — Rand</option>
+          <option value="item-qty">Top items — Quantity</option>
         </select>
         <select id="rPieDept" onchange="renderRechargesPie()" style="width:auto;font-size:11px;display:none;">
-          <option value="">â€” Select department â€”</option>
+          <option value="">— Select department —</option>
         </select>
       </div>
       <div class="pie-wrap"><canvas id="rPieChart"></canvas></div>
@@ -346,7 +346,7 @@ body.viewer .admin-only{display:none!important;}
 <div class="page admin-only" id="page-entry">
   <div class="card">
     <h2>Paste monthly recharge table</h2>
-    <p style="font-size:12px;color:#555;margin:0 0 10px;">Copy your Excel recharge sheet and paste below. Expected columns: <strong>Item name &nbsp;|&nbsp; Out &nbsp;|&nbsp; In &nbsp;|&nbsp; Qty &nbsp;|&nbsp; Unit price (R) &nbsp;|&nbsp; Total (R)</strong> (tab-separated). Include the department name row and month name above each section.<br>Decimal quantities like <strong>0,5</strong> or <strong>0.5</strong> are both supported â€” <span style="color:#C62828;font-weight:600;">red rows</span> flag price mismatches vs. your master price list.</p>
+    <p style="font-size:12px;color:#555;margin:0 0 10px;">Copy your Excel recharge sheet and paste below. Expected columns: <strong>Item name &nbsp;|&nbsp; Out &nbsp;|&nbsp; In &nbsp;|&nbsp; Qty &nbsp;|&nbsp; Unit price (R) &nbsp;|&nbsp; Total (R)</strong> (tab-separated). Include the department name row and month name above each section.<br>Decimal quantities like <strong>0,5</strong> or <strong>0.5</strong> are both supported — <span style="color:#C62828;font-weight:600;">red rows</span> flag price mismatches vs. your master price list.</p>
     <textarea id="csvIn" rows="10" placeholder="June&#10;&#10;Business Morning	Out	In	Quantity Item (Inv.)	Price(R) Per Unit	Total (R)&#10;Cups	167	84	83	1.7	R141.10&#10;...&#10;Final Total					R286.05" oninput="previewPaste()" style="width:100%;font-size:12px;font-family:monospace;border:0.5px solid rgba(0,0,0,0.25);border-radius:8px;padding:10px;resize:vertical;box-sizing:border-box;"></textarea>
     <div style="display:flex;gap:8px;margin-top:8px;align-items:center;">
       <button onclick="clearPaste()" style="font-size:12px;padding:6px 12px;">Clear</button>
@@ -378,7 +378,7 @@ body.viewer .admin-only{display:none!important;}
       <div class="fg"><label style="font-size:11px;display:block;margin-bottom:4px;">Department</label><select id="pendDept" style="font-size:12px;padding:5px 8px;border-radius:7px;border:0.5px solid rgba(0,0,0,0.3);min-width:140px;"></select></div>
       <div class="fg"><label style="font-size:11px;display:block;margin-bottom:4px;">Item</label><select id="pendItem" style="font-size:12px;padding:5px 8px;border-radius:7px;border:0.5px solid rgba(0,0,0,0.3);min-width:160px;"></select></div>
       <div class="fg"><label style="font-size:11px;display:block;margin-bottom:4px;">Qty sent out</label><input type="number" id="pendOut" min="0" step="any" placeholder="0" style="font-size:12px;padding:5px 8px;border-radius:7px;border:0.5px solid rgba(0,0,0,0.3);width:90px;"></div>
-      <div class="fg"><label style="font-size:11px;display:block;margin-bottom:4px;">Day</label><input type="number" id="pendDay" min="1" max="31" placeholder="1â€“31" style="font-size:12px;padding:5px 8px;border-radius:7px;border:0.5px solid rgba(0,0,0,0.3);width:64px;"></div>
+      <div class="fg"><label style="font-size:11px;display:block;margin-bottom:4px;">Day</label><input type="number" id="pendDay" min="1" max="31" placeholder="1–31" style="font-size:12px;padding:5px 8px;border-radius:7px;border:0.5px solid rgba(0,0,0,0.3);width:64px;"></div>
       <div class="fg"><label style="font-size:11px;display:block;margin-bottom:4px;">Notes (optional)</label><input type="text" id="pendNotes" placeholder="e.g. sent to Business Morning" style="font-size:12px;padding:5px 8px;border-radius:7px;border:0.5px solid rgba(0,0,0,0.3);width:180px;"></div>
       <button onclick="addPendingEntry()" style="padding:7px 16px;font-size:13px;font-weight:600;background:#0B2545;color:#fff;border:none;border-radius:8px;cursor:pointer;align-self:flex-end;">+ Log request</button>
     </div>
@@ -476,7 +476,7 @@ body.viewer .admin-only{display:none!important;}
   <div class="card">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
       <h2 style="margin:0;">Items &amp; supplier overview</h2>
-      <span style="font-size:11px;color:#888;">Edit Target % to model savings â€” values update live.</span>
+      <span style="font-size:11px;color:#888;">Edit Target % to model savings — values update live.</span>
     </div>
     <div id="iCatSections"></div>
   </div>
@@ -512,7 +512,7 @@ body.viewer .admin-only{display:none!important;}
   <div class="card">
     <h2>Add purchase</h2>
     <div class="form-row">
-      <div class="fg"><label>Day</label><input type="number" id="pDay" min="1" max="31" placeholder="1â€“31"></div>
+      <div class="fg"><label>Day</label><input type="number" id="pDay" min="1" max="31" placeholder="1–31"></div>
       <div class="fg"><label>Month</label><select id="pMonthIn">
         <option value="0">January</option><option value="1">February</option><option value="2">March</option>
         <option value="3">April</option><option value="4" selected>May</option><option value="5">June</option>
@@ -563,7 +563,7 @@ body.viewer .admin-only{display:none!important;}
       <label style="font-size:11px;color:#555;">Year:</label>
       <select id="invChartYear" onchange="renderInvStockChart()" style="width:auto;font-size:11px;"><option value="2025">2025</option><option value="2026" selected>2026</option></select>
     </div>
-    <p style="font-size:11px;color:#888;margin:0 0 8px;">Opening inventory each month, adjusted for purchases (+), closed recharges (âˆ’) and open requests still out (âˆ’). Shows estimated remaining stock.</p>
+    <p style="font-size:11px;color:#888;margin:0 0 8px;">Opening inventory each month, adjusted for purchases (+), closed recharges (−) and open requests still out (−). Shows estimated remaining stock.</p>
     <div id="invChartPills" class="stock-item-pills"></div>
     <div class="chart-wrap" style="height:280px;"><canvas id="invStockChart" role="img" aria-label="Live stock level chart"></canvas></div>
     <div id="invChartLegend" style="display:flex;gap:16px;flex-wrap:wrap;margin-top:8px;font-size:11px;color:#555;">
@@ -571,7 +571,7 @@ body.viewer .admin-only{display:none!important;}
       <span style="display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:20px;height:2px;border-top:2px dashed #E65100;"></span> Live (incl. open requests out)</span>
     </div>
     <div style="margin-top:16px;border-top:1px solid rgba(0,0,0,0.07);padding-top:14px;">
-      <div style="font-size:12px;font-weight:600;color:#0B2545;margin-bottom:10px;">Current stock levels â€” what is in the room right now</div>
+      <div style="font-size:12px;font-weight:600;color:#0B2545;margin-bottom:10px;">Current stock levels — what is in the room right now</div>
       <div id="invCurrentCards" style="display:flex;flex-wrap:wrap;gap:12px;"></div>
     </div>
   </div>
@@ -598,18 +598,18 @@ body.viewer .admin-only{display:none!important;}
       <div id="invPasteMsg" style="font-size:12px;margin-top:6px;"></div>
     </div>
   </div>
-  <div class="card"><h2>Stock on hand â€” edit quantities to update</h2><div class="ovx"><table><thead><tr><th>Item</th><th>Category</th><th>Unit cost (R)</th><th>Qty in stock</th><th>Total value (R)</th></tr></thead><tbody id="invBody"></tbody></table></div></div>
+  <div class="card"><h2>Stock on hand — edit quantities to update</h2><div class="ovx"><table><thead><tr><th>Item</th><th>Category</th><th>Unit cost (R)</th><th>Qty in stock</th><th>Total value (R)</th></tr></thead><tbody id="invBody"></tbody></table></div></div>
 </div>
 
 </div><!-- end content -->
 </div><!-- end app -->
 
 <script>
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════════════
 //  FIREBASE CONFIG
 //  Replace these values with your own Firebase project credentials.
-//  Get them from: Firebase Console â†’ Project Settings â†’ Your apps â†’ SDK setup
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+//  Get them from: Firebase Console → Project Settings → Your apps → SDK setup
+// ═══════════════════════════════════════════════════════════════════
 const FIREBASE_CONFIG = {
   apiKey:            "AIzaSyAqRuA0yUXBSOFAd17Z8wRIVXMqlKScDE8",
   authDomain:        "inventory-dashboard-cityhill.firebaseapp.com",
@@ -618,7 +618,7 @@ const FIREBASE_CONFIG = {
   messagingSenderId: "70686718672",
   appId:             "1:70686718672:web:1d43690633b4516a2fbcd5"
 };
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════════════
 
 const MN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const MNF=['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -626,7 +626,7 @@ const COLS=['#185FA5','#0F6E56','#993C1D','#993356','#3B6D11','#854F0B','#533AB7
 const DEPT_COLORS=['#1565C0','#00796B','#C62828','#6A1B9A','#2E7D32','#D84315','#0277BD','#37474F','#E65100','#283593','#558B2F','#AD1457','#00695C','#BF360C','#1976D2','#880E4F','#4E342E','#546E7A','#1B5E20'];
 function getDeptColor(dept){const idx=S.depts.indexOf(dept);return DEPT_COLORS[idx>=0?idx%DEPT_COLORS.length:0];}
 
-// â”€â”€ Default seed data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Default seed data ──────────────────────────────────────────────
 const DEFAULT_ITEMS=[
   {id:1,name:'Milk (2L)',cat:'Beverages',cost:31,supplier:'',target:28},
   {id:2,name:'Cups',cat:'Consumables',cost:1.70,supplier:'',target:1.40},
@@ -685,7 +685,7 @@ function buildDefaultEntries(items){
   return {entries,nid};
 }
 
-// â”€â”€ App state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── App state ──────────────────────────────────────────────────────
 let S={items:[],depts:[],entries:[],purchases:[],inventory:[],pendingEntries:[],nid:100};
 let isAdmin=false;
 let activePage='overview';
@@ -695,7 +695,7 @@ let parsedPreviewData=null;
 let db=null;
 let unsubscribe=null;
 
-// â”€â”€ Firebase init â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Firebase init ──────────────────────────────────────────────────
 function initFirebase(){
   const cfg=FIREBASE_CONFIG;
   if(!cfg.apiKey||cfg.apiKey.startsWith('REPLACE')||!cfg.projectId||cfg.projectId.startsWith('REPLACE')){
@@ -706,7 +706,7 @@ function initFirebase(){
         Before this dashboard can connect, you need to add your Firebase credentials.<br><br>
         <strong>Steps:</strong><br>
         1. Go to <strong>firebase.google.com</strong> and create a free project<br>
-        2. In Project Settings â†’ Your apps â†’ click <strong>&lt;/&gt;</strong> to register a web app<br>
+        2. In Project Settings → Your apps → click <strong>&lt;/&gt;</strong> to register a web app<br>
         3. Copy the <code style="background:#f0efea;padding:1px 5px;border-radius:4px;">firebaseConfig</code> values<br>
         4. Open <strong>consumables_dashboard_shared.html</strong> in a text editor<br>
         5. Find <code style="background:#f0efea;padding:1px 5px;border-radius:4px;">FIREBASE_CONFIG</code> near the top and replace the placeholder values<br>
@@ -739,14 +739,14 @@ async function checkFirstRun(){
   }
 }
 
-// â”€â”€ Gate: setup â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Gate: setup ────────────────────────────────────────────────────
 function showSetupForm(){
   document.getElementById('gateInner').innerHTML=`
     <div class="gate-logo">Consumables Dashboard</div>
-    <div class="gate-sub">First-time setup â€” create your passwords</div>
+    <div class="gate-sub">First-time setup — create your passwords</div>
     <div class="gate-hint">
-      <strong>Admin password</strong> â€” full access (editing, importing, all tabs).<br>
-      <strong>Share password</strong> â€” read-only access for your team. Give this to others.
+      <strong>Admin password</strong> — full access (editing, importing, all tabs).<br>
+      <strong>Share password</strong> — read-only access for your team. Give this to others.
     </div>
     <label class="gate-label">Admin password</label>
     <input class="gate-input" type="password" id="setupAdmin" placeholder="Choose a strong admin password" onkeydown="if(event.key==='Enter')doSetup()">
@@ -763,7 +763,7 @@ async function doSetup(){
   if(!adminPass||!sharePass){document.getElementById('setupErr').textContent='Both passwords are required.';return;}
   if(adminPass===sharePass){document.getElementById('setupErr').textContent='Admin and share passwords must be different.';return;}
   const btn=document.querySelector('.gate-btn');
-  btn.disabled=true;btn.textContent='Setting upâ€¦';
+  btn.disabled=true;btn.textContent='Setting up…';
   try{
     await db.doc('dashboard/config').set({adminPassword:adminPass,viewPassword:sharePass});
     const {entries,nid}=buildDefaultEntries(DEFAULT_ITEMS);
@@ -776,7 +776,7 @@ async function doSetup(){
   }
 }
 
-// â”€â”€ Gate: login â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Gate: login ────────────────────────────────────────────────────
 function showLoginForm(){
   document.getElementById('gateInner').innerHTML=`
     <div style="text-align:center;margin-bottom:28px;">
@@ -796,7 +796,7 @@ function showLoginForm(){
 async function doLogin(){
   const pass=document.getElementById('passInput').value;
   const btn=document.querySelector('.gate-btn');
-  btn.disabled=true;btn.textContent='Checkingâ€¦';
+  btn.disabled=true;btn.textContent='Checking…';
   try{
     const snap=await db.doc('dashboard/config').get();
     const cfg=snap.data();
@@ -825,7 +825,7 @@ function showGateError(msg){
     <button class="gate-btn" onclick="location.reload()" style="margin-top:20px;">Retry</button>`;
 }
 
-// â”€â”€ Launch app after login â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Launch app after login ─────────────────────────────────────────
 function launchApp(){
   document.getElementById('gate').style.display='none';
   document.getElementById('app').style.display='';
@@ -890,13 +890,13 @@ async function changePasswords(){
 function setSyncDot(state){
   const d=document.getElementById('syncIndicator');
   d.className='sync-dot '+state;
-  d.title=state==='ok'?'Synced':state==='syncing'?'Savingâ€¦':'Sync error';
+  d.title=state==='ok'?'Synced':state==='syncing'?'Saving…':'Sync error';
 }
 
-// â”€â”€ Re-render current page on data change â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ── Re-render current page on data change ─────────────────────────
+/* ══════════════════════════════════════════════════════════════════
    STOCK LEVEL CHART
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+══════════════════════════════════════════════════════════════════ */
 let slChartInst=null;
 let slActiveItems=new Set();
 let invChartInst=null;
@@ -947,9 +947,9 @@ function toggleSlItem(itemId){
   renderStockLevelChart();
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ══════════════════════════════════════════════════════════════════
    OPEN REQUESTS (PENDING ENTRIES)
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+══════════════════════════════════════════════════════════════════ */
 function updatePendingBadge(){
   const n=S.pendingEntries.length;
   ['pendingBadge','pendingCount'].forEach(id=>{
@@ -1016,7 +1016,7 @@ function renderPending(){
     <div class="kpi navy"><div class="kpi-label">Open requests</div><div class="kpi-value">${recs.length}</div><div class="kpi-sub">awaiting stock return</div></div>
     <div class="kpi teal"><div class="kpi-label">Departments</div><div class="kpi-value">${depts.length}</div><div class="kpi-sub">with open stock</div></div>
     <div class="kpi"><div class="kpi-label">Total qty out</div><div class="kpi-value">${totalOut}</div><div class="kpi-sub">units not yet reconciled</div></div>`;
-  // Accordion by dept â€” same structure as recharges
+  // Accordion by dept — same structure as recharges
   const openSet=new Set([...(document.querySelectorAll('.dept-detail.open')||[])].map(el=>el.id.replace('detail-','pend-')));
   let html='';
   depts.forEach(dept=>{
@@ -1026,7 +1026,7 @@ function renderPending(){
     const dRecs=recs.filter(r=>r.dept===dept);
     html+=`
     <div class="dept-row${wasOpen?' open':''}" id="row-${dId}" onclick="toggleDeptPend('${dId}')" style="border-left-color:${dc};">
-      <div class="dept-name"><span class="dept-color-dot" style="background:${dc};"></span><span class="dept-chevron${wasOpen?' open':''}" id="chev-${dId}">â–¼</span>${dept}</div>
+      <div class="dept-name"><span class="dept-color-dot" style="background:${dc};"></span><span class="dept-chevron${wasOpen?' open':''}" id="chev-${dId}">▼</span>${dept}</div>
       <div style="display:flex;align-items:center;gap:12px;">
         <span style="font-size:11px;color:#888;">${dRecs.length} item${dRecs.length!==1?'s':''} open</span>
         <span class="status-open">OPEN</span>
@@ -1053,7 +1053,7 @@ function buildPendTable(recs,dId,yr,mv){
       <td>${String(r.day).padStart(2,'0')} ${MN[r.month]} ${r.year}</td>
       <td><strong>${r.out}</strong></td>
       <td><input class="inline-input" type="number" id="pin-${r.id}" min="0" step="any" placeholder="qty returned" style="width:100px;" oninput="updatePendNet(${r.id})"></td>
-      <td id="pnet-${r.id}" style="font-weight:600;color:#555;">â€”</td>
+      <td id="pnet-${r.id}" style="font-weight:600;color:#555;">—</td>
       <td style="color:#777;font-size:11px;">${r.notes||''}</td>
       <td style="white-space:nowrap;">
         <button class="edit-btn save" onclick="closePendingEntry(${r.id})">&#10003; Close &amp; move to recharges</button>
@@ -1075,7 +1075,7 @@ function updatePendNet(id){
   const inRaw=document.getElementById('pin-'+id).value;
   const inQ=inRaw===''?null:parseSANum(inRaw);
   const netEl=document.getElementById('pnet-'+id);
-  if(netEl) netEl.textContent=inQ!==null?Math.max(0,rec.out-inQ)+'  units':'â€”';
+  if(netEl) netEl.textContent=inQ!==null?Math.max(0,rec.out-inQ)+'  units':'—';
 }
 function closePendingEntry(id){
   const rec=S.pendingEntries.find(r=>r.id===id);
@@ -1114,9 +1114,9 @@ function rerenderCurrentPage(){
   else if(activePage==='pending') renderPending();
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ══════════════════════════════════════════════════════════════════
    PURCHASES
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+══════════════════════════════════════════════════════════════════ */
 function renderPurchasesSelects(){
   const sel=document.getElementById('pItem');
   if(sel) sel.innerHTML=S.items.map(i=>`<option value="${i.id}">${i.name}</option>`).join('');
@@ -1169,7 +1169,7 @@ function renderPurchases(){
     const vsign=variance>0?'+':'';
     return `<tr>
       <td>${String(p.day).padStart(2,'0')} ${MN[p.month]} ${p.year}</td>
-      <td>${it?it.name:'â€”'}</td>
+      <td>${it?it.name:'—'}</td>
       <td>${p.qty.toLocaleString()}</td>
       <td>R ${fmt(p.actualTotal)}</td>
       <td>R ${fmt(expected)}</td>
@@ -1187,9 +1187,9 @@ function renderPurchases(){
     <div class="kpi"><div class="kpi-label">Records</div><div class="kpi-value">${purch.length}</div></div>`;
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ══════════════════════════════════════════════════════════════════
    INVENTORY
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+══════════════════════════════════════════════════════════════════ */
 function getInvKey(year,month){return`${year}-${month}`;}
 function getInvQty(itemId,year,month){
   const rec=S.inventory.find(r=>r.itemId===itemId&&r.year===year&&r.month===month);
@@ -1256,7 +1256,7 @@ function renderInvStockChart(){
       const active=invChartActiveItems.has(it.id);
       return `<span class="stock-pill${active?' active':''}" style="background:${active?col+'22':'#f5f5f5'};color:${col};border-color:${active?col:'transparent'};" onclick="toggleInvChartItem(${it.id})">${it.name}</span>`;
     }).join('');
-    if(!itemsWithData.length) pillsEl.innerHTML='<span style="font-size:12px;color:#aaa;">No inventory snapshots yet â€” add stock quantities on the table below first.</span>';
+    if(!itemsWithData.length) pillsEl.innerHTML='<span style="font-size:12px;color:#aaa;">No inventory snapshots yet — add stock quantities on the table below first.</span>';
   }
   const activeList=itemsWithData.filter(it=>invChartActiveItems.has(it.id));
   const datasets=[];
@@ -1278,7 +1278,7 @@ function renderInvStockChart(){
       // Dashed = live incl. pending
       if(hasPending) datasets.push({label:it.name+' (live)',data:liveData,borderColor:col,backgroundColor:'transparent',tension:0.3,pointRadius:3,pointHoverRadius:6,fill:false,spanGaps:false,borderDash:[6,4],borderWidth:1.5,pointStyle:'triangle'});
     } else {
-      // Live only â€” always show the live line (dashed style)
+      // Live only — always show the live line (dashed style)
       datasets.push({label:it.name,data:liveData,borderColor:col,backgroundColor:col+'18',tension:0.3,pointRadius:4,pointHoverRadius:7,fill:false,spanGaps:false,borderDash:[6,4],borderWidth:2.5});
     }
   });
@@ -1303,8 +1303,8 @@ function renderInvStockChart(){
             if(!calc) return null;
             const lines=[`${name}:`,'  Opening: '+calc.opening];
             if(calc.purchased>0) lines.push('  + Purchased: '+calc.purchased);
-            if(calc.recharged>0) lines.push('  âˆ’ Recharged: '+calc.recharged);
-            if(calc.pendingOut>0) lines.push('  âˆ’ Out (pending): '+calc.pendingOut);
+            if(calc.recharged>0) lines.push('  − Recharged: '+calc.recharged);
+            if(calc.pendingOut>0) lines.push('  − Out (pending): '+calc.pendingOut);
             lines.push('  = '+ctx.parsed.y+' units remaining');
             return lines;
           }
@@ -1316,7 +1316,7 @@ function renderInvStockChart(){
       }
     }
   });
-  // â”€â”€ Current level cards â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Current level cards ──────────────────────────────────────────
   const now=new Date();
   const curMonth=yr===now.getFullYear()?now.getMonth():11;
   const cardsEl=document.getElementById('invCurrentCards');
@@ -1340,11 +1340,11 @@ function renderInvStockChart(){
       <div class="ilc-name" style="color:${col};">${it.name}</div>
       <span class="ilc-status ${statusClass}">${statusLabel}</span>
       <div class="ilc-qty" style="color:${col};">${calc.remaining}</div>
-      <div style="font-size:10px;color:#aaa;margin-bottom:2px;">units in room Â· ${MN[useMonth]} ${yr}</div>
+      <div style="font-size:10px;color:#aaa;margin-bottom:2px;">units in room · ${MN[useMonth]} ${yr}</div>
       <div class="ilc-bar-wrap"><div class="ilc-bar" style="width:${Math.min(100,pct)}%;background:${barCol};"></div></div>
       <div class="ilc-detail">
-        Opening: ${calc.opening}${calc.purchased>0?' Â· +'+calc.purchased+' purchased':''}
-        Â· âˆ’${calc.recharged} recharged${calc.pendingOut>0?' Â· âˆ’'+calc.pendingOut+' out':''}
+        Opening: ${calc.opening}${calc.purchased>0?' · +'+calc.purchased+' purchased':''}
+        · −${calc.recharged} recharged${calc.pendingOut>0?' · −'+calc.pendingOut+' out':''}
         <br><strong>${pct}% remaining</strong>
       </div>
       ${pendNote}
@@ -1366,7 +1366,7 @@ function renderInventory(){
       <td><span class="badge bb">${it.cat}</span></td>
       <td>R ${it.cost.toFixed(2)}</td>
       <td><input type="number" min="0" step="any" value="${q}" onchange="setInvQty(${it.id},parseFloat(this.value)||0,${yr},${month})" style="width:80px;padding:4px 7px;font-size:12px;border:0.5px solid rgba(0,0,0,0.3);border-radius:6px;"></td>
-      <td style="font-weight:600;color:${val>0?'#0B2545':'#aaa'};">${val>0?'R '+fmt(val):'â€”'}</td>
+      <td style="font-weight:600;color:${val>0?'#0B2545':'#aaa'};">${val>0?'R '+fmt(val):'—'}</td>
     </tr>`;
   }).join('');
   document.getElementById('invBody').innerHTML=rows;
@@ -1398,7 +1398,7 @@ function updateInvPasteNextLabel(){
   const nextMonth=month===11?0:month+1;
   const nextYear=month===11?yr+1:yr;
   document.getElementById('invPasteNextLabel').textContent=
-    `â†’ Will also set as opening stock for ${MNF[nextMonth]} ${nextYear}`;
+    `→ Will also set as opening stock for ${MNF[nextMonth]} ${nextYear}`;
 }
 function previewInvPaste(){
   const raw=document.getElementById('invCsvIn').value;
@@ -1421,9 +1421,9 @@ function previewInvPaste(){
                S.items.find(i=>i.name.toLowerCase().includes(name.toLowerCase()));
     rows.push({raw:name,item,qty});
   });
-  if(!rows.length){preview.innerHTML='<p style="font-size:12px;color:#A32D2D;">Nothing recognised â€” check your columns are tab-separated.</p>';bar.style.display='none';return;}
+  if(!rows.length){preview.innerHTML='<p style="font-size:12px;color:#A32D2D;">Nothing recognised — check your columns are tab-separated.</p>';bar.style.display='none';return;}
   let html=`<div style="font-size:11px;color:#B8860B;margin-bottom:6px;font-weight:600;">
-    Closing stock: ${MNF[month]} ${yr} &nbsp;Â·&nbsp; Opening stock: ${MNF[nextMonth]} ${nextYear}
+    Closing stock: ${MNF[month]} ${yr} &nbsp;·&nbsp; Opening stock: ${MNF[nextMonth]} ${nextYear}
   </div>
   <table class="preview-table"><thead><tr><th>Item (pasted)</th><th>Matched to</th><th>Qty</th><th>Unit cost (R)</th><th>Value (R)</th></tr></thead><tbody>`;
   rows.forEach(r=>{
@@ -1431,7 +1431,7 @@ function previewInvPaste(){
     const badge=!r.item?`<span class="preview-warn-badge">UNKNOWN</span>`:'';
     const matchName=r.item?r.item.name:`<em style="color:#A32D2D;">No match</em>`;
     const val=r.item?R2(r.qty*r.item.cost):0;
-    html+=`<tr class="${wc}"><td>${r.raw}${badge}</td><td>${matchName}</td><td>${r.qty}</td><td>${r.item?'R '+r.item.cost.toFixed(2):'â€”'}</td><td>${val?'R '+fmt(val):'â€”'}</td></tr>`;
+    html+=`<tr class="${wc}"><td>${r.raw}${badge}</td><td>${matchName}</td><td>${r.qty}</td><td>${r.item?'R '+r.item.cost.toFixed(2):'—'}</td><td>${val?'R '+fmt(val):'—'}</td></tr>`;
   });
   html+=`</tbody></table>`;
   preview.innerHTML=html;
@@ -1497,7 +1497,7 @@ function confirmMoveSnapshot(){
   const toMonth=parseInt(document.getElementById('moveToMonth').value);
   const toYr=parseInt(document.getElementById('moveToYear').value);
   if(fromMonth===toMonth&&fromYr===toYr){
-    document.getElementById('moveSnapshotMsg').textContent='That is already the current month â€” choose a different target.';
+    document.getElementById('moveSnapshotMsg').textContent='That is already the current month — choose a different target.';
     return;
   }
   const fromRecs=S.inventory.filter(r=>r.year===fromYr&&r.month===fromMonth);
@@ -1534,9 +1534,9 @@ function copyPrevInventory(){
   renderInventory();
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ══════════════════════════════════════════════════════════════════
    RECONCILIATION
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+══════════════════════════════════════════════════════════════════ */
 function renderReconciliation(){
   const yr=parseInt(document.getElementById('recYear').value);
   const mv=document.getElementById('recMonth').value;
@@ -1561,7 +1561,7 @@ function renderReconciliation(){
   // Actual net closing (incorporates variance)
   const closingVal=R2(openingVal+purchaseTotal-rechargeTotal);
   const periodLabel=mv==='all'?`${yr}`:MNF[month]+' '+yr;
-  const varSign=purchaseVariance>0?'+':purchaseVariance<0?'âˆ’':'Â±';
+  const varSign=purchaseVariance>0?'+':purchaseVariance<0?'−':'±';
   const varClass=purchaseVariance>0?'var-pos':purchaseVariance<0?'var-neg':'';
   const varLabel=purchaseVariance>0?'Overspent vs expected':purchaseVariance<0?'Saved vs expected':'On budget';
   document.getElementById('reconCards').innerHTML=`
@@ -1576,7 +1576,7 @@ function renderReconciliation(){
       <div class="recon-value">R ${fmt(purchaseTotal)}</div>
       <div class="recon-sub">${purchRecs.length} purchase record${purchRecs.length!==1?'s':''}</div>
     </div>
-    <div class="recon-arrow">âˆ’</div>
+    <div class="recon-arrow">−</div>
     <div class="recon-card recon-recharge">
       <div class="recon-label">Recharges issued</div>
       <div class="recon-value">R ${fmt(rechargeTotal)}</div>
@@ -1594,7 +1594,7 @@ function renderReconciliation(){
       <div class="recon-sub">${varLabel}</div>
     </div>`;
   document.getElementById('reconEq').innerHTML=`
-    <span>R ${fmt(openingVal)} (opening) + R ${fmt(purchaseTotal)} (purchases) âˆ’ R ${fmt(rechargeTotal)} (recharges)</span>
+    <span>R ${fmt(openingVal)} (opening) + R ${fmt(purchaseTotal)} (purchases) − R ${fmt(rechargeTotal)} (recharges)</span>
     <span style="font-size:15px;">= R ${fmt(closingAtStd)} (std) ${varSign} R ${fmt(Math.abs(purchaseVariance))} (variance) = <strong>R ${fmt(closingVal)}</strong></span>`;
   // Dept breakdown
   const deptTotals={};
@@ -1609,15 +1609,15 @@ function renderReconciliation(){
     const it=S.items.find(i=>i.id===p.itemId);
     const exp=R2(p.qty*(it?it.cost:0));
     const vari=R2(p.actualTotal-exp);
-    return `<tr><td>${String(p.day).padStart(2,'0')} ${MN[p.month]}</td><td>${it?it.name:'â€”'}</td><td>${p.qty}</td><td>R ${fmt(p.actualTotal)}</td><td>R ${fmt(exp)}</td><td class="${vari>0?'var-pos':vari<0?'var-neg':''}">${vari>0?'+':''}R ${fmt(Math.abs(vari))}</td></tr>`;
+    return `<tr><td>${String(p.day).padStart(2,'0')} ${MN[p.month]}</td><td>${it?it.name:'—'}</td><td>${p.qty}</td><td>R ${fmt(p.actualTotal)}</td><td>R ${fmt(exp)}</td><td class="${vari>0?'var-pos':vari<0?'var-neg':''}">${vari>0?'+':''}R ${fmt(Math.abs(vari))}</td></tr>`;
   }).join('');
   document.getElementById('reconPurchBody').innerHTML=purchRows||`<tr><td colspan="6" style="text-align:center;padding:12px;color:#555;">No purchases.</td></tr>`;
 }
 
-// â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Helpers ────────────────────────────────────────────────────────
 function R2(v){return Math.round(v*100)/100;}
 function fmt(v){return parseFloat(v).toLocaleString('en-ZA',{minimumFractionDigits:2,maximumFractionDigits:2});}
-// Handles both SA decimal comma (0,5 â†’ 0.5) and standard decimal point
+// Handles both SA decimal comma (0,5 → 0.5) and standard decimal point
 function parseSANum(s){
   if(s===null||s===undefined) return NaN;
   s=String(s).replace(/[R\s]/g,'').trim();
@@ -1668,7 +1668,7 @@ function populateSelects(mId,yId){
   MNF.forEach((m,i)=>ms.innerHTML+=`<option value="${i}">${m}</option>`);
 }
 
-/* â”€â”€ OVERVIEW â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€*/
+/* ── OVERVIEW ─────────────────────────────────────────────────────*/
 function renderOverview(){
   const yr=parseInt(document.getElementById('ovYear').value);
   const mv=document.getElementById('ovMonth').value;
@@ -1690,8 +1690,8 @@ function renderOverview(){
   document.getElementById('kpiGrid').innerHTML=`
     <div class="kpi navy"><div class="kpi-label">Total spend (period)</div><div class="kpi-value">R ${fmt(total)}</div><div class="kpi-sub">${ents.length} line entries</div></div>
     <div class="kpi teal"><div class="kpi-label">Total savings potential</div><div class="kpi-value">R ${fmt(totalSavings)}</div><div class="kpi-sub">across all items at targets</div></div>
-    <div class="kpi"><div class="kpi-label">Largest total spend</div><div class="kpi-value" style="font-size:15px;">${maxSp?maxSp.name:'â€”'}</div><div class="kpi-sub">${maxSp?'R '+fmt(agg[maxSp.id].spend)+' total':''}</div></div>
-    <div class="kpi"><div class="kpi-label">Best savings opportunity</div><div class="kpi-value" style="font-size:15px;">${maxSv?maxSv.name:'â€”'}</div><div class="kpi-sub">${maxSv?'Save up to R '+fmt((maxSv.cost-(maxSv.target||maxSv.cost))*agg[maxSv.id].qty):''}</div></div>`;
+    <div class="kpi"><div class="kpi-label">Largest total spend</div><div class="kpi-value" style="font-size:15px;">${maxSp?maxSp.name:'—'}</div><div class="kpi-sub">${maxSp?'R '+fmt(agg[maxSp.id].spend)+' total':''}</div></div>
+    <div class="kpi"><div class="kpi-label">Best savings opportunity</div><div class="kpi-value" style="font-size:15px;">${maxSv?maxSv.name:'—'}</div><div class="kpi-sub">${maxSv?'Save up to R '+fmt((maxSv.cost-(maxSv.target||maxSv.cost))*agg[maxSv.id].qty):''}</div></div>`;
   let rows='';
   [...S.items].sort((a,b)=>(agg[b.id]?.spend||0)-(agg[a.id]?.spend||0)).forEach(it=>{
     const a=agg[it.id];
@@ -1732,10 +1732,10 @@ function renderOverviewChart(){
   if(deptQtyMode){
     // Populate dept selector
     const curVal=deptSel.value;
-    deptSel.innerHTML='<option value="">â€” Select department â€”</option>'+S.depts.map(d=>`<option value="${d}"${d===curVal?' selected':''}>${d}</option>`).join('');
+    deptSel.innerHTML='<option value="">— Select department —</option>'+S.depts.map(d=>`<option value="${d}"${d===curVal?' selected':''}>${d}</option>`).join('');
     if(!deptSel.value){
-      // No dept chosen â€” show prompt in chart area
-      document.getElementById('ovChartTitle').textContent='Quantity by item â€” select a department';
+      // No dept chosen — show prompt in chart area
+      document.getElementById('ovChartTitle').textContent='Quantity by item — select a department';
       const canvas=document.getElementById('ovBarChart');
       if(ovBarChartInst){ovBarChartInst.destroy();ovBarChartInst=null;}
       const ctx=canvas.getContext('2d');ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -1774,7 +1774,7 @@ function renderOverviewChart(){
     colors=sorted.map((_,i)=>COLS[i%COLS.length]);
   }
   document.getElementById('ovChartTitle').textContent=
-    deptQtyMode?`Quantity by item â€” ${deptSel.value}`:
+    deptQtyMode?`Quantity by item — ${deptSel.value}`:
     (isSpend?'Rand spend':'Quantity')+' by '+(grp==='item'?'item':'department');
   const canvas=document.getElementById('ovBarChart');
   if(!canvas) return;
@@ -1815,7 +1815,7 @@ function renderOverviewChart(){
   });
 }
 
-/* â”€â”€ RECHARGES PIE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€*/
+/* ── RECHARGES PIE ────────────────────────────────────────────────*/
 function renderRechargesPie(){
   const{yr,mv}=getRYM();
   const view=document.getElementById('rPieView')?document.getElementById('rPieView').value:'dept-spend';
@@ -1826,7 +1826,7 @@ function renderRechargesPie(){
     deptSel.style.display=deptQtyMode?'':'none';
     if(deptQtyMode){
       const curVal=deptSel.value;
-      deptSel.innerHTML='<option value="">â€” Select department â€”</option>'+S.depts.map(d=>`<option value="${d}"${d===curVal?' selected':''}>${d}</option>`).join('');
+      deptSel.innerHTML='<option value="">— Select department —</option>'+S.depts.map(d=>`<option value="${d}"${d===curVal?' selected':''}>${d}</option>`).join('');
     }
   }
   let ents=S.entries.filter(e=>e.year===yr);
@@ -1835,7 +1835,7 @@ function renderRechargesPie(){
   const canvas=document.getElementById('rPieChart');
   if(!canvas) return;
   if(deptQtyMode&&deptSel&&!deptSel.value){
-    // No dept selected â€” show prompt
+    // No dept selected — show prompt
     if(rPieChartInst){rPieChartInst.destroy();rPieChartInst=null;}
     const ctx=canvas.getContext('2d');ctx.clearRect(0,0,canvas.width,canvas.height);
     ctx.font='13px system-ui';ctx.fillStyle='#aaa';ctx.textAlign='center';
@@ -1843,7 +1843,7 @@ function renderRechargesPie(){
     return;
   }
   if(deptQtyMode){
-    // Items for selected dept â€” quantity
+    // Items for selected dept — quantity
     const selDept=deptSel.value;
     const dEnts=ents.filter(e=>e.dept===selDept);
     const agg={};
@@ -1873,11 +1873,11 @@ function renderRechargesPie(){
     options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{
       legend:{position:'right',labels:{font:{size:10},padding:10,boxWidth:12}},
       tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${isSpend?'R '+fmt(ctx.raw):ctx.raw.toLocaleString()+' units'}`}},
-      title:{display:deptQtyMode,text:deptQtyMode?`Items used â€” ${deptSel?.value}`:'',font:{size:12}}
+      title:{display:deptQtyMode,text:deptQtyMode?`Items used — ${deptSel?.value}`:'',font:{size:12}}
     }}
   });
 }
-/* â”€â”€ MONTHLY RECHARGES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€*/
+/* ── MONTHLY RECHARGES ────────────────────────────────────────────*/
 function getRYM(){return{yr:parseInt(document.getElementById('rYear').value),mv:document.getElementById('rMonth').value};}
 function renderRecharges(){
   const{yr,mv}=getRYM();
@@ -1890,7 +1890,7 @@ function renderRecharges(){
   const sorted=activeDepts.sort((a,b)=>dTotals[b]-dTotals[a]);
   document.getElementById('rKpis').innerHTML=`
     <div class="kpi navy"><div class="kpi-label">Total recharged</div><div class="kpi-value">R ${fmt(total)}</div><div class="kpi-sub">${activeDepts.length} departments</div></div>
-    <div class="kpi teal"><div class="kpi-label">Highest dept charge</div><div class="kpi-value" style="font-size:15px;">${sorted[0]||'â€”'}</div><div class="kpi-sub">${sorted[0]?'R '+fmt(dTotals[sorted[0]]):''}</div></div>
+    <div class="kpi teal"><div class="kpi-label">Highest dept charge</div><div class="kpi-value" style="font-size:15px;">${sorted[0]||'—'}</div><div class="kpi-sub">${sorted[0]?'R '+fmt(dTotals[sorted[0]]):''}</div></div>
     <div class="kpi"><div class="kpi-label">Avg per department</div><div class="kpi-value">R ${activeDepts.length?fmt(total/activeDepts.length):'0.00'}</div></div>`;
   renderRechargesPie();
   if(sorted.length===0){document.getElementById('rDeptList').innerHTML=`<div style="text-align:center;padding:32px;color:#555;font-size:13px;">No recharges for this period.</div>`;return;}
@@ -1904,7 +1904,7 @@ function renderRecharges(){
     const dc=getDeptColor(dept);
     html+=`
     <div class="dept-row${wasOpen?' open':''}" id="row-${dId}" onclick="toggleDept('${dId}')" style="border-left-color:${dc};">
-      <div class="dept-name"><span class="dept-color-dot" style="background:${dc};"></span><span class="dept-chevron${wasOpen?' open':''}" id="chev-${dId}">â–¼</span>${dept}</div>
+      <div class="dept-name"><span class="dept-color-dot" style="background:${dc};"></span><span class="dept-chevron${wasOpen?' open':''}" id="chev-${dId}">▼</span>${dept}</div>
       <div style="display:flex;align-items:center;gap:12px;">
         <span style="font-size:11px;color:#888;">${dEnts.length} item${dEnts.length!==1?'s':''}</span>
         <span class="dept-total" id="dtotal-${dId}" style="color:${dc};">R ${fmt(dTotal)}</span>
@@ -1927,7 +1927,7 @@ function buildDeptTable(dept,dId,dEnts,dTotal,yr,mv){
     const spend=e.qty*e.unitCost;
     const pct=dTotal>0?(spend/dTotal*100):0;
     return `<tr id="erow-${e.id}">
-      <td style="padding-left:16px;">${item?item.name:'â€”'}</td>
+      <td style="padding-left:16px;">${item?item.name:'—'}</td>
       <td>${e.out}</td><td>${e.in}</td>
       <td style="font-weight:500;">${e.qty}</td>
       <td>R ${e.unitCost.toFixed(2)}</td>
@@ -1974,7 +1974,7 @@ function editRow(eid,dId){
   if(!e) return;
   const item=S.items.find(i=>i.id===e.itemId);
   document.getElementById('erow-'+eid).innerHTML=`
-    <td style="padding-left:16px;font-weight:500;">${item?item.name:'â€”'}</td>
+    <td style="padding-left:16px;font-weight:500;">${item?item.name:'—'}</td>
     <td><input class="inline-input" id="ei-out-${eid}" type="number" value="${e.out}" min="0" step="any"></td>
     <td><input class="inline-input" id="ei-in-${eid}" type="number" value="${e.in}" min="0" step="any"></td>
     <td></td>
@@ -2014,12 +2014,12 @@ function saveAddRow(dId,dept,yr,mv){
   const uc=parseSANum(document.getElementById('add-uc-'+dId).value)||0;
   const month=mv!==null?mv:new Date().getMonth();
   if(!itemId||out<=0){alert('Please select an item and enter qty out.');return;}
-  // Blank In = still waiting â†’ Open Requests
+  // Blank In = still waiting → Open Requests
   if(inQ===null){
     S.pendingEntries.push({id:S.nid++,dept,itemId,out,day:1,month,year:yr,notes:''});
     persist();
     updatePendingBadge();
-    alert('No "In" qty entered â€” logged as an Open Request. Close it from the Open Requests tab once stock returns.');
+    alert('No "In" qty entered — logged as an Open Request. Close it from the Open Requests tab once stock returns.');
     return;
   }
   S.entries.push({id:S.nid++,year:yr,month,dept,itemId,out,in:inQ,qty:out-inQ,unitCost:uc});
@@ -2043,13 +2043,13 @@ function refreshDeptDetail(dId){
   const top=activeDepts.sort((a,b)=>dTotals[b]-dTotals[a])[0];
   document.getElementById('rKpis').innerHTML=`
     <div class="kpi"><div class="kpi-label">Total recharged</div><div class="kpi-value">R ${fmt(grandTotal)}</div><div class="kpi-sub">${activeDepts.length} departments</div></div>
-    <div class="kpi"><div class="kpi-label">Highest dept charge</div><div class="kpi-value" style="font-size:15px;">${top||'â€”'}</div><div class="kpi-sub">${top?'R '+fmt(dTotals[top]):''}</div></div>
+    <div class="kpi"><div class="kpi-label">Highest dept charge</div><div class="kpi-value" style="font-size:15px;">${top||'—'}</div><div class="kpi-sub">${top?'R '+fmt(dTotals[top]):''}</div></div>
     <div class="kpi"><div class="kpi-label">Avg per department</div><div class="kpi-value">R ${activeDepts.length?fmt(grandTotal/activeDepts.length):'0.00'}</div></div>`;
 }
 
 function setMsg(id,txt,col){const el=document.getElementById(id);if(!el)return;el.style.color=col;el.textContent=txt;setTimeout(()=>el.textContent='',4000);}
 
-/* â”€â”€ PASTE PREVIEW â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€*/
+/* ── PASTE PREVIEW ────────────────────────────────────────────────*/
 const MONTH_MAP_P={january:0,february:1,march:2,april:3,may:4,june:5,july:6,august:7,september:8,october:9,november:10,december:11,jan:0,feb:1,mar:2,apr:3,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
 const ALIASES_P={'milk':1,'milk (2l)':1,'cups':2,'cup':2,'lids':3,'lid':3,'stirrers':4,'stirrer':4,'brown sugar':5,'brownsugar':5,'white sugar':6,'whitesugar':6,'sweetener':7,'sweetner':7,'filter coffee':8,'filter coffee (750g)':8,'filtercoffee':8,'instant coffee':9,'in. coffee':9,'in.coffee':9,'instantcoffee':9,'incoffee':9,'black tea':10,'blacktea':10,'rooibos tea':11,'rooibostea':11,'rooibos':11,'teaspoons':12,'teaspoon':12,'serviettes':13,'serviette':13,'plates':14,'plate':14,'rusks':15,'rusk':15,'kit kats':16,'kitkat':16,'kit kat':16,'kitkats':16,'bar ones':17,'bar one':17,'barones':17,'barone':17,'water (still)':18,'water':18,'water still':18,'biscuits':19,'biscuit':19};
 function matchItemP(r){const k=r.toLowerCase().replace(/\s+/g,' ').trim();if(ALIASES_P[k])return ALIASES_P[k];const f=S.items.find(i=>i.name.toLowerCase().includes(k)||k.includes(i.name.toLowerCase()));return f?f.id:null;}
@@ -2110,8 +2110,8 @@ function previewPaste(){
         <tbody>`;
     sec.rows.forEach(r=>{
       const wc=r.warn||r.unrecognised?'preview-warn':'';
-      const badge=r.unrecognised?`<span class="preview-warn-badge">UNKNOWN</span>`:r.warn?`<span class="preview-warn-badge">PRICE âš </span>`:'';
-      const costCell=r.warn?`<span class="preview-warn-cell">${r.pastedCost!==null?'R '+r.pastedCost.toFixed(2):'â€”'}</span>`:(r.pastedCost!==null?'R '+r.pastedCost.toFixed(2):'â€”');
+      const badge=r.unrecognised?`<span class="preview-warn-badge">UNKNOWN</span>`:r.warn?`<span class="preview-warn-badge">PRICE ⚠</span>`:'';
+      const costCell=r.warn?`<span class="preview-warn-cell">${r.pastedCost!==null?'R '+r.pastedCost.toFixed(2):'—'}</span>`:(r.pastedCost!==null?'R '+r.pastedCost.toFixed(2):'—');
       const total=r.qty*(r.pastedCost!==null?r.pastedCost:r.masterCost);
       html+=`<tr class="${wc}">
         <td>${r.itemName}${badge}</td>
@@ -2125,7 +2125,7 @@ function previewPaste(){
     html+=`</tbody></table></div>`;
   });
   preview.innerHTML=html;
-  const warnTxt=warnRows>0?` â€” ${warnRows} warning${warnRows!==1?'s':''} flagged`:'';
+  const warnTxt=warnRows>0?` — ${warnRows} warning${warnRows!==1?'s':''} flagged`:'';
   document.getElementById('confirmBarMsg').textContent=`${totalRows} rows ready to import${warnTxt}. Review above then confirm.`;
   bar.classList.add('visible');
 }
@@ -2139,7 +2139,7 @@ function confirmImport(){
     rows.forEach(r=>{
       if(!r.itemId||r.out<=0) return;
       const cost=r.pastedCost!==null?r.pastedCost:r.masterCost;
-      // Blank In = still waiting for stock return â†’ goes to Open Requests
+      // Blank In = still waiting for stock return → goes to Open Requests
       if(r.inQ===null){
         S.pendingEntries.push({id:S.nid++,dept,itemId:r.itemId,out:r.out,day:1,month,year,notes:'From paste import'});
         ok++;
@@ -2167,7 +2167,7 @@ function clearPaste(){
   parsedPreviewData=null;
 }
 
-/* â”€â”€ DEPT HISTORY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€*/
+/* ── DEPT HISTORY ─────────────────────────────────────────────────*/
 function renderDeptSelects(){document.getElementById('dSel').innerHTML=S.depts.map(d=>`<option>${d}</option>`).join('');}
 function setDeptMeasure(m){
   dMeasure=m;
@@ -2190,7 +2190,7 @@ function renderDept(){
   const dc=getDeptColor(dept);
   document.getElementById('dKpis').innerHTML=`
     <div class="kpi navy"><div class="kpi-label">Total spend ${yr}</div><div class="kpi-value">R ${fmt(total)}</div></div>
-    <div class="kpi" style="border-left-color:${dc};"><div class="kpi-label">Highest spend item</div><div class="kpi-value" style="font-size:15px;color:${dc};">${topItem?topItem.name:'â€”'}</div><div class="kpi-sub">${topItem?'R '+fmt(topSpend)+' total':''}</div></div>
+    <div class="kpi" style="border-left-color:${dc};"><div class="kpi-label">Highest spend item</div><div class="kpi-value" style="font-size:15px;color:${dc};">${topItem?topItem.name:'—'}</div><div class="kpi-sub">${topItem?'R '+fmt(topSpend)+' total':''}</div></div>
     <div class="kpi"><div class="kpi-label">Months recorded</div><div class="kpi-value">${months}</div></div>`;
   const ms=Array(12).fill(0);
   ents.forEach(e=>{ms[e.month]+=e.qty*e.unitCost;});
@@ -2212,7 +2212,7 @@ function renderDept(){
   }).forEach(it=>{
     const row=activeMths.map(m=>{
       const val=ents.filter(e=>e.itemId===it.id&&e.month===m).reduce((s,e)=>s+(isSpend?e.qty*e.unitCost:e.qty),0);
-      return val>0?(isSpend?`R ${fmt(val)}`:val.toLocaleString()):'â€”';
+      return val>0?(isSpend?`R ${fmt(val)}`:val.toLocaleString()):'—';
     });
     const tot=ents.filter(e=>e.itemId===it.id).reduce((s,e)=>s+(isSpend?e.qty*e.unitCost:e.qty),0);
     if(tot>0) tbody+=`<tr><td>${it.name}</td>${row.map(r=>`<td>${r}</td>`).join('')}<td><strong>${isSpend?'R '+fmt(tot):tot.toLocaleString()}</strong></td></tr>`;
@@ -2220,7 +2220,7 @@ function renderDept(){
   document.getElementById('dItemTable').innerHTML=thead+`<tbody>${tbody||'<tr><td colspan="20" style="text-align:center;padding:16px;color:#555;">No data.</td></tr>'}</tbody>`;
 }
 
-/* â”€â”€ TRENDS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€*/
+/* ── TRENDS ───────────────────────────────────────────────────────*/
 function populateTrendsFilter(){onTGroupChange();}
 function onTGroupChange(){
   const grp=document.getElementById('tGroupBy').value;
@@ -2242,15 +2242,15 @@ function renderTrends(){
     series=pool.map(it=>({label:it.name,data:MN.map((_,m)=>{const e2=ents.filter(e=>e.itemId===it.id&&e.month===m);return isSpend?R2(e2.reduce((s,e)=>s+e.qty*e.unitCost,0)):e2.reduce((s,e)=>s+e.qty,0);})}));
   } else {
     if(!isSpend&&fv==='all'){
-      // Dept + qty with no dept selected â€” show prompt and bail
-      document.getElementById('tTitle').textContent='Quantity by item â€” select a department from the filter';
+      // Dept + qty with no dept selected — show prompt and bail
+      document.getElementById('tTitle').textContent='Quantity by item — select a department from the filter';
       if(tChartInst){tChartInst.destroy();tChartInst=null;}
       document.getElementById('tLegend').innerHTML='<span style="font-size:12px;color:#aaa;">Select a specific department in the Filter dropdown to see item quantities.</span>';
       document.getElementById('tTable').innerHTML='';
       return;
     }
     if(!isSpend&&fv!=='all'){
-      // Dept + qty + specific dept â€” show items for that dept as separate lines
+      // Dept + qty + specific dept — show items for that dept as separate lines
       const selDept=decodeURIComponent(fv.slice(1));
       const dEnts=ents.filter(e=>e.dept===selDept);
       const activeItems=S.items.filter(it=>dEnts.some(e=>e.itemId===it.id));
@@ -2261,7 +2261,7 @@ function renderTrends(){
     }
   }
   const trendDeptQty=grp==='dept'&&!isSpend&&fv!=='all';
-  document.getElementById('tTitle').textContent=trendDeptQty?`Monthly quantity by item â€” ${decodeURIComponent(fv.slice(1))}`:`Monthly ${isSpend?'spend (R)':'quantity'} by ${grp==='item'?'item':'department'}`;
+  document.getElementById('tTitle').textContent=trendDeptQty?`Monthly quantity by item — ${decodeURIComponent(fv.slice(1))}`:`Monthly ${isSpend?'spend (R)':'quantity'} by ${grp==='item'?'item':'department'}`;
   document.getElementById('tTableTitle').textContent=`Annual ${isSpend?'spend':'quantity'} summary`;
   const ds=series.map((s,i)=>({label:s.label,data:s.data,borderColor:COLS[i%COLS.length],backgroundColor:COLS[i%COLS.length]+'22',tension:0.35,pointRadius:4,borderWidth:2}));
   if(tChartInst) tChartInst.destroy();
@@ -2281,7 +2281,7 @@ function renderTrends(){
   document.getElementById('tTable').innerHTML=head+`<tbody>${body||'<tr><td colspan="14" style="text-align:center;padding:16px;color:#555;">No data.</td></tr>'}</tbody>`;
 }
 
-/* â”€â”€ ITEMS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€*/
+/* ── ITEMS ────────────────────────────────────────────────────────*/
 function renderItems(){
   const cats=[...new Set(S.items.map(i=>i.cat))].sort();
   const container=document.getElementById('iCatSections');
@@ -2295,10 +2295,10 @@ function renderItems(){
       return `<tr id="irow-${it.id}">
         <td style="font-weight:500;">${it.name}</td>
         <td>R ${it.cost.toFixed(2)}</td>
-        <td>${it.supplier||'â€”'}</td>
-        <td>${it.target?'R '+it.target.toFixed(2):'â€”'}</td>
+        <td>${it.supplier||'—'}</td>
+        <td>${it.target?'R '+it.target.toFixed(2):'—'}</td>
         <td style="text-align:center;">${pctInput}</td>
-        <td><span style="color:${sv>0?'#2E7D32':'#888'};font-weight:600;">${sv>0?'R '+sv.toFixed(2):'â€”'}</span></td>
+        <td><span style="color:${sv>0?'#2E7D32':'#888'};font-weight:600;">${sv>0?'R '+sv.toFixed(2):'—'}</span></td>
         <td class="admin-only" style="white-space:nowrap;">
           <button class="edit-btn" onclick="editItem(${it.id})">Edit</button>
           <button class="edit-btn del" onclick="delItem(${it.id})">Remove</button>
@@ -2308,7 +2308,7 @@ function renderItems(){
     return `<div style="margin-bottom:10px;">
       <div class="cat-header" onclick="toggleCat(this)">
         <span class="cat-title">${cat} <span style="font-weight:400;font-size:11px;color:#555;">(${items.length})</span></span>
-        <span style="font-size:11px;color:#888;">â–¼</span>
+        <span style="font-size:11px;color:#888;">▼</span>
       </div>
       <div class="cat-body">
         <div class="ovx"><table>
@@ -2323,7 +2323,7 @@ function toggleCat(el){
   const body=el.nextElementSibling;
   const icon=el.querySelector('span:last-child');
   const collapsed=body.classList.toggle('collapsed');
-  icon.textContent=collapsed?'â–¶':'â–¼';
+  icon.textContent=collapsed?'▶':'▼';
 }
 function updateItemPct(itemId,pct){
   const it=S.items.find(x=>x.id===itemId);
@@ -2379,7 +2379,7 @@ function addDept(){
   renderDeptList();
 }
 function renderDeptList(){
-  document.getElementById('deptList').innerHTML=S.depts.map(d=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:0.5px solid rgba(0,0,0,0.08);font-size:12px;">${d}<button onclick="removeDept('${d.replace(/'/g,"\\'")}') " style="padding:2px 7px;font-size:10px;color:#A32D2D;border-color:rgba(240,149,149,0.53);">âœ•</button></div>`).join('');
+  document.getElementById('deptList').innerHTML=S.depts.map(d=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:0.5px solid rgba(0,0,0,0.08);font-size:12px;">${d}<button onclick="removeDept('${d.replace(/'/g,"\\'")}') " style="padding:2px 7px;font-size:10px;color:#A32D2D;border-color:rgba(240,149,149,0.53);">✕</button></div>`).join('');
 }
 function removeDept(n){
   if(!confirm(`Remove "${n}"?`)) return;
@@ -2389,7 +2389,7 @@ function removeDept(n){
   renderDeptList();
 }
 
-/* â”€â”€ EXPORT / IMPORT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€*/
+/* ── EXPORT / IMPORT ──────────────────────────────────────────────*/
 function exportData(){
   const payload={version:1,exportedAt:new Date().toISOString(),items:S.items,depts:S.depts,entries:S.entries,nid:S.nid};
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
@@ -2405,17 +2405,17 @@ function importData(evt){
     try{
       const d=JSON.parse(e.target.result);
       if(!d.version||!d.items||!d.entries) throw new Error('Unrecognised file format.');
-      if(!confirm(`Import "${file.name}"?\n\nâ€¢ ${d.items.length} items\nâ€¢ ${d.depts.length} departments\nâ€¢ ${d.entries.length} entries\n\nThis will replace all current data for everyone.`)) return;
+      if(!confirm(`Import "${file.name}"?\n\n• ${d.items.length} items\n• ${d.depts.length} departments\n• ${d.entries.length} entries\n\nThis will replace all current data for everyone.`)) return;
       S.items=d.items;S.depts=d.depts;S.entries=d.entries;S.nid=d.nid||Math.max(...d.entries.map(e=>e.id),0)+1;
       persist();
-      alert(`Import successful â€” ${d.entries.length} entries saved to the cloud.`);
+      alert(`Import successful — ${d.entries.length} entries saved to the cloud.`);
     } catch(err){alert('Import failed: '+err.message);}
   };
   reader.readAsText(file);
   evt.target.value='';
 }
 
-// â”€â”€ Start â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Start ──────────────────────────────────────────────────────────
 initFirebase();
 </script>
 </body>
