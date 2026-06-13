@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Consumables Dashboard</title>
+<title>CityHill Church Stock</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
@@ -11,7 +12,7 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:system-ui,sans-serif;background:#f5f5f3;color:#1a1a1a;font-size:14px;}
 
-/* ── Gate ── */
+/* â”€â”€ Gate â”€â”€ */
 #gate{position:fixed;inset:0;background:#f5f5f3;z-index:9999;display:flex;align-items:center;justify-content:center;}
 .gate-card{background:#fff;border:0.5px solid rgba(0,0,0,0.15);border-radius:16px;padding:36px 40px;width:100%;max-width:400px;box-shadow:0 4px 24px rgba(0,0,0,0.08);}
 .gate-logo{font-size:18px;font-weight:600;margin-bottom:4px;}
@@ -35,11 +36,22 @@ body{font-family:system-ui,sans-serif;background:#f5f5f3;color:#1a1a1a;font-size
 .sync-dot.ok{background:#639922;}
 .sync-dot.err{background:#A32D2D;}
 
-/* ── App ── */
-.topbar{background:#0B2545;border-bottom:none;padding:12px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.3);}
-.tab{padding:8px 16px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;border:none;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.65);letter-spacing:0.3px;transition:all 0.15s;}
+/* â”€â”€ App â”€â”€ */
+.topbar{background:#0B2545;border-bottom:none;padding:0;display:flex;flex-direction:column;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.3);}
+.topbar-brand-row{display:flex;align-items:center;gap:12px;padding:12px 24px;}
+.topbar-tabs-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap;padding:8px 24px 10px;border-top:1px solid rgba(255,255,255,0.08);background:rgba(0,0,0,0.12);}
+.tab{padding:7px 15px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;border:none;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.65);letter-spacing:0.3px;transition:all 0.15s;white-space:nowrap;}
 .tab:hover{background:rgba(255,255,255,0.18);color:#fff;}
 .tab.active{background:#ffffff;color:#0B2545;font-weight:700;box-shadow:0 1px 6px rgba(0,0,0,0.2);}
+/* Silver group (Overview + Trends) */
+.tab.silver{background:rgba(180,180,190,0.18);color:rgba(220,220,230,0.75);}
+.tab.silver:hover{background:rgba(200,200,210,0.3);color:#e8e8ef;}
+.tab.silver.active{background:linear-gradient(135deg,#d0d0d8,#b8b8c4);color:#0B2545;box-shadow:0 1px 6px rgba(0,0,0,0.25);}
+.tab.overview-big{padding:8px 20px;font-size:13px;}
+/* Green group (Recharges + Open Requests + Dept History) */
+.tab.grn{background:rgba(50,160,80,0.15);color:rgba(120,220,140,0.8);}
+.tab.grn:hover{background:rgba(50,160,80,0.25);color:#7ddc96;}
+.tab.grn.active{background:linear-gradient(135deg,#2e9e52,#27873f);color:#fff;box-shadow:0 1px 6px rgba(46,158,82,0.4);}
 .content{padding:16px;}
 .page{display:none;}.page.active{display:block;}
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:16px;}
@@ -100,17 +112,17 @@ textarea{font-family:monospace;font-size:11px;resize:vertical;}
 .import-label:hover{background:rgba(255,255,255,0.2);}
 .topbar-signout{font-size:11px;padding:5px 10px;color:rgba(255,255,255,0.7);border-color:rgba(255,255,255,0.25);background:transparent;}
 .topbar-signout:hover{background:rgba(255,255,255,0.12);color:#fff;}
-/* viewer mode — hide all edit controls */
+/* viewer mode â€” hide all edit controls */
 body.viewer .admin-only{display:none!important;}
 .viewer-badge{background:rgba(255,255,255,0.15);color:#fff;font-size:10px;padding:3px 8px;border-radius:20px;font-weight:500;}
 .dept-color-dot{width:10px;height:10px;border-radius:50%;display:inline-block;flex-shrink:0;}
-/* ── Toggle buttons ── */
+/* â”€â”€ Toggle buttons â”€â”€ */
 .toggle-group{display:flex;gap:0;border-radius:8px;overflow:hidden;border:1px solid rgba(0,0,0,0.15);}
 .toggle-btn{padding:5px 14px;font-size:11px;font-weight:600;border:none;background:#f0f4fb;color:#555;cursor:pointer;transition:all 0.15s;border-radius:0;}
 .toggle-btn.active{background:#0B2545;color:#fff;}
 .toggle-btn:first-child{border-radius:8px 0 0 8px;}
 .toggle-btn:last-child{border-radius:0 8px 8px 0;}
-/* ── Paste preview grid ── */
+/* â”€â”€ Paste preview grid â”€â”€ */
 #pastePreview{margin-top:12px;}
 .preview-section{margin-bottom:12px;border-radius:8px;overflow:hidden;border:1px solid rgba(0,0,0,0.1);}
 .preview-period-header{padding:8px 12px;font-size:12px;font-weight:700;background:linear-gradient(135deg,#0B2545,#1565C0);color:#fff;letter-spacing:0.3px;}
@@ -125,17 +137,17 @@ body.viewer .admin-only{display:none!important;}
 .preview-cell-edit{width:100%;border:none;background:transparent;font-size:11px;color:inherit;font-weight:inherit;}
 .preview-cell-edit:focus{outline:1px solid #0B2545;border-radius:3px;background:#f0f4fb;}
 .preview-warn .preview-cell-edit:focus{background:#fff0f0;}
-/* ── Pie chart container ── */
+/* â”€â”€ Pie chart container â”€â”€ */
 .pie-wrap{position:relative;width:100%;height:280px;}
 .recharges-top{display:grid;grid-template-columns:1fr 340px;gap:14px;margin-bottom:14px;align-items:start;}
 @media(max-width:900px){.recharges-top{grid-template-columns:1fr;}}
-/* ── Category sections ── */
+/* â”€â”€ Category sections â”€â”€ */
 .cat-header{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#EEF2F9;border-radius:6px;cursor:pointer;margin-bottom:4px;border-left:3px solid #0B2545;}
 .cat-header:hover{background:#e0e7f3;}
 .cat-title{font-size:12px;font-weight:700;color:#0B2545;text-transform:uppercase;letter-spacing:0.4px;}
 .cat-body{display:block;}
 .cat-body.collapsed{display:none;}
-/* ── KPI card gradient variants ── */
+/* â”€â”€ KPI card gradient variants â”€â”€ */
 .kpi.navy{background:linear-gradient(135deg,#0B2545 0%,#1565C0 100%);color:#fff;}
 .kpi.navy .kpi-label{color:rgba(255,255,255,0.75);}
 .kpi.navy .kpi-value{color:#fff;}
@@ -146,15 +158,15 @@ body.viewer .admin-only{display:none!important;}
 .kpi.orange{background:linear-gradient(135deg,#E65100 0%,#FF8F00 100%);color:#fff;}
 .kpi.orange .kpi-label,.kpi.orange .kpi-value,.kpi.orange .kpi-sub{color:#fff;}
 .kpi.orange .kpi-sub{color:rgba(255,255,255,0.7);}
-/* ── Import confirm bar ── */
+/* â”€â”€ Import confirm bar â”€â”€ */
 #confirmBar{display:none;position:sticky;bottom:0;background:#0B2545;color:#fff;padding:10px 16px;display:none;align-items:center;justify-content:space-between;gap:12px;border-radius:8px;margin-top:12px;}
 #confirmBar.visible{display:flex;}
-/* ── Financial tabs (amber accent) ── */
+/* â”€â”€ Financial tabs (amber accent) â”€â”€ */
 .tab.fin{background:rgba(255,183,0,0.12);color:rgba(255,210,80,0.8);}
 .tab.fin:hover{background:rgba(255,183,0,0.22);color:#FFD740;}
 .tab.fin.active{background:#FFB300;color:#0B2545;font-weight:700;box-shadow:0 1px 6px rgba(255,183,0,0.35);}
 .fin-divider{width:1px;background:rgba(255,255,255,0.2);height:22px;align-self:center;margin:0 2px;}
-/* ── Reconciliation page ── */
+/* â”€â”€ Reconciliation page â”€â”€ */
 .recon-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:20px;}
 .recon-card{background:#fff;border-radius:12px;padding:18px 20px;border:0.5px solid rgba(0,0,0,0.12);position:relative;overflow:hidden;}
 .recon-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;}
@@ -167,61 +179,92 @@ body.viewer .admin-only{display:none!important;}
 .recon-sub{font-size:11px;color:#888;margin-top:4px;}
 .recon-arrow{font-size:18px;color:#555;display:flex;align-items:center;justify-content:center;padding-top:20px;}
 .recon-eq{font-size:13px;font-weight:700;color:#0B2545;padding:10px 16px;background:#EEF2F9;border-radius:8px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
-/* ── Purchases page ── */
+/* â”€â”€ Purchases page â”€â”€ */
 .var-pos{color:#C62828;font-weight:600;}
 .var-neg{color:#2E7D32;font-weight:600;}
-/* ── Inventory page ── */
+/* â”€â”€ Inventory page â”€â”€ */
 .inv-total-bar{background:linear-gradient(135deg,#0B2545,#1565C0);color:#fff;border-radius:10px;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
 .inv-total-bar .label{font-size:12px;opacity:0.8;}
 .inv-total-bar .value{font-size:22px;font-weight:700;}
-/* ── Open Requests tab ── */
+/* â”€â”€ Open Requests tab â”€â”€ */
 .pending-count{display:inline-block;background:#E65100;color:#fff;border-radius:10px;font-size:9px;font-weight:700;padding:1px 5px;margin-left:4px;vertical-align:middle;}
 .pending-row td{vertical-align:middle;}
 .pending-close-form{background:#f9f6ee;border:1px solid #e6c96a;border-radius:8px;padding:10px 14px;margin-top:6px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
 .status-open{display:inline-block;background:#FFF3E0;color:#E65100;border:1px solid #FFCC80;border-radius:6px;font-size:10px;font-weight:700;padding:2px 8px;letter-spacing:0.3px;}
-/* ── Stock level chart ── */
+/* â”€â”€ Stock level chart â”€â”€ */
 .stock-item-pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
 .stock-pill{font-size:11px;padding:3px 10px;border-radius:12px;cursor:pointer;border:1.5px solid transparent;opacity:0.5;transition:opacity 0.15s,border-color 0.15s;}
 .stock-pill.active{opacity:1;border-color:currentColor;}
+/* â”€â”€ Current stock cards â”€â”€ */
+.inv-level-card{background:#f8f9fb;border-radius:12px;padding:14px 16px;min-width:160px;flex:1;max-width:220px;border:1.5px solid transparent;position:relative;overflow:hidden;}
+.inv-level-card .ilc-name{font-size:11px;font-weight:600;color:#555;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.inv-level-card .ilc-qty{font-size:28px;font-weight:700;line-height:1;}
+.inv-level-card .ilc-bar-wrap{height:6px;background:rgba(0,0,0,0.08);border-radius:3px;margin:8px 0 6px;}
+.inv-level-card .ilc-bar{height:100%;border-radius:3px;transition:width 0.4s;}
+.inv-level-card .ilc-detail{font-size:10px;color:#888;line-height:1.6;}
+.inv-level-card.ilc-ok{border-color:rgba(46,125,50,0.3);background:#f0faf0;}
+.inv-level-card.ilc-warn{border-color:rgba(230,81,0,0.3);background:#fff8f0;}
+.inv-level-card.ilc-low{border-color:rgba(198,40,40,0.35);background:#fff5f5;}
+.ilc-status{font-size:10px;font-weight:700;letter-spacing:0.3px;padding:2px 7px;border-radius:6px;display:inline-block;margin-bottom:4px;}
+.ilc-status.ok{background:#E8F5E9;color:#2E7D32;}
+.ilc-status.warn{background:#FFF3E0;color:#E65100;}
+.ilc-status.low{background:#FFEBEE;color:#C62828;}
+.ilc-pending-note{font-size:10px;color:#E65100;margin-top:3px;}
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════
-     GATE — shown before login
-════════════════════════════════════════════════ -->
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     GATE â€” shown before login
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <div id="gate">
   <div class="gate-card" id="gateInner">
-    <div class="connecting"><div class="spinner"></div><p>Connecting…</p></div>
+    <div class="connecting"><div class="spinner"></div><p>Connectingâ€¦</p></div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     APP — shown after login
-════════════════════════════════════════════════ -->
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     APP â€” shown after login
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <div id="app" style="display:none;">
 
 <div class="topbar">
-  <span style="font-size:15px;font-weight:700;color:#fff;letter-spacing:0.3px;">Consumables Dashboard</span>
-  <div style="display:flex;gap:4px;flex-wrap:wrap;">
-    <button class="tab active" onclick="showPage('overview',this)">Overview</button>
-    <button class="tab" onclick="showPage('recharges',this)">Monthly recharges</button>
-    <button class="tab admin-only" onclick="showPage('entry',this)">Add entries</button>
-    <button class="tab admin-only" onclick="showPage('pending',this)">Open requests<span id="pendingBadge" class="pending-count" style="display:none;"></span></button>
-    <button class="tab" onclick="showPage('departments',this)">Department history</button>
-    <button class="tab" onclick="showPage('trends',this)">Trends</button>
+  <!-- Row 1: Brand + Controls -->
+  <div class="topbar-brand-row">
+    <svg width="54" height="40" viewBox="35 34 138 64" xmlns="http://www.w3.org/2000/svg">
+      <path fill="white" d="M120.82,72.1,98.74,46.69a4.27,4.27,0,0,1,6.45-5.6l15.63,18L136.5,41a4.27,4.27,0,0,1,6.45,5.6ZM105,90.89a4.27,4.27,0,0,0,.42-6L83.06,59.1,60.67,84.86a4.27,4.27,0,1,0,6.45,5.6L83.06,72.11,99,90.46a4.27,4.27,0,0,0,6,.43Zm56.34-50.25a4.28,4.28,0,0,0-6,.42L120.82,80.8,86.28,41.06l-3.21-3.7L79.93,41c-.1.11-.21.23-.3.35L42.08,84.54a4.27,4.27,0,1,0,6.45,5.59L83.07,50.37l34.59,39.81,3.16,3.63L124,90.2l.3-.35L161.8,46.67A4.29,4.29,0,0,0,161.37,40.64Z"/>
+    </svg>
+    <div style="line-height:1.15;">
+      <div style="font-family:'Montserrat',system-ui,sans-serif;font-size:19px;font-weight:800;color:#ffffff;letter-spacing:2px;text-transform:uppercase;line-height:1;">CityHill Church Stock</div>
+      <div style="font-family:'Montserrat',system-ui,sans-serif;font-size:9px;font-weight:600;color:rgba(255,255,255,0.45);letter-spacing:5px;text-transform:uppercase;margin-top:3px;">Dashboard</div>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:8px;align-items:center;">
+      <span id="syncIndicator" title="Sync status" class="sync-dot"></span>
+      <span id="viewerBadge" class="viewer-badge" style="display:none;">View only</span>
+      <button class="export-btn admin-only" onclick="exportData()">&#8595; Export</button>
+      <label class="import-label admin-only">&#8593; Import<input type="file" id="importFile" accept=".json" style="display:none;" onchange="importData(event)"></label>
+      <button onclick="doLogout()" class="topbar-signout">Sign out</button>
+    </div>
+  </div>
+  <!-- Row 2: Tabs -->
+  <div class="topbar-tabs-row">
+    <!-- Silver group: Overview + Trends -->
+    <button class="tab silver overview-big active" onclick="showPage('overview',this)">Overview</button>
+    <button class="tab silver" onclick="showPage('trends',this)">Trends</button>
+    <div class="fin-divider" style="margin:0 6px;"></div>
+    <!-- Green group: Recharges + Open Requests + Dept History -->
+    <button class="tab grn" onclick="showPage('recharges',this)">Monthly recharges</button>
+    <button class="tab grn admin-only" onclick="showPage('pending',this)">Open requests<span id="pendingBadge" class="pending-count" style="display:none;"></span></button>
+    <button class="tab grn" onclick="showPage('departments',this)">Department history</button>
+    <div class="fin-divider" style="margin:0 6px;"></div>
+    <!-- Neutral group: Add entries + Items & suppliers -->
     <button class="tab admin-only" onclick="showPage('items',this)">Items &amp; suppliers</button>
-    <div class="fin-divider"></div>
+    <button class="tab admin-only" onclick="showPage('entry',this)">Add entries</button>
+    <div class="fin-divider" style="margin:0 6px;"></div>
+    <!-- Amber group: financial -->
     <button class="tab fin" onclick="showPage('reconciliation',this)">&#9654; Reconciliation</button>
     <button class="tab fin admin-only" onclick="showPage('purchases',this)">&#9654; Purchases</button>
     <button class="tab fin admin-only" onclick="showPage('inventory',this)">&#9654; Inventory</button>
-  </div>
-  <div style="margin-left:auto;display:flex;gap:6px;align-items:center;">
-    <span id="syncIndicator" title="Sync status" class="sync-dot"></span>
-    <span id="viewerBadge" class="viewer-badge" style="display:none;">View only</span>
-    <button class="export-btn admin-only" onclick="exportData()">&#8595; Export</button>
-    <label class="import-label admin-only">&#8593; Import<input type="file" id="importFile" accept=".json" style="display:none;" onchange="importData(event)"></label>
-    <button onclick="doLogout()" class="topbar-signout">Sign out</button>
   </div>
 </div>
 
@@ -240,7 +283,7 @@ body.viewer .admin-only{display:none!important;}
   <div class="card">
     <h2>Item summary</h2>
     <div class="ovx"><table><thead><tr><th>Item</th><th>Category</th><th>Unit cost (R)</th><th>Qty used</th><th>Total spend (R)</th><th>Target %</th><th>Savings potential (R)</th></tr></thead><tbody id="ovBody"></tbody></table></div>
-    <p style="font-size:10px;color:#888;margin-top:8px;">Edit the Target % column to model different savings scenarios — figures update instantly.</p>
+    <p style="font-size:10px;color:#888;margin-top:8px;">Edit the Target % column to model different savings scenarios â€” figures update instantly.</p>
   </div>
   <div class="card">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
@@ -254,10 +297,17 @@ body.viewer .admin-only{display:none!important;}
           <option value="spend">Rand spend (R)</option>
           <option value="qty">Quantity</option>
         </select>
+        <select id="ovChartDept" onchange="renderOverviewChart()" style="width:auto;font-size:11px;display:none;">
+          <option value="">â€” Select department â€”</option>
+        </select>
       </div>
     </div>
-    <div class="chart-wrap" style="height:300px;"><canvas id="ovBarChart"></canvas></div>
+    <div class="chart-wrap" style="height:300px;position:relative;"><canvas id="ovBarChart"></canvas></div>
   </div>
+</div>
+<div id="barPopup" style="display:none;position:fixed;z-index:9999;background:#fff;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.18);padding:20px 24px;min-width:220px;max-width:300px;">
+  <button onclick="document.getElementById('barPopup').style.display='none'" style="position:absolute;top:10px;right:12px;background:none;border:none;font-size:18px;cursor:pointer;color:#888;">&times;</button>
+  <div id="barPopupContent"></div>
 </div>
 
 <!-- MONTHLY RECHARGES -->
@@ -277,10 +327,13 @@ body.viewer .admin-only{display:none!important;}
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
         <h2 style="margin:0;">Spend breakdown</h2>
         <select id="rPieView" onchange="renderRechargesPie()" style="width:auto;font-size:11px;">
-          <option value="dept-spend">Departments — Rand</option>
-          <option value="dept-qty">Departments — Quantity</option>
-          <option value="item-spend">Top items — Rand</option>
-          <option value="item-qty">Top items — Quantity</option>
+          <option value="dept-spend">Departments â€” Rand</option>
+          <option value="dept-qty">Departments â€” Quantity</option>
+          <option value="item-spend">Top items â€” Rand</option>
+          <option value="item-qty">Top items â€” Quantity</option>
+        </select>
+        <select id="rPieDept" onchange="renderRechargesPie()" style="width:auto;font-size:11px;display:none;">
+          <option value="">â€” Select department â€”</option>
         </select>
       </div>
       <div class="pie-wrap"><canvas id="rPieChart"></canvas></div>
@@ -293,7 +346,7 @@ body.viewer .admin-only{display:none!important;}
 <div class="page admin-only" id="page-entry">
   <div class="card">
     <h2>Paste monthly recharge table</h2>
-    <p style="font-size:12px;color:#555;margin:0 0 10px;">Copy your Excel recharge sheet and paste below. Expected columns: <strong>Item name &nbsp;|&nbsp; Out &nbsp;|&nbsp; In &nbsp;|&nbsp; Qty &nbsp;|&nbsp; Unit price (R) &nbsp;|&nbsp; Total (R)</strong> (tab-separated). Include the department name row and month name above each section.<br>Decimal quantities like <strong>0,5</strong> or <strong>0.5</strong> are both supported — <span style="color:#C62828;font-weight:600;">red rows</span> flag price mismatches vs. your master price list.</p>
+    <p style="font-size:12px;color:#555;margin:0 0 10px;">Copy your Excel recharge sheet and paste below. Expected columns: <strong>Item name &nbsp;|&nbsp; Out &nbsp;|&nbsp; In &nbsp;|&nbsp; Qty &nbsp;|&nbsp; Unit price (R) &nbsp;|&nbsp; Total (R)</strong> (tab-separated). Include the department name row and month name above each section.<br>Decimal quantities like <strong>0,5</strong> or <strong>0.5</strong> are both supported â€” <span style="color:#C62828;font-weight:600;">red rows</span> flag price mismatches vs. your master price list.</p>
     <textarea id="csvIn" rows="10" placeholder="June&#10;&#10;Business Morning	Out	In	Quantity Item (Inv.)	Price(R) Per Unit	Total (R)&#10;Cups	167	84	83	1.7	R141.10&#10;...&#10;Final Total					R286.05" oninput="previewPaste()" style="width:100%;font-size:12px;font-family:monospace;border:0.5px solid rgba(0,0,0,0.25);border-radius:8px;padding:10px;resize:vertical;box-sizing:border-box;"></textarea>
     <div style="display:flex;gap:8px;margin-top:8px;align-items:center;">
       <button onclick="clearPaste()" style="font-size:12px;padding:6px 12px;">Clear</button>
@@ -312,30 +365,28 @@ body.viewer .admin-only{display:none!important;}
 
 <!-- OPEN REQUESTS -->
 <div class="page admin-only" id="page-pending">
-  <div class="card" style="margin-bottom:14px;">
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:14px;flex-wrap:wrap;">
+    <span style="font-size:11px;color:#555;">Period:</span>
+    <select id="pendMonth" onchange="renderPending()" style="width:auto;"></select>
+    <select id="pendYear" onchange="renderPending()" style="width:auto;"><option value="2025">2025</option><option value="2026" selected>2026</option></select>
+    <button onclick="togglePendForm()" style="font-size:11px;padding:5px 12px;margin-left:8px;">+ Log new open request</button>
+  </div>
+  <div id="pendFormCard" class="card" style="display:none;margin-bottom:14px;">
     <h2>Log new open request</h2>
-    <p style="font-size:12px;color:#555;margin:0 0 10px;">Use this when stock has gone out but hasn't been returned / reconciled yet. Once you know what came back, click <strong>Close</strong> to move it to monthly recharges.</p>
+    <p style="font-size:12px;color:#555;margin:0 0 10px;">Use this when stock has gone out but hasn't come back yet. Fill in the In qty later from the list below to close it.</p>
     <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;">
       <div class="fg"><label style="font-size:11px;display:block;margin-bottom:4px;">Department</label><select id="pendDept" style="font-size:12px;padding:5px 8px;border-radius:7px;border:0.5px solid rgba(0,0,0,0.3);min-width:140px;"></select></div>
       <div class="fg"><label style="font-size:11px;display:block;margin-bottom:4px;">Item</label><select id="pendItem" style="font-size:12px;padding:5px 8px;border-radius:7px;border:0.5px solid rgba(0,0,0,0.3);min-width:160px;"></select></div>
       <div class="fg"><label style="font-size:11px;display:block;margin-bottom:4px;">Qty sent out</label><input type="number" id="pendOut" min="0" step="any" placeholder="0" style="font-size:12px;padding:5px 8px;border-radius:7px;border:0.5px solid rgba(0,0,0,0.3);width:90px;"></div>
-      <div class="fg"><label style="font-size:11px;display:block;margin-bottom:4px;">Day</label><input type="number" id="pendDay" min="1" max="31" placeholder="1–31" style="font-size:12px;padding:5px 8px;border-radius:7px;border:0.5px solid rgba(0,0,0,0.3);width:64px;"></div>
-      <div class="fg"><label style="font-size:11px;display:block;margin-bottom:4px;">Month</label><select id="pendMonth" style="font-size:12px;padding:5px 8px;border-radius:7px;border:0.5px solid rgba(0,0,0,0.3);"></select></div>
-      <div class="fg"><label style="font-size:11px;display:block;margin-bottom:4px;">Year</label><select id="pendYear" style="font-size:12px;padding:5px 8px;border-radius:7px;border:0.5px solid rgba(0,0,0,0.3);"><option value="2025">2025</option><option value="2026" selected>2026</option></select></div>
+      <div class="fg"><label style="font-size:11px;display:block;margin-bottom:4px;">Day</label><input type="number" id="pendDay" min="1" max="31" placeholder="1â€“31" style="font-size:12px;padding:5px 8px;border-radius:7px;border:0.5px solid rgba(0,0,0,0.3);width:64px;"></div>
       <div class="fg"><label style="font-size:11px;display:block;margin-bottom:4px;">Notes (optional)</label><input type="text" id="pendNotes" placeholder="e.g. sent to Business Morning" style="font-size:12px;padding:5px 8px;border-radius:7px;border:0.5px solid rgba(0,0,0,0.3);width:180px;"></div>
       <button onclick="addPendingEntry()" style="padding:7px 16px;font-size:13px;font-weight:600;background:#0B2545;color:#fff;border:none;border-radius:8px;cursor:pointer;align-self:flex-end;">+ Log request</button>
     </div>
     <div id="pendMsg" style="font-size:12px;margin-top:8px;"></div>
   </div>
-  <div class="card">
-    <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
-      <h2 style="margin:0;flex:1;">Open requests <span id="pendingCount" class="pending-count" style="display:none;"></span></h2>
-      <label style="font-size:11px;color:#555;">Filter dept:</label>
-      <select id="pendFilterDept" onchange="renderPending()" style="font-size:12px;padding:4px 8px;border-radius:6px;border:0.5px solid rgba(0,0,0,0.3);"></select>
-    </div>
-    <div class="ovx"><table><thead><tr><th>Date</th><th>Department</th><th>Item</th><th>Qty out</th><th>Notes</th><th>Status</th><th class="admin-only">Actions</th></tr></thead><tbody id="pendBody"></tbody></table></div>
-    <div id="pendEmptyMsg" style="text-align:center;padding:20px;color:#888;font-size:13px;display:none;">No open requests. All stock is reconciled.</div>
-  </div>
+  <div id="pendKpis" class="kpi-grid" style="margin-bottom:14px;"></div>
+  <div id="pendDeptList"></div>
+  <div id="pendEmptyMsg" style="text-align:center;padding:32px;color:#555;font-size:13px;display:none;">No open requests for this period. All stock is reconciled.</div>
 </div>
 
 <!-- DEPARTMENT HISTORY -->
@@ -425,7 +476,7 @@ body.viewer .admin-only{display:none!important;}
   <div class="card">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
       <h2 style="margin:0;">Items &amp; supplier overview</h2>
-      <span style="font-size:11px;color:#888;">Edit Target % to model savings — values update live.</span>
+      <span style="font-size:11px;color:#888;">Edit Target % to model savings â€” values update live.</span>
     </div>
     <div id="iCatSections"></div>
   </div>
@@ -461,7 +512,7 @@ body.viewer .admin-only{display:none!important;}
   <div class="card">
     <h2>Add purchase</h2>
     <div class="form-row">
-      <div class="fg"><label>Day</label><input type="number" id="pDay" min="1" max="31" placeholder="1–31"></div>
+      <div class="fg"><label>Day</label><input type="number" id="pDay" min="1" max="31" placeholder="1â€“31"></div>
       <div class="fg"><label>Month</label><select id="pMonthIn">
         <option value="0">January</option><option value="1">February</option><option value="2">March</option>
         <option value="3">April</option><option value="4" selected>May</option><option value="5">June</option>
@@ -502,6 +553,28 @@ body.viewer .admin-only{display:none!important;}
     <button onclick="toggleMoveSnapshot()" style="font-size:12px;padding:6px 12px;">Cancel</button>
     <span id="moveSnapshotMsg" style="font-size:12px;color:#3B6D11;"></span>
   </div>
+  <div class="card" style="margin-bottom:14px;">
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px;">
+      <h2 style="margin:0;flex:1;">Live stock levels</h2>
+      <div style="display:flex;border:1px solid rgba(0,0,0,0.15);border-radius:8px;overflow:hidden;font-size:11px;">
+        <button id="invChartModeBoth" onclick="setInvChartMode('both')" style="padding:4px 12px;border:none;background:#0B2545;color:#fff;cursor:pointer;font-size:11px;font-weight:600;">Both lines</button>
+        <button id="invChartModeLive" onclick="setInvChartMode('live')" style="padding:4px 12px;border:none;background:#f5f5f5;color:#555;cursor:pointer;font-size:11px;">Live only</button>
+      </div>
+      <label style="font-size:11px;color:#555;">Year:</label>
+      <select id="invChartYear" onchange="renderInvStockChart()" style="width:auto;font-size:11px;"><option value="2025">2025</option><option value="2026" selected>2026</option></select>
+    </div>
+    <p style="font-size:11px;color:#888;margin:0 0 8px;">Opening inventory each month, adjusted for purchases (+), closed recharges (âˆ’) and open requests still out (âˆ’). Shows estimated remaining stock.</p>
+    <div id="invChartPills" class="stock-item-pills"></div>
+    <div class="chart-wrap" style="height:280px;"><canvas id="invStockChart" role="img" aria-label="Live stock level chart"></canvas></div>
+    <div id="invChartLegend" style="display:flex;gap:16px;flex-wrap:wrap;margin-top:8px;font-size:11px;color:#555;">
+      <span style="display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:20px;height:2px;background:#555;"></span> Stock (closed recharges only)</span>
+      <span style="display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:20px;height:2px;border-top:2px dashed #E65100;"></span> Live (incl. open requests out)</span>
+    </div>
+    <div style="margin-top:16px;border-top:1px solid rgba(0,0,0,0.07);padding-top:14px;">
+      <div style="font-size:12px;font-weight:600;color:#0B2545;margin-bottom:10px;">Current stock levels â€” what is in the room right now</div>
+      <div id="invCurrentCards" style="display:flex;flex-wrap:wrap;gap:12px;"></div>
+    </div>
+  </div>
   <div class="inv-total-bar" id="invTotalBar"><div><div class="label">Total inventory value</div><div class="value" id="invTotalVal">R 0.00</div></div><div style="font-size:11px;opacity:0.7;" id="invItemCount"></div></div>
   <div class="card" id="invPasteCard">
     <h2 style="cursor:pointer;user-select:none;" onclick="toggleInvPaste()">&#8597; Paste stock count sheet <span style="font-size:11px;font-weight:400;color:#888;">(click to expand)</span></h2>
@@ -525,18 +598,18 @@ body.viewer .admin-only{display:none!important;}
       <div id="invPasteMsg" style="font-size:12px;margin-top:6px;"></div>
     </div>
   </div>
-  <div class="card"><h2>Stock on hand — edit quantities to update</h2><div class="ovx"><table><thead><tr><th>Item</th><th>Category</th><th>Unit cost (R)</th><th>Qty in stock</th><th>Total value (R)</th></tr></thead><tbody id="invBody"></tbody></table></div></div>
+  <div class="card"><h2>Stock on hand â€” edit quantities to update</h2><div class="ovx"><table><thead><tr><th>Item</th><th>Category</th><th>Unit cost (R)</th><th>Qty in stock</th><th>Total value (R)</th></tr></thead><tbody id="invBody"></tbody></table></div></div>
 </div>
 
 </div><!-- end content -->
 </div><!-- end app -->
 
 <script>
-// ═══════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 //  FIREBASE CONFIG
 //  Replace these values with your own Firebase project credentials.
-//  Get them from: Firebase Console → Project Settings → Your apps → SDK setup
-// ═══════════════════════════════════════════════════════════════════
+//  Get them from: Firebase Console â†’ Project Settings â†’ Your apps â†’ SDK setup
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 const FIREBASE_CONFIG = {
   apiKey:            "AIzaSyAqRuA0yUXBSOFAd17Z8wRIVXMqlKScDE8",
   authDomain:        "inventory-dashboard-cityhill.firebaseapp.com",
@@ -545,7 +618,7 @@ const FIREBASE_CONFIG = {
   messagingSenderId: "70686718672",
   appId:             "1:70686718672:web:1d43690633b4516a2fbcd5"
 };
-// ═══════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 const MN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const MNF=['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -553,7 +626,7 @@ const COLS=['#185FA5','#0F6E56','#993C1D','#993356','#3B6D11','#854F0B','#533AB7
 const DEPT_COLORS=['#1565C0','#00796B','#C62828','#6A1B9A','#2E7D32','#D84315','#0277BD','#37474F','#E65100','#283593','#558B2F','#AD1457','#00695C','#BF360C','#1976D2','#880E4F','#4E342E','#546E7A','#1B5E20'];
 function getDeptColor(dept){const idx=S.depts.indexOf(dept);return DEPT_COLORS[idx>=0?idx%DEPT_COLORS.length:0];}
 
-// ── Default seed data ──────────────────────────────────────────────
+// â”€â”€ Default seed data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const DEFAULT_ITEMS=[
   {id:1,name:'Milk (2L)',cat:'Beverages',cost:31,supplier:'',target:28},
   {id:2,name:'Cups',cat:'Consumables',cost:1.70,supplier:'',target:1.40},
@@ -612,7 +685,7 @@ function buildDefaultEntries(items){
   return {entries,nid};
 }
 
-// ── App state ──────────────────────────────────────────────────────
+// â”€â”€ App state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 let S={items:[],depts:[],entries:[],purchases:[],inventory:[],pendingEntries:[],nid:100};
 let isAdmin=false;
 let activePage='overview';
@@ -622,7 +695,7 @@ let parsedPreviewData=null;
 let db=null;
 let unsubscribe=null;
 
-// ── Firebase init ──────────────────────────────────────────────────
+// â”€â”€ Firebase init â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function initFirebase(){
   const cfg=FIREBASE_CONFIG;
   if(!cfg.apiKey||cfg.apiKey.startsWith('REPLACE')||!cfg.projectId||cfg.projectId.startsWith('REPLACE')){
@@ -633,7 +706,7 @@ function initFirebase(){
         Before this dashboard can connect, you need to add your Firebase credentials.<br><br>
         <strong>Steps:</strong><br>
         1. Go to <strong>firebase.google.com</strong> and create a free project<br>
-        2. In Project Settings → Your apps → click <strong>&lt;/&gt;</strong> to register a web app<br>
+        2. In Project Settings â†’ Your apps â†’ click <strong>&lt;/&gt;</strong> to register a web app<br>
         3. Copy the <code style="background:#f0efea;padding:1px 5px;border-radius:4px;">firebaseConfig</code> values<br>
         4. Open <strong>consumables_dashboard_shared.html</strong> in a text editor<br>
         5. Find <code style="background:#f0efea;padding:1px 5px;border-radius:4px;">FIREBASE_CONFIG</code> near the top and replace the placeholder values<br>
@@ -666,14 +739,14 @@ async function checkFirstRun(){
   }
 }
 
-// ── Gate: setup ────────────────────────────────────────────────────
+// â”€â”€ Gate: setup â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function showSetupForm(){
   document.getElementById('gateInner').innerHTML=`
     <div class="gate-logo">Consumables Dashboard</div>
-    <div class="gate-sub">First-time setup — create your passwords</div>
+    <div class="gate-sub">First-time setup â€” create your passwords</div>
     <div class="gate-hint">
-      <strong>Admin password</strong> — full access (editing, importing, all tabs).<br>
-      <strong>Share password</strong> — read-only access for your team. Give this to others.
+      <strong>Admin password</strong> â€” full access (editing, importing, all tabs).<br>
+      <strong>Share password</strong> â€” read-only access for your team. Give this to others.
     </div>
     <label class="gate-label">Admin password</label>
     <input class="gate-input" type="password" id="setupAdmin" placeholder="Choose a strong admin password" onkeydown="if(event.key==='Enter')doSetup()">
@@ -690,7 +763,7 @@ async function doSetup(){
   if(!adminPass||!sharePass){document.getElementById('setupErr').textContent='Both passwords are required.';return;}
   if(adminPass===sharePass){document.getElementById('setupErr').textContent='Admin and share passwords must be different.';return;}
   const btn=document.querySelector('.gate-btn');
-  btn.disabled=true;btn.textContent='Setting up…';
+  btn.disabled=true;btn.textContent='Setting upâ€¦';
   try{
     await db.doc('dashboard/config').set({adminPassword:adminPass,viewPassword:sharePass});
     const {entries,nid}=buildDefaultEntries(DEFAULT_ITEMS);
@@ -703,13 +776,18 @@ async function doSetup(){
   }
 }
 
-// ── Gate: login ────────────────────────────────────────────────────
+// â”€â”€ Gate: login â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function showLoginForm(){
   document.getElementById('gateInner').innerHTML=`
-    <div class="gate-logo">Consumables Dashboard</div>
-    <div class="gate-sub">Enter your password to continue</div>
+    <div style="text-align:center;margin-bottom:28px;">
+      <svg width="72" height="52" viewBox="35 34 138 64" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto 14px;">
+        <path fill="#0B2545" d="M120.82,72.1,98.74,46.69a4.27,4.27,0,0,1,6.45-5.6l15.63,18L136.5,41a4.27,4.27,0,0,1,6.45,5.6ZM105,90.89a4.27,4.27,0,0,0,.42-6L83.06,59.1,60.67,84.86a4.27,4.27,0,1,0,6.45,5.6L83.06,72.11,99,90.46a4.27,4.27,0,0,0,6,.43Zm56.34-50.25a4.28,4.28,0,0,0-6,.42L120.82,80.8,86.28,41.06l-3.21-3.7L79.93,41c-.1.11-.21.23-.3.35L42.08,84.54a4.27,4.27,0,1,0,6.45,5.59L83.07,50.37l34.59,39.81,3.16,3.63L124,90.2l.3-.35L161.8,46.67A4.29,4.29,0,0,0,161.37,40.64Z"/>
+      </svg>
+      <div style="font-family:'Montserrat',system-ui,sans-serif;font-size:22px;font-weight:800;color:#0B2545;letter-spacing:2px;text-transform:uppercase;line-height:1;">Hello and Welcome</div>
+      <div style="font-family:'Montserrat',system-ui,sans-serif;font-size:9px;font-weight:600;color:#0B2545;opacity:0.4;letter-spacing:5px;text-transform:uppercase;margin-top:5px;">CityHill Church Stock</div>
+    </div>
     <label class="gate-label">Password</label>
-    <input class="gate-input" type="password" id="passInput" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()">
+    <input class="gate-input" type="password" id="passInput" placeholder="Enter your password" onkeydown="if(event.key==='Enter')doLogin()">
     <button class="gate-btn" onclick="doLogin()">Sign in</button>
     <div class="gate-err" id="loginErr"></div>`;
   setTimeout(()=>document.getElementById('passInput').focus(),50);
@@ -718,7 +796,7 @@ function showLoginForm(){
 async function doLogin(){
   const pass=document.getElementById('passInput').value;
   const btn=document.querySelector('.gate-btn');
-  btn.disabled=true;btn.textContent='Checking…';
+  btn.disabled=true;btn.textContent='Checkingâ€¦';
   try{
     const snap=await db.doc('dashboard/config').get();
     const cfg=snap.data();
@@ -747,7 +825,7 @@ function showGateError(msg){
     <button class="gate-btn" onclick="location.reload()" style="margin-top:20px;">Retry</button>`;
 }
 
-// ── Launch app after login ─────────────────────────────────────────
+// â”€â”€ Launch app after login â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function launchApp(){
   document.getElementById('gate').style.display='none';
   document.getElementById('app').style.display='';
@@ -757,7 +835,8 @@ function launchApp(){
   }
   setSyncDot('ok');
   subscribeData();
-  populateSelects('ovMonth','ovYear');
+  const prev=getPrevMonth();
+  setMonthSelects('ovMonth','ovYear',prev.month,prev.year);
   renderOverview();
 }
 
@@ -811,15 +890,18 @@ async function changePasswords(){
 function setSyncDot(state){
   const d=document.getElementById('syncIndicator');
   d.className='sync-dot '+state;
-  d.title=state==='ok'?'Synced':state==='syncing'?'Saving…':'Sync error';
+  d.title=state==='ok'?'Synced':state==='syncing'?'Savingâ€¦':'Sync error';
 }
 
-// ── Re-render current page on data change ─────────────────────────
-/* ══════════════════════════════════════════════════════════════════
+// â”€â”€ Re-render current page on data change â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    STOCK LEVEL CHART
-══════════════════════════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 let slChartInst=null;
 let slActiveItems=new Set();
+let invChartInst=null;
+let invChartActiveItems=new Set();
+let invChartMode='both'; // 'both' | 'live'
 function renderStockLevelChart(){
   const yr=parseInt(document.getElementById('slYear').value);
   // Build per-item monthly stock levels: opening inventory - recharges for that month
@@ -865,9 +947,9 @@ function toggleSlItem(itemId){
   renderStockLevelChart();
 }
 
-/* ══════════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    OPEN REQUESTS (PENDING ENTRIES)
-══════════════════════════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 function updatePendingBadge(){
   const n=S.pendingEntries.length;
   ['pendingBadge','pendingCount'].forEach(id=>{
@@ -877,23 +959,29 @@ function updatePendingBadge(){
     el.style.display=n>0?'':'none';
   });
 }
+function togglePendForm(){
+  const c=document.getElementById('pendFormCard');
+  c.style.display=c.style.display==='none'?'block':'none';
+}
 function initPendingSelects(){
   const dSel=document.getElementById('pendDept');
-  dSel.innerHTML=S.depts.map(d=>`<option value="${d}">${d}</option>`).join('');
+  if(dSel) dSel.innerHTML=S.depts.map(d=>`<option value="${d}">${d}</option>`).join('');
   const iSel=document.getElementById('pendItem');
-  iSel.innerHTML=S.items.map(i=>`<option value="${i.id}">${i.name}</option>`).join('');
+  if(iSel) iSel.innerHTML=S.items.map(i=>`<option value="${i.id}">${i.name}</option>`).join('');
   const mSel=document.getElementById('pendMonth');
-  if(!mSel.options.length) MNF.forEach((m,i)=>mSel.innerHTML+=`<option value="${i}">${m}</option>`);
-  mSel.value=new Date().getMonth();
-  const fSel=document.getElementById('pendFilterDept');
-  fSel.innerHTML='<option value="all">All departments</option>'+S.depts.map(d=>`<option value="${d}">${d}</option>`).join('');
+  if(mSel&&!mSel.options.length){
+    mSel.innerHTML='<option value="all">All months</option>';
+    MNF.forEach((m,i)=>mSel.innerHTML+=`<option value="${i}">${m}</option>`);
+    mSel.value=new Date().getMonth();
+  }
 }
 function addPendingEntry(){
   const dept=document.getElementById('pendDept').value;
   const itemId=parseInt(document.getElementById('pendItem').value);
   const out=parseSANum(document.getElementById('pendOut').value)||0;
   const day=parseInt(document.getElementById('pendDay').value)||1;
-  const month=parseInt(document.getElementById('pendMonth').value);
+  const mv=document.getElementById('pendMonth').value;
+  const month=mv==='all'?new Date().getMonth():parseInt(mv);
   const year=parseInt(document.getElementById('pendYear').value);
   const notes=document.getElementById('pendNotes').value.trim();
   if(!dept||!itemId||out<=0){setMsg('pendMsg','Please fill in department, item and qty sent out.','#A32D2D');return;}
@@ -905,54 +993,99 @@ function addPendingEntry(){
   setMsg('pendMsg','Open request logged.','#3B6D11');
   renderPending();
 }
+function getPendYM(){
+  const mv=document.getElementById('pendMonth').value;
+  const yr=parseInt(document.getElementById('pendYear').value);
+  return{mv,yr,month:mv==='all'?null:parseInt(mv)};
+}
 function renderPending(){
   updatePendingBadge();
   initPendingSelects();
-  const filterDept=document.getElementById('pendFilterDept').value;
-  let recs=S.pendingEntries;
-  if(filterDept!=='all') recs=recs.filter(r=>r.dept===filterDept);
-  const tbody=document.getElementById('pendBody');
+  const{mv,yr,month}=getPendYM();
+  let recs=S.pendingEntries.filter(r=>r.year===yr);
+  if(mv!=='all') recs=recs.filter(r=>r.month===month);
   const empty=document.getElementById('pendEmptyMsg');
-  if(!recs.length){tbody.innerHTML='';empty.style.display='';return;}
+  const list=document.getElementById('pendDeptList');
+  const kpis=document.getElementById('pendKpis');
+  if(!recs.length){list.innerHTML='';kpis.innerHTML='';empty.style.display='';return;}
   empty.style.display='none';
-  tbody.innerHTML=recs.map(r=>{
-    const it=S.items.find(i=>i.id===r.itemId);
-    const dc=getDeptColor(r.dept);
-    return `<tr class="pending-row" id="prow-${r.id}">
-      <td>${String(r.day).padStart(2,'0')} ${MN[r.month]} ${r.year}</td>
-      <td><span class="dept-color-dot" style="background:${dc};margin-right:5px;"></span>${r.dept}</td>
-      <td>${it?it.name:'Unknown'}</td>
-      <td><strong>${r.out}</strong></td>
-      <td style="color:#777;font-size:11px;">${r.notes||'—'}</td>
-      <td><span class="status-open">OPEN</span></td>
-      <td class="admin-only">
-        <button onclick="showCloseForm(${r.id})" style="font-size:11px;padding:4px 10px;background:#2E7D32;color:#fff;border:none;border-radius:6px;cursor:pointer;margin-right:4px;">&#10003; Close</button>
-        <button onclick="deletePendingEntry(${r.id})" style="font-size:11px;padding:4px 10px;background:#f5f5f5;border:0.5px solid rgba(0,0,0,0.2);border-radius:6px;cursor:pointer;">Delete</button>
-      </td>
-    </tr>
-    <tr id="pclose-${r.id}" style="display:none;"><td colspan="7" style="padding:0;">
-      <div class="pending-close-form">
-        <span style="font-size:12px;font-weight:600;color:#7a5a00;">Close request — enter qty returned:</span>
-        <label style="font-size:11px;">Qty returned (In):</label>
-        <input type="number" id="pin-${r.id}" min="0" step="any" value="0" style="width:80px;font-size:12px;padding:4px 8px;border-radius:6px;border:0.5px solid rgba(0,0,0,0.3);">
-        <span style="font-size:11px;color:#555;">Net qty recharged = out − returned</span>
-        <button onclick="closePendingEntry(${r.id})" style="font-size:12px;padding:5px 14px;background:#0B2545;color:#fff;border:none;border-radius:7px;font-weight:600;cursor:pointer;">Confirm &amp; move to recharges</button>
-        <button onclick="hideCloseForm(${r.id})" style="font-size:12px;padding:5px 10px;">Cancel</button>
+  // KPIs
+  const depts=[...new Set(recs.map(r=>r.dept))];
+  const totalOut=recs.reduce((s,r)=>s+r.out,0);
+  kpis.innerHTML=`
+    <div class="kpi navy"><div class="kpi-label">Open requests</div><div class="kpi-value">${recs.length}</div><div class="kpi-sub">awaiting stock return</div></div>
+    <div class="kpi teal"><div class="kpi-label">Departments</div><div class="kpi-value">${depts.length}</div><div class="kpi-sub">with open stock</div></div>
+    <div class="kpi"><div class="kpi-label">Total qty out</div><div class="kpi-value">${totalOut}</div><div class="kpi-sub">units not yet reconciled</div></div>`;
+  // Accordion by dept â€” same structure as recharges
+  const openSet=new Set([...(document.querySelectorAll('.dept-detail.open')||[])].map(el=>el.id.replace('detail-','pend-')));
+  let html='';
+  depts.forEach(dept=>{
+    const dId='pend_'+dept.replace(/[^a-z0-9]/gi,'_');
+    const wasOpen=openSet.has(dId)||true; // default open
+    const dc=getDeptColor(dept);
+    const dRecs=recs.filter(r=>r.dept===dept);
+    html+=`
+    <div class="dept-row${wasOpen?' open':''}" id="row-${dId}" onclick="toggleDeptPend('${dId}')" style="border-left-color:${dc};">
+      <div class="dept-name"><span class="dept-color-dot" style="background:${dc};"></span><span class="dept-chevron${wasOpen?' open':''}" id="chev-${dId}">â–¼</span>${dept}</div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span style="font-size:11px;color:#888;">${dRecs.length} item${dRecs.length!==1?'s':''} open</span>
+        <span class="status-open">OPEN</span>
       </div>
-    </td></tr>`;
-  }).join('');
+    </div>
+    <div class="dept-detail${wasOpen?' open':''}" id="detail-${dId}" style="border-left-color:${dc};">
+      ${buildPendTable(dRecs,dId,yr,mv)}
+    </div>`;
+  });
+  list.innerHTML=html;
 }
-function showCloseForm(id){document.getElementById('pclose-'+id).style.display='';}
-function hideCloseForm(id){document.getElementById('pclose-'+id).style.display='none';}
+function toggleDeptPend(dId){
+  const d=document.getElementById('detail-'+dId);
+  const r=document.getElementById('row-'+dId);
+  const c=document.getElementById('chev-'+dId);
+  const o=d.classList.contains('open');
+  d.classList.toggle('open',!o);r.classList.toggle('open',!o);c.classList.toggle('open',!o);
+}
+function buildPendTable(recs,dId,yr,mv){
+  const rows=recs.map(r=>{
+    const it=S.items.find(i=>i.id===r.itemId);
+    return `<tr id="pendrow-${r.id}">
+      <td style="font-weight:500;padding-left:16px;">${it?it.name:'Unknown item'}</td>
+      <td>${String(r.day).padStart(2,'0')} ${MN[r.month]} ${r.year}</td>
+      <td><strong>${r.out}</strong></td>
+      <td><input class="inline-input" type="number" id="pin-${r.id}" min="0" step="any" placeholder="qty returned" style="width:100px;" oninput="updatePendNet(${r.id})"></td>
+      <td id="pnet-${r.id}" style="font-weight:600;color:#555;">â€”</td>
+      <td style="color:#777;font-size:11px;">${r.notes||''}</td>
+      <td style="white-space:nowrap;">
+        <button class="edit-btn save" onclick="closePendingEntry(${r.id})">&#10003; Close &amp; move to recharges</button>
+        <button class="edit-btn cancel" onclick="deletePendingEntry(${r.id})">Delete</button>
+      </td>
+    </tr>`;
+  }).join('');
+  return `<table style="font-size:12px;">
+    <thead><tr>
+      <th style="padding-left:16px;">Item</th><th>Date</th><th>Qty out</th><th>Qty returned (In)</th><th>Net recharged</th><th>Notes</th><th style="width:200px;"></th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table>
+  <div class="month-total-row"><span style="color:#555;">Fill in qty returned then click Close to move to recharges</span></div>`;
+}
+function updatePendNet(id){
+  const rec=S.pendingEntries.find(r=>r.id===id);
+  if(!rec) return;
+  const inRaw=document.getElementById('pin-'+id).value;
+  const inQ=inRaw===''?null:parseSANum(inRaw);
+  const netEl=document.getElementById('pnet-'+id);
+  if(netEl) netEl.textContent=inQ!==null?Math.max(0,rec.out-inQ)+'  units':'â€”';
+}
 function closePendingEntry(id){
   const rec=S.pendingEntries.find(r=>r.id===id);
   if(!rec) return;
-  const inQty=parseSANum(document.getElementById('pin-'+id).value)||0;
+  const inRaw=document.getElementById('pin-'+id)?document.getElementById('pin-'+id).value:'0';
+  const inQty=inRaw===''?0:parseSANum(inRaw)||0;
   const netQty=Math.max(0,rec.out-inQty);
   const it=S.items.find(i=>i.id===rec.itemId);
   const unitCost=it?it.cost:0;
   if(!S.depts.includes(rec.dept)) S.depts.push(rec.dept);
-  // Check if entry already exists for this dept/item/month and merge
   const existing=S.entries.find(e=>e.year===rec.year&&e.month===rec.month&&e.dept===rec.dept&&e.itemId===rec.itemId);
   if(existing){existing.out=(existing.out||0)+rec.out;existing.in=(existing.in||0)+inQty;existing.qty=(existing.qty||0)+netQty;}
   else S.entries.push({id:S.nid++,year:rec.year,month:rec.month,dept:rec.dept,itemId:rec.itemId,out:rec.out,in:inQty,qty:netQty,unitCost});
@@ -977,13 +1110,13 @@ function rerenderCurrentPage(){
   else if(activePage==='items'){renderItems();renderDeptList();}
   else if(activePage==='reconciliation') renderReconciliation();
   else if(activePage==='purchases') renderPurchases();
-  else if(activePage==='inventory') renderInventory();
+  else if(activePage==='inventory'){renderInventory();renderInvStockChart();}
   else if(activePage==='pending') renderPending();
 }
 
-/* ══════════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    PURCHASES
-══════════════════════════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 function renderPurchasesSelects(){
   const sel=document.getElementById('pItem');
   if(sel) sel.innerHTML=S.items.map(i=>`<option value="${i.id}">${i.name}</option>`).join('');
@@ -1036,7 +1169,7 @@ function renderPurchases(){
     const vsign=variance>0?'+':'';
     return `<tr>
       <td>${String(p.day).padStart(2,'0')} ${MN[p.month]} ${p.year}</td>
-      <td>${it?it.name:'—'}</td>
+      <td>${it?it.name:'â€”'}</td>
       <td>${p.qty.toLocaleString()}</td>
       <td>R ${fmt(p.actualTotal)}</td>
       <td>R ${fmt(expected)}</td>
@@ -1054,9 +1187,9 @@ function renderPurchases(){
     <div class="kpi"><div class="kpi-label">Records</div><div class="kpi-value">${purch.length}</div></div>`;
 }
 
-/* ══════════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    INVENTORY
-══════════════════════════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 function getInvKey(year,month){return`${year}-${month}`;}
 function getInvQty(itemId,year,month){
   const rec=S.inventory.find(r=>r.itemId===itemId&&r.year===year&&r.month===month);
@@ -1081,6 +1214,143 @@ function updateInvTotal(year,month){
   if(tv) tv.textContent='R '+fmt(total);
   if(ic) ic.textContent=count+' items with stock';
 }
+function calcLiveStock(itemId,yr,month){
+  const opening=getInvQty(itemId,yr,month);
+  if(opening===0) return null;
+  const purchased=S.purchases.filter(p=>p.year===yr&&p.month===month&&p.itemId===itemId).reduce((s,p)=>s+p.qty,0);
+  const recharged=S.entries.filter(e=>e.year===yr&&e.month===month&&e.itemId===itemId).reduce((s,e)=>s+e.qty,0);
+  const pendingOut=S.pendingEntries.filter(p=>p.year===yr&&p.month===month&&p.itemId===itemId).reduce((s,p)=>s+p.out,0);
+  return{opening,purchased,recharged,pendingOut,remaining:Math.max(0,opening+purchased-recharged-pendingOut),remainingClosed:Math.max(0,opening+purchased-recharged)};
+}
+function setInvChartMode(mode){
+  invChartMode=mode;
+  document.getElementById('invChartModeBoth').style.background=mode==='both'?'#0B2545':'#f5f5f5';
+  document.getElementById('invChartModeBoth').style.color=mode==='both'?'#fff':'#555';
+  document.getElementById('invChartModeLive').style.background=mode==='live'?'#0B2545':'#f5f5f5';
+  document.getElementById('invChartModeLive').style.color=mode==='live'?'#fff':'#555';
+  const legend=document.getElementById('invChartLegend');
+  if(legend) legend.style.display=mode==='both'?'flex':'none';
+  renderInvStockChart();
+}
+function toggleInvChartItem(itemId){
+  if(invChartActiveItems.has(itemId)) invChartActiveItems.delete(itemId);
+  else invChartActiveItems.add(itemId);
+  renderInvStockChart();
+}
+function renderInvStockChart(){
+  const yr=parseInt(document.getElementById('invChartYear').value);
+  const itemsWithData=S.items.filter(it=>{
+    for(let m=0;m<12;m++) if(getInvQty(it.id,yr,m)>0) return true;
+    return false;
+  });
+  if(invChartActiveItems.size===0){
+    const totals=S.items.map(it=>({it,qty:S.entries.filter(e=>e.year===yr&&e.itemId===it.id).reduce((s,e)=>s+e.qty,0)}));
+    totals.sort((a,b)=>b.qty-a.qty);
+    totals.slice(0,6).forEach(x=>invChartActiveItems.add(x.it.id));
+  }
+  // Pills
+  const pillsEl=document.getElementById('invChartPills');
+  if(pillsEl){
+    pillsEl.innerHTML=itemsWithData.map((it,idx)=>{
+      const col=DEPT_COLORS[idx%DEPT_COLORS.length];
+      const active=invChartActiveItems.has(it.id);
+      return `<span class="stock-pill${active?' active':''}" style="background:${active?col+'22':'#f5f5f5'};color:${col};border-color:${active?col:'transparent'};" onclick="toggleInvChartItem(${it.id})">${it.name}</span>`;
+    }).join('');
+    if(!itemsWithData.length) pillsEl.innerHTML='<span style="font-size:12px;color:#aaa;">No inventory snapshots yet â€” add stock quantities on the table below first.</span>';
+  }
+  const activeList=itemsWithData.filter(it=>invChartActiveItems.has(it.id));
+  const datasets=[];
+  activeList.forEach(it=>{
+    const idx=itemsWithData.indexOf(it);
+    const col=DEPT_COLORS[idx%DEPT_COLORS.length];
+    const closedData=[],liveData=[];
+    let hasPending=false;
+    MN.forEach((_,m)=>{
+      const calc=calcLiveStock(it.id,yr,m);
+      if(!calc){closedData.push(null);liveData.push(null);return;}
+      closedData.push(calc.remainingClosed);
+      liveData.push(calc.remaining);
+      if(calc.pendingOut>0) hasPending=true;
+    });
+    if(invChartMode==='both'){
+      // Solid = closed recharges only
+      datasets.push({label:it.name+' (stock)',data:closedData,borderColor:col,backgroundColor:col+'18',tension:0.3,pointRadius:4,pointHoverRadius:7,fill:false,spanGaps:false,borderWidth:2.5});
+      // Dashed = live incl. pending
+      if(hasPending) datasets.push({label:it.name+' (live)',data:liveData,borderColor:col,backgroundColor:'transparent',tension:0.3,pointRadius:3,pointHoverRadius:6,fill:false,spanGaps:false,borderDash:[6,4],borderWidth:1.5,pointStyle:'triangle'});
+    } else {
+      // Live only â€” always show the live line (dashed style)
+      datasets.push({label:it.name,data:liveData,borderColor:col,backgroundColor:col+'18',tension:0.3,pointRadius:4,pointHoverRadius:7,fill:false,spanGaps:false,borderDash:[6,4],borderWidth:2.5});
+    }
+  });
+  const ctx=document.getElementById('invStockChart');
+  if(!ctx) return;
+  if(invChartInst) invChartInst.destroy();
+  invChartInst=new Chart(ctx,{
+    type:'line',
+    data:{labels:MN,datasets},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{
+          title:items=>`${MN[items[0].dataIndex]} ${yr}`,
+          label:ctx=>{
+            const name=ctx.dataset.label.replace(/ \((stock|live)\)$/,'');
+            const it=S.items.find(i=>i.name===name);
+            if(!it||ctx.parsed.y===null) return null;
+            const calc=calcLiveStock(it.id,yr,ctx.dataIndex);
+            if(!calc) return null;
+            const lines=[`${name}:`,'  Opening: '+calc.opening];
+            if(calc.purchased>0) lines.push('  + Purchased: '+calc.purchased);
+            if(calc.recharged>0) lines.push('  âˆ’ Recharged: '+calc.recharged);
+            if(calc.pendingOut>0) lines.push('  âˆ’ Out (pending): '+calc.pendingOut);
+            lines.push('  = '+ctx.parsed.y+' units remaining');
+            return lines;
+          }
+        }}
+      },
+      scales:{
+        y:{beginAtZero:true,title:{display:true,text:'Units in stock',font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}},
+        x:{grid:{color:'rgba(0,0,0,0.05)'}}
+      }
+    }
+  });
+  // â”€â”€ Current level cards â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  const now=new Date();
+  const curMonth=yr===now.getFullYear()?now.getMonth():11;
+  const cardsEl=document.getElementById('invCurrentCards');
+  if(!cardsEl) return;
+  if(!activeList.length){cardsEl.innerHTML='<span style="font-size:12px;color:#aaa;">Select items above to see their current level.</span>';return;}
+  cardsEl.innerHTML=activeList.map(it=>{
+    const idx=itemsWithData.indexOf(it);
+    const col=DEPT_COLORS[idx%DEPT_COLORS.length];
+    // Find most recent month with data up to curMonth
+    let useMonth=curMonth;
+    for(let m=curMonth;m>=0;m--){if(getInvQty(it.id,yr,m)>0){useMonth=m;break;}}
+    const calc=calcLiveStock(it.id,yr,useMonth);
+    if(!calc) return `<div class="inv-level-card" style="border-color:${col}44;"><div class="ilc-name" style="color:${col};">${it.name}</div><div style="font-size:12px;color:#aaa;">No snapshot for ${MN[useMonth]}</div></div>`;
+    const pct=calc.opening>0?Math.round(calc.remaining/calc.opening*100):0;
+    const statusClass=pct>=50?'ok':pct>=20?'warn':'low';
+    const statusLabel=pct>=50?'GOOD':pct>=20?'LOW':'CRITICAL';
+    const cardClass=pct>=50?'ilc-ok':pct>=20?'ilc-warn':'ilc-low';
+    const barCol=pct>=50?'#2E7D32':pct>=20?'#E65100':'#C62828';
+    const pendNote=calc.pendingOut>0?`<div class="ilc-pending-note">&#9654; ${calc.pendingOut} units currently out (open request)</div>`:'';
+    return `<div class="inv-level-card ${cardClass}" style="border-color:${col}66;">
+      <div class="ilc-name" style="color:${col};">${it.name}</div>
+      <span class="ilc-status ${statusClass}">${statusLabel}</span>
+      <div class="ilc-qty" style="color:${col};">${calc.remaining}</div>
+      <div style="font-size:10px;color:#aaa;margin-bottom:2px;">units in room Â· ${MN[useMonth]} ${yr}</div>
+      <div class="ilc-bar-wrap"><div class="ilc-bar" style="width:${Math.min(100,pct)}%;background:${barCol};"></div></div>
+      <div class="ilc-detail">
+        Opening: ${calc.opening}${calc.purchased>0?' Â· +'+calc.purchased+' purchased':''}
+        Â· âˆ’${calc.recharged} recharged${calc.pendingOut>0?' Â· âˆ’'+calc.pendingOut+' out':''}
+        <br><strong>${pct}% remaining</strong>
+      </div>
+      ${pendNote}
+    </div>`;
+  }).join('');
+}
 function renderInventory(){
   const yr=parseInt(document.getElementById('invYear').value);
   const mv=document.getElementById('invMonth').value;
@@ -1096,7 +1366,7 @@ function renderInventory(){
       <td><span class="badge bb">${it.cat}</span></td>
       <td>R ${it.cost.toFixed(2)}</td>
       <td><input type="number" min="0" step="any" value="${q}" onchange="setInvQty(${it.id},parseFloat(this.value)||0,${yr},${month})" style="width:80px;padding:4px 7px;font-size:12px;border:0.5px solid rgba(0,0,0,0.3);border-radius:6px;"></td>
-      <td style="font-weight:600;color:${val>0?'#0B2545':'#aaa'};">${val>0?'R '+fmt(val):'—'}</td>
+      <td style="font-weight:600;color:${val>0?'#0B2545':'#aaa'};">${val>0?'R '+fmt(val):'â€”'}</td>
     </tr>`;
   }).join('');
   document.getElementById('invBody').innerHTML=rows;
@@ -1128,7 +1398,7 @@ function updateInvPasteNextLabel(){
   const nextMonth=month===11?0:month+1;
   const nextYear=month===11?yr+1:yr;
   document.getElementById('invPasteNextLabel').textContent=
-    `→ Will also set as opening stock for ${MNF[nextMonth]} ${nextYear}`;
+    `â†’ Will also set as opening stock for ${MNF[nextMonth]} ${nextYear}`;
 }
 function previewInvPaste(){
   const raw=document.getElementById('invCsvIn').value;
@@ -1151,9 +1421,9 @@ function previewInvPaste(){
                S.items.find(i=>i.name.toLowerCase().includes(name.toLowerCase()));
     rows.push({raw:name,item,qty});
   });
-  if(!rows.length){preview.innerHTML='<p style="font-size:12px;color:#A32D2D;">Nothing recognised — check your columns are tab-separated.</p>';bar.style.display='none';return;}
+  if(!rows.length){preview.innerHTML='<p style="font-size:12px;color:#A32D2D;">Nothing recognised â€” check your columns are tab-separated.</p>';bar.style.display='none';return;}
   let html=`<div style="font-size:11px;color:#B8860B;margin-bottom:6px;font-weight:600;">
-    Closing stock: ${MNF[month]} ${yr} &nbsp;·&nbsp; Opening stock: ${MNF[nextMonth]} ${nextYear}
+    Closing stock: ${MNF[month]} ${yr} &nbsp;Â·&nbsp; Opening stock: ${MNF[nextMonth]} ${nextYear}
   </div>
   <table class="preview-table"><thead><tr><th>Item (pasted)</th><th>Matched to</th><th>Qty</th><th>Unit cost (R)</th><th>Value (R)</th></tr></thead><tbody>`;
   rows.forEach(r=>{
@@ -1161,7 +1431,7 @@ function previewInvPaste(){
     const badge=!r.item?`<span class="preview-warn-badge">UNKNOWN</span>`:'';
     const matchName=r.item?r.item.name:`<em style="color:#A32D2D;">No match</em>`;
     const val=r.item?R2(r.qty*r.item.cost):0;
-    html+=`<tr class="${wc}"><td>${r.raw}${badge}</td><td>${matchName}</td><td>${r.qty}</td><td>${r.item?'R '+r.item.cost.toFixed(2):'—'}</td><td>${val?'R '+fmt(val):'—'}</td></tr>`;
+    html+=`<tr class="${wc}"><td>${r.raw}${badge}</td><td>${matchName}</td><td>${r.qty}</td><td>${r.item?'R '+r.item.cost.toFixed(2):'â€”'}</td><td>${val?'R '+fmt(val):'â€”'}</td></tr>`;
   });
   html+=`</tbody></table>`;
   preview.innerHTML=html;
@@ -1227,7 +1497,7 @@ function confirmMoveSnapshot(){
   const toMonth=parseInt(document.getElementById('moveToMonth').value);
   const toYr=parseInt(document.getElementById('moveToYear').value);
   if(fromMonth===toMonth&&fromYr===toYr){
-    document.getElementById('moveSnapshotMsg').textContent='That is already the current month — choose a different target.';
+    document.getElementById('moveSnapshotMsg').textContent='That is already the current month â€” choose a different target.';
     return;
   }
   const fromRecs=S.inventory.filter(r=>r.year===fromYr&&r.month===fromMonth);
@@ -1264,9 +1534,9 @@ function copyPrevInventory(){
   renderInventory();
 }
 
-/* ══════════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    RECONCILIATION
-══════════════════════════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 function renderReconciliation(){
   const yr=parseInt(document.getElementById('recYear').value);
   const mv=document.getElementById('recMonth').value;
@@ -1291,7 +1561,7 @@ function renderReconciliation(){
   // Actual net closing (incorporates variance)
   const closingVal=R2(openingVal+purchaseTotal-rechargeTotal);
   const periodLabel=mv==='all'?`${yr}`:MNF[month]+' '+yr;
-  const varSign=purchaseVariance>0?'+':purchaseVariance<0?'−':'±';
+  const varSign=purchaseVariance>0?'+':purchaseVariance<0?'âˆ’':'Â±';
   const varClass=purchaseVariance>0?'var-pos':purchaseVariance<0?'var-neg':'';
   const varLabel=purchaseVariance>0?'Overspent vs expected':purchaseVariance<0?'Saved vs expected':'On budget';
   document.getElementById('reconCards').innerHTML=`
@@ -1306,7 +1576,7 @@ function renderReconciliation(){
       <div class="recon-value">R ${fmt(purchaseTotal)}</div>
       <div class="recon-sub">${purchRecs.length} purchase record${purchRecs.length!==1?'s':''}</div>
     </div>
-    <div class="recon-arrow">−</div>
+    <div class="recon-arrow">âˆ’</div>
     <div class="recon-card recon-recharge">
       <div class="recon-label">Recharges issued</div>
       <div class="recon-value">R ${fmt(rechargeTotal)}</div>
@@ -1324,7 +1594,7 @@ function renderReconciliation(){
       <div class="recon-sub">${varLabel}</div>
     </div>`;
   document.getElementById('reconEq').innerHTML=`
-    <span>R ${fmt(openingVal)} (opening) + R ${fmt(purchaseTotal)} (purchases) − R ${fmt(rechargeTotal)} (recharges)</span>
+    <span>R ${fmt(openingVal)} (opening) + R ${fmt(purchaseTotal)} (purchases) âˆ’ R ${fmt(rechargeTotal)} (recharges)</span>
     <span style="font-size:15px;">= R ${fmt(closingAtStd)} (std) ${varSign} R ${fmt(Math.abs(purchaseVariance))} (variance) = <strong>R ${fmt(closingVal)}</strong></span>`;
   // Dept breakdown
   const deptTotals={};
@@ -1339,15 +1609,15 @@ function renderReconciliation(){
     const it=S.items.find(i=>i.id===p.itemId);
     const exp=R2(p.qty*(it?it.cost:0));
     const vari=R2(p.actualTotal-exp);
-    return `<tr><td>${String(p.day).padStart(2,'0')} ${MN[p.month]}</td><td>${it?it.name:'—'}</td><td>${p.qty}</td><td>R ${fmt(p.actualTotal)}</td><td>R ${fmt(exp)}</td><td class="${vari>0?'var-pos':vari<0?'var-neg':''}">${vari>0?'+':''}R ${fmt(Math.abs(vari))}</td></tr>`;
+    return `<tr><td>${String(p.day).padStart(2,'0')} ${MN[p.month]}</td><td>${it?it.name:'â€”'}</td><td>${p.qty}</td><td>R ${fmt(p.actualTotal)}</td><td>R ${fmt(exp)}</td><td class="${vari>0?'var-pos':vari<0?'var-neg':''}">${vari>0?'+':''}R ${fmt(Math.abs(vari))}</td></tr>`;
   }).join('');
   document.getElementById('reconPurchBody').innerHTML=purchRows||`<tr><td colspan="6" style="text-align:center;padding:12px;color:#555;">No purchases.</td></tr>`;
 }
 
-// ── Helpers ────────────────────────────────────────────────────────
+// â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function R2(v){return Math.round(v*100)/100;}
 function fmt(v){return parseFloat(v).toLocaleString('en-ZA',{minimumFractionDigits:2,maximumFractionDigits:2});}
-// Handles both SA decimal comma (0,5 → 0.5) and standard decimal point
+// Handles both SA decimal comma (0,5 â†’ 0.5) and standard decimal point
 function parseSANum(s){
   if(s===null||s===undefined) return NaN;
   s=String(s).replace(/[R\s]/g,'').trim();
@@ -1358,21 +1628,36 @@ function parseSANum(s){
   return parseFloat(s);
 }
 
+function getPrevMonth(){
+  const now=new Date();
+  const m=now.getMonth()===0?11:now.getMonth()-1;
+  const y=now.getMonth()===0?now.getFullYear()-1:now.getFullYear();
+  return{month:m,year:y};
+}
+function setMonthSelects(mId,yId,month,year){
+  populateSelects(mId,yId);
+  const ms=document.getElementById(mId);
+  const ys=document.getElementById(yId);
+  if(ms&&ms._autoSet!==mId){ms.value=String(month);ms._autoSet=mId;}
+  if(ys&&ys._autoSet!==yId){ys.value=String(year);ys._autoSet=yId;}
+}
 function showPage(name,el){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
   el.classList.add('active');
   activePage=name;
-  if(name==='overview'){populateSelects('ovMonth','ovYear');renderOverview();}
-  if(name==='recharges'){populateSelects('rMonth','rYear');renderRecharges();}
+  const prev=getPrevMonth();
+  const now=new Date();
+  if(name==='overview'){setMonthSelects('ovMonth','ovYear',prev.month,prev.year);renderOverview();}
+  if(name==='recharges'){setMonthSelects('rMonth','rYear',prev.month,prev.year);renderRecharges();}
   if(name==='entry'){/* paste preview triggered by user input */}
   if(name==='departments'){renderDeptSelects();renderDept();}
   if(name==='trends'){populateTrendsFilter();renderStockLevelChart();renderTrends();}
   if(name==='items'){renderItems();renderDeptList();}
-  if(name==='reconciliation'){populateSelects('recMonth','recYear');renderReconciliation();}
-  if(name==='purchases'){populateSelects('pMonth','pYear');renderPurchasesSelects();renderPurchases();}
-  if(name==='inventory'){populateSelects('invMonth','invYear');renderInventory();}
+  if(name==='reconciliation'){setMonthSelects('recMonth','recYear',prev.month,prev.year);renderReconciliation();}
+  if(name==='purchases'){setMonthSelects('pMonth','pYear',prev.month,prev.year);renderPurchasesSelects();renderPurchases();}
+  if(name==='inventory'){setMonthSelects('invMonth','invYear',now.getMonth(),now.getFullYear());renderInventory();renderInvStockChart();}
   if(name==='pending'){initPendingSelects();renderPending();}
 }
 
@@ -1383,7 +1668,7 @@ function populateSelects(mId,yId){
   MNF.forEach((m,i)=>ms.innerHTML+=`<option value="${i}">${m}</option>`);
 }
 
-/* ── OVERVIEW ─────────────────────────────────────────────────────*/
+/* â”€â”€ OVERVIEW â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€*/
 function renderOverview(){
   const yr=parseInt(document.getElementById('ovYear').value);
   const mv=document.getElementById('ovMonth').value;
@@ -1405,8 +1690,8 @@ function renderOverview(){
   document.getElementById('kpiGrid').innerHTML=`
     <div class="kpi navy"><div class="kpi-label">Total spend (period)</div><div class="kpi-value">R ${fmt(total)}</div><div class="kpi-sub">${ents.length} line entries</div></div>
     <div class="kpi teal"><div class="kpi-label">Total savings potential</div><div class="kpi-value">R ${fmt(totalSavings)}</div><div class="kpi-sub">across all items at targets</div></div>
-    <div class="kpi"><div class="kpi-label">Largest total spend</div><div class="kpi-value" style="font-size:15px;">${maxSp?maxSp.name:'—'}</div><div class="kpi-sub">${maxSp?'R '+fmt(agg[maxSp.id].spend)+' total':''}</div></div>
-    <div class="kpi"><div class="kpi-label">Best savings opportunity</div><div class="kpi-value" style="font-size:15px;">${maxSv?maxSv.name:'—'}</div><div class="kpi-sub">${maxSv?'Save up to R '+fmt((maxSv.cost-(maxSv.target||maxSv.cost))*agg[maxSv.id].qty):''}</div></div>`;
+    <div class="kpi"><div class="kpi-label">Largest total spend</div><div class="kpi-value" style="font-size:15px;">${maxSp?maxSp.name:'â€”'}</div><div class="kpi-sub">${maxSp?'R '+fmt(agg[maxSp.id].spend)+' total':''}</div></div>
+    <div class="kpi"><div class="kpi-label">Best savings opportunity</div><div class="kpi-value" style="font-size:15px;">${maxSv?maxSv.name:'â€”'}</div><div class="kpi-sub">${maxSv?'Save up to R '+fmt((maxSv.cost-(maxSv.target||maxSv.cost))*agg[maxSv.id].qty):''}</div></div>`;
   let rows='';
   [...S.items].sort((a,b)=>(agg[b.id]?.spend||0)-(agg[a.id]?.spend||0)).forEach(it=>{
     const a=agg[it.id];
@@ -1440,6 +1725,25 @@ function renderOverviewChart(){
   const mv=document.getElementById('ovMonth').value;
   const grp=document.getElementById('ovChartGroup').value;
   const isSpend=document.getElementById('ovChartMeasure').value==='spend';
+  const deptSel=document.getElementById('ovChartDept');
+  const deptQtyMode=grp==='dept'&&!isSpend;
+  // Show/hide dept selector
+  deptSel.style.display=deptQtyMode?'':'none';
+  if(deptQtyMode){
+    // Populate dept selector
+    const curVal=deptSel.value;
+    deptSel.innerHTML='<option value="">â€” Select department â€”</option>'+S.depts.map(d=>`<option value="${d}"${d===curVal?' selected':''}>${d}</option>`).join('');
+    if(!deptSel.value){
+      // No dept chosen â€” show prompt in chart area
+      document.getElementById('ovChartTitle').textContent='Quantity by item â€” select a department';
+      const canvas=document.getElementById('ovBarChart');
+      if(ovBarChartInst){ovBarChartInst.destroy();ovBarChartInst=null;}
+      const ctx=canvas.getContext('2d');ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.font='14px system-ui';ctx.fillStyle='#aaa';ctx.textAlign='center';
+      ctx.fillText('Select a department above to see item quantities',canvas.width/2,canvas.height/2);
+      return;
+    }
+  }
   let ents=S.entries.filter(e=>e.year===yr);
   if(mv!=='all') ents=ents.filter(e=>e.month===parseInt(mv));
   let labels=[],data=[],colors=[];
@@ -1450,60 +1754,130 @@ function renderOverviewChart(){
     const sorted=Object.values(agg).filter(x=>x.val>0).sort((a,b)=>b.val-a.val);
     labels=sorted.map(x=>x.name);data=sorted.map(x=>R2(x.val));
     colors=sorted.map((_,i)=>COLS[i%COLS.length]);
-  } else {
+  } else if(isSpend){
+    // Dept + spend: show all depts
     const agg={};
     S.depts.forEach(d=>{agg[d]=0;});
-    ents.forEach(e=>{if(agg[e.dept]!==undefined) agg[e.dept]+=isSpend?e.qty*e.unitCost:e.qty;});
+    ents.forEach(e=>{if(agg[e.dept]!==undefined) agg[e.dept]+=e.qty*e.unitCost;});
     const sorted=Object.entries(agg).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
     labels=sorted.map(([d])=>d);data=sorted.map(([,v])=>R2(v));
     colors=sorted.map(([d])=>getDeptColor(d));
+  } else {
+    // Dept + qty: show items for selected dept
+    const selDept=deptSel.value;
+    const dEnts=ents.filter(e=>e.dept===selDept);
+    const agg={};
+    S.items.forEach(it=>{agg[it.id]={name:it.name,val:0};});
+    dEnts.forEach(e=>{if(agg[e.itemId]) agg[e.itemId].val+=e.qty;});
+    const sorted=Object.values(agg).filter(x=>x.val>0).sort((a,b)=>b.val-a.val);
+    labels=sorted.map(x=>x.name);data=sorted.map(x=>R2(x.val));
+    colors=sorted.map((_,i)=>COLS[i%COLS.length]);
   }
-  document.getElementById('ovChartTitle').textContent=(isSpend?'Rand spend':'Quantity')+' by '+(grp==='item'?'item':'department');
+  document.getElementById('ovChartTitle').textContent=
+    deptQtyMode?`Quantity by item â€” ${deptSel.value}`:
+    (isSpend?'Rand spend':'Quantity')+' by '+(grp==='item'?'item':'department');
   const canvas=document.getElementById('ovBarChart');
   if(!canvas) return;
   if(ovBarChartInst) ovBarChartInst.destroy();
+  // Build item lookup for popup (item view only)
+  const itemPopupData={};
+  if(grp==='item'){
+    const yr2=parseInt(document.getElementById('ovYear').value);
+    const mv2=document.getElementById('ovMonth').value;
+    let ents2=S.entries.filter(e=>e.year===yr2);
+    if(mv2!=='all') ents2=ents2.filter(e=>e.month===parseInt(mv2));
+    S.items.forEach(it=>{itemPopupData[it.name]={qty:0,spend:0,unitCost:it.cost,name:it.name};});
+    ents2.forEach(e=>{const it=S.items.find(i=>i.id===e.itemId);if(it&&itemPopupData[it.name]){itemPopupData[it.name].qty+=e.qty;itemPopupData[it.name].spend+=e.qty*e.unitCost;}});
+  }
   ovBarChartInst=new Chart(canvas.getContext('2d'),{
     type:'bar',
     data:{labels,datasets:[{data,backgroundColor:colors,borderRadius:5,borderWidth:0}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>isSpend?'R '+fmt(ctx.parsed.y):ctx.parsed.y.toLocaleString()}}},scales:{y:{ticks:{callback:v=>isSpend?'R '+v.toLocaleString():v.toLocaleString()},grid:{color:'rgba(0,0,0,0.04)'}},x:{ticks:{maxRotation:40,font:{size:10}}}}}
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>isSpend?'R '+fmt(ctx.parsed.y):ctx.parsed.y.toLocaleString()+' units'}}},scales:{y:{ticks:{callback:v=>isSpend?'R '+v.toLocaleString():v.toLocaleString()},grid:{color:'rgba(0,0,0,0.04)'}},x:{ticks:{maxRotation:40,font:{size:10}}}},
+    onClick:(evt,els)=>{
+      if(!els.length||grp!=='item') return;
+      const label=labels[els[0].index];
+      const d=itemPopupData[label];
+      if(!d) return;
+      const pop=document.getElementById('barPopup');
+      document.getElementById('barPopupContent').innerHTML=`
+        <div style="font-size:14px;font-weight:700;margin-bottom:12px;padding-right:16px;">${d.name}</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;justify-content:space-between;gap:16px;"><span style="color:#666;font-size:13px;">Total spend</span><span style="font-weight:600;">R ${fmt(d.spend)}</span></div>
+          <div style="display:flex;justify-content:space-between;gap:16px;"><span style="color:#666;font-size:13px;">Quantity used</span><span style="font-weight:600;">${d.qty.toLocaleString()} units</span></div>
+          <div style="display:flex;justify-content:space-between;gap:16px;border-top:1px solid #eee;padding-top:8px;"><span style="color:#666;font-size:13px;">Unit cost</span><span style="font-weight:600;">R ${fmt(d.unitCost)}</span></div>
+        </div>`;
+      const x=evt.native?evt.native.clientX:evt.clientX||100;
+      const y=evt.native?evt.native.clientY:evt.clientY||100;
+      pop.style.left=Math.min(x+10,window.innerWidth-320)+'px';
+      pop.style.top=Math.max(y-30,10)+'px';
+      pop.style.display='block';
+    }}
   });
 }
 
-/* ── RECHARGES PIE ────────────────────────────────────────────────*/
+/* â”€â”€ RECHARGES PIE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€*/
 function renderRechargesPie(){
   const{yr,mv}=getRYM();
   const view=document.getElementById('rPieView')?document.getElementById('rPieView').value:'dept-spend';
+  const deptSel=document.getElementById('rPieDept');
+  const deptQtyMode=view==='dept-qty';
+  // Show/hide dept selector
+  if(deptSel){
+    deptSel.style.display=deptQtyMode?'':'none';
+    if(deptQtyMode){
+      const curVal=deptSel.value;
+      deptSel.innerHTML='<option value="">â€” Select department â€”</option>'+S.depts.map(d=>`<option value="${d}"${d===curVal?' selected':''}>${d}</option>`).join('');
+    }
+  }
   let ents=S.entries.filter(e=>e.year===yr);
   if(mv!=='all') ents=ents.filter(e=>e.month===parseInt(mv));
   let labels=[],data=[],colors=[];
-  if(view.startsWith('dept')){
-    const isSpend=view==='dept-spend';
+  const canvas=document.getElementById('rPieChart');
+  if(!canvas) return;
+  if(deptQtyMode&&deptSel&&!deptSel.value){
+    // No dept selected â€” show prompt
+    if(rPieChartInst){rPieChartInst.destroy();rPieChartInst=null;}
+    const ctx=canvas.getContext('2d');ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.font='13px system-ui';ctx.fillStyle='#aaa';ctx.textAlign='center';
+    ctx.fillText('Select a department above to see item quantities',canvas.width/2,canvas.height/2);
+    return;
+  }
+  if(deptQtyMode){
+    // Items for selected dept â€” quantity
+    const selDept=deptSel.value;
+    const dEnts=ents.filter(e=>e.dept===selDept);
     const agg={};
-    ents.forEach(e=>{if(!agg[e.dept])agg[e.dept]=0;agg[e.dept]+=isSpend?e.qty*e.unitCost:e.qty;});
-    const sorted=Object.entries(agg).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]).slice(0,10);
-    labels=sorted.map(([d])=>d);
+    dEnts.forEach(e=>{if(!agg[e.itemId])agg[e.itemId]=0;agg[e.itemId]+=e.qty;});
+    const sorted=Object.entries(agg).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
+    labels=sorted.map(([id])=>S.items.find(i=>i.id===parseInt(id))?.name||'?');
     data=sorted.map(([,v])=>R2(v));
-    colors=sorted.map(([d])=>getDeptColor(d));
+    colors=COLS.slice(0,sorted.length);
+  } else if(view==='dept-spend'){
+    const agg={};
+    ents.forEach(e=>{if(!agg[e.dept])agg[e.dept]=0;agg[e.dept]+=e.qty*e.unitCost;});
+    const sorted=Object.entries(agg).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]).slice(0,10);
+    labels=sorted.map(([d])=>d);data=sorted.map(([,v])=>R2(v));colors=sorted.map(([d])=>getDeptColor(d));
   } else {
     const isSpend=view==='item-spend';
     const agg={};
     ents.forEach(e=>{if(!agg[e.itemId])agg[e.itemId]=0;agg[e.itemId]+=isSpend?e.qty*e.unitCost:e.qty;});
     const sorted=Object.entries(agg).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]).slice(0,6);
     labels=sorted.map(([id])=>S.items.find(i=>i.id===parseInt(id))?.name||'?');
-    data=sorted.map(([,v])=>R2(v));
-    colors=COLS.slice(0,sorted.length);
+    data=sorted.map(([,v])=>R2(v));colors=COLS.slice(0,sorted.length);
   }
-  const canvas=document.getElementById('rPieChart');
-  if(!canvas) return;
   if(rPieChartInst) rPieChartInst.destroy();
-  const isSpend=view.includes('spend');
+  const isSpend=view.includes('spend')&&!deptQtyMode;
   rPieChartInst=new Chart(canvas.getContext('2d'),{
     type:'doughnut',
     data:{labels,datasets:[{data,backgroundColor:colors,borderWidth:2,borderColor:'#fff',hoverOffset:6}]},
-    options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{legend:{position:'right',labels:{font:{size:10},padding:10,boxWidth:12}},tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${isSpend?'R '+fmt(ctx.raw):ctx.raw.toLocaleString()}`}}}}
+    options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{
+      legend:{position:'right',labels:{font:{size:10},padding:10,boxWidth:12}},
+      tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${isSpend?'R '+fmt(ctx.raw):ctx.raw.toLocaleString()+' units'}`}},
+      title:{display:deptQtyMode,text:deptQtyMode?`Items used â€” ${deptSel?.value}`:'',font:{size:12}}
+    }}
   });
 }
-/* ── MONTHLY RECHARGES ────────────────────────────────────────────*/
+/* â”€â”€ MONTHLY RECHARGES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€*/
 function getRYM(){return{yr:parseInt(document.getElementById('rYear').value),mv:document.getElementById('rMonth').value};}
 function renderRecharges(){
   const{yr,mv}=getRYM();
@@ -1516,7 +1890,7 @@ function renderRecharges(){
   const sorted=activeDepts.sort((a,b)=>dTotals[b]-dTotals[a]);
   document.getElementById('rKpis').innerHTML=`
     <div class="kpi navy"><div class="kpi-label">Total recharged</div><div class="kpi-value">R ${fmt(total)}</div><div class="kpi-sub">${activeDepts.length} departments</div></div>
-    <div class="kpi teal"><div class="kpi-label">Highest dept charge</div><div class="kpi-value" style="font-size:15px;">${sorted[0]||'—'}</div><div class="kpi-sub">${sorted[0]?'R '+fmt(dTotals[sorted[0]]):''}</div></div>
+    <div class="kpi teal"><div class="kpi-label">Highest dept charge</div><div class="kpi-value" style="font-size:15px;">${sorted[0]||'â€”'}</div><div class="kpi-sub">${sorted[0]?'R '+fmt(dTotals[sorted[0]]):''}</div></div>
     <div class="kpi"><div class="kpi-label">Avg per department</div><div class="kpi-value">R ${activeDepts.length?fmt(total/activeDepts.length):'0.00'}</div></div>`;
   renderRechargesPie();
   if(sorted.length===0){document.getElementById('rDeptList').innerHTML=`<div style="text-align:center;padding:32px;color:#555;font-size:13px;">No recharges for this period.</div>`;return;}
@@ -1530,7 +1904,7 @@ function renderRecharges(){
     const dc=getDeptColor(dept);
     html+=`
     <div class="dept-row${wasOpen?' open':''}" id="row-${dId}" onclick="toggleDept('${dId}')" style="border-left-color:${dc};">
-      <div class="dept-name"><span class="dept-color-dot" style="background:${dc};"></span><span class="dept-chevron${wasOpen?' open':''}" id="chev-${dId}">▼</span>${dept}</div>
+      <div class="dept-name"><span class="dept-color-dot" style="background:${dc};"></span><span class="dept-chevron${wasOpen?' open':''}" id="chev-${dId}">â–¼</span>${dept}</div>
       <div style="display:flex;align-items:center;gap:12px;">
         <span style="font-size:11px;color:#888;">${dEnts.length} item${dEnts.length!==1?'s':''}</span>
         <span class="dept-total" id="dtotal-${dId}" style="color:${dc};">R ${fmt(dTotal)}</span>
@@ -1553,7 +1927,7 @@ function buildDeptTable(dept,dId,dEnts,dTotal,yr,mv){
     const spend=e.qty*e.unitCost;
     const pct=dTotal>0?(spend/dTotal*100):0;
     return `<tr id="erow-${e.id}">
-      <td style="padding-left:16px;">${item?item.name:'—'}</td>
+      <td style="padding-left:16px;">${item?item.name:'â€”'}</td>
       <td>${e.out}</td><td>${e.in}</td>
       <td style="font-weight:500;">${e.qty}</td>
       <td>R ${e.unitCost.toFixed(2)}</td>
@@ -1565,7 +1939,7 @@ function buildDeptTable(dept,dId,dEnts,dTotal,yr,mv){
   const addRow=isAdmin?`<tr class="add-item-row" id="addrow-${dId}" style="display:none;">
     <td style="padding-left:16px;"><select id="add-item-${dId}" style="width:140px;">${availItems.map(i=>`<option value="${i.id}">${i.name}</option>`).join('')}</select></td>
     <td><input class="inline-input" type="number" id="add-out-${dId}" placeholder="Out" min="0" step="any"></td>
-    <td><input class="inline-input" type="number" id="add-in-${dId}" placeholder="In" min="0" value="0" step="any"></td>
+    <td><input class="inline-input" type="number" id="add-in-${dId}" placeholder="blank=pending" min="0" step="any"></td>
     <td></td>
     <td><input class="inline-input" type="number" id="add-uc-${dId}" placeholder="Cost" min="0" step="0.01" style="width:55px;"></td>
     <td></td><td></td>
@@ -1600,7 +1974,7 @@ function editRow(eid,dId){
   if(!e) return;
   const item=S.items.find(i=>i.id===e.itemId);
   document.getElementById('erow-'+eid).innerHTML=`
-    <td style="padding-left:16px;font-weight:500;">${item?item.name:'—'}</td>
+    <td style="padding-left:16px;font-weight:500;">${item?item.name:'â€”'}</td>
     <td><input class="inline-input" id="ei-out-${eid}" type="number" value="${e.out}" min="0" step="any"></td>
     <td><input class="inline-input" id="ei-in-${eid}" type="number" value="${e.in}" min="0" step="any"></td>
     <td></td>
@@ -1634,11 +2008,20 @@ function showAddRow(dId){
 function cancelAddRow(dId){const r=document.getElementById('addrow-'+dId);if(r)r.style.display='none';}
 function saveAddRow(dId,dept,yr,mv){
   const itemId=parseInt(document.getElementById('add-item-'+dId).value);
-  const out=parseFloat(document.getElementById('add-out-'+dId).value)||0;
-  const inQ=parseFloat(document.getElementById('add-in-'+dId).value)||0;
-  const uc=parseFloat(document.getElementById('add-uc-'+dId).value)||0;
+  const out=parseSANum(document.getElementById('add-out-'+dId).value)||0;
+  const inRaw=document.getElementById('add-in-'+dId).value.trim();
+  const inQ=inRaw===''?null:parseSANum(inRaw);
+  const uc=parseSANum(document.getElementById('add-uc-'+dId).value)||0;
   const month=mv!==null?mv:new Date().getMonth();
   if(!itemId||out<=0){alert('Please select an item and enter qty out.');return;}
+  // Blank In = still waiting â†’ Open Requests
+  if(inQ===null){
+    S.pendingEntries.push({id:S.nid++,dept,itemId,out,day:1,month,year:yr,notes:''});
+    persist();
+    updatePendingBadge();
+    alert('No "In" qty entered â€” logged as an Open Request. Close it from the Open Requests tab once stock returns.');
+    return;
+  }
   S.entries.push({id:S.nid++,year:yr,month,dept,itemId,out,in:inQ,qty:out-inQ,unitCost:uc});
   persist();
 }
@@ -1660,13 +2043,13 @@ function refreshDeptDetail(dId){
   const top=activeDepts.sort((a,b)=>dTotals[b]-dTotals[a])[0];
   document.getElementById('rKpis').innerHTML=`
     <div class="kpi"><div class="kpi-label">Total recharged</div><div class="kpi-value">R ${fmt(grandTotal)}</div><div class="kpi-sub">${activeDepts.length} departments</div></div>
-    <div class="kpi"><div class="kpi-label">Highest dept charge</div><div class="kpi-value" style="font-size:15px;">${top||'—'}</div><div class="kpi-sub">${top?'R '+fmt(dTotals[top]):''}</div></div>
+    <div class="kpi"><div class="kpi-label">Highest dept charge</div><div class="kpi-value" style="font-size:15px;">${top||'â€”'}</div><div class="kpi-sub">${top?'R '+fmt(dTotals[top]):''}</div></div>
     <div class="kpi"><div class="kpi-label">Avg per department</div><div class="kpi-value">R ${activeDepts.length?fmt(grandTotal/activeDepts.length):'0.00'}</div></div>`;
 }
 
 function setMsg(id,txt,col){const el=document.getElementById(id);if(!el)return;el.style.color=col;el.textContent=txt;setTimeout(()=>el.textContent='',4000);}
 
-/* ── PASTE PREVIEW ────────────────────────────────────────────────*/
+/* â”€â”€ PASTE PREVIEW â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€*/
 const MONTH_MAP_P={january:0,february:1,march:2,april:3,may:4,june:5,july:6,august:7,september:8,october:9,november:10,december:11,jan:0,feb:1,mar:2,apr:3,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
 const ALIASES_P={'milk':1,'milk (2l)':1,'cups':2,'cup':2,'lids':3,'lid':3,'stirrers':4,'stirrer':4,'brown sugar':5,'brownsugar':5,'white sugar':6,'whitesugar':6,'sweetener':7,'sweetner':7,'filter coffee':8,'filter coffee (750g)':8,'filtercoffee':8,'instant coffee':9,'in. coffee':9,'in.coffee':9,'instantcoffee':9,'incoffee':9,'black tea':10,'blacktea':10,'rooibos tea':11,'rooibostea':11,'rooibos':11,'teaspoons':12,'teaspoon':12,'serviettes':13,'serviette':13,'plates':14,'plate':14,'rusks':15,'rusk':15,'kit kats':16,'kitkat':16,'kit kat':16,'kitkats':16,'bar ones':17,'bar one':17,'barones':17,'barone':17,'water (still)':18,'water':18,'water still':18,'biscuits':19,'biscuit':19};
 function matchItemP(r){const k=r.toLowerCase().replace(/\s+/g,' ').trim();if(ALIASES_P[k])return ALIASES_P[k];const f=S.items.find(i=>i.name.toLowerCase().includes(k)||k.includes(i.name.toLowerCase()));return f?f.id:null;}
@@ -1703,8 +2086,8 @@ function previewPaste(){
     const itemId=matchItemP(raw0);
     const nums=cols.slice(1).map(c=>{const n=parseSANum(c);return isNaN(n)?null:n;});
     const out=nums[0]!==null?nums[0]:0;
-    const inQ=nums[1]!==null?nums[1]:0;
-    let qty=nums[2]!==null?nums[2]:out-inQ;
+    const inQ=nums[1]; // null = blank (still waiting), 0 = explicit zero (nothing returned)
+    let qty=nums[2]!==null?nums[2]:(inQ!==null?out-inQ:out);
     const pastedCost=nums[3]!==null?nums[3]:null;
     if(qty<0) qty=0;
     const masterItem=S.items.find(x=>x.id===itemId);
@@ -1727,8 +2110,8 @@ function previewPaste(){
         <tbody>`;
     sec.rows.forEach(r=>{
       const wc=r.warn||r.unrecognised?'preview-warn':'';
-      const badge=r.unrecognised?`<span class="preview-warn-badge">UNKNOWN</span>`:r.warn?`<span class="preview-warn-badge">PRICE ⚠</span>`:'';
-      const costCell=r.warn?`<span class="preview-warn-cell">${r.pastedCost!==null?'R '+r.pastedCost.toFixed(2):'—'}</span>`:(r.pastedCost!==null?'R '+r.pastedCost.toFixed(2):'—');
+      const badge=r.unrecognised?`<span class="preview-warn-badge">UNKNOWN</span>`:r.warn?`<span class="preview-warn-badge">PRICE âš </span>`:'';
+      const costCell=r.warn?`<span class="preview-warn-cell">${r.pastedCost!==null?'R '+r.pastedCost.toFixed(2):'â€”'}</span>`:(r.pastedCost!==null?'R '+r.pastedCost.toFixed(2):'â€”');
       const total=r.qty*(r.pastedCost!==null?r.pastedCost:r.masterCost);
       html+=`<tr class="${wc}">
         <td>${r.itemName}${badge}</td>
@@ -1742,7 +2125,7 @@ function previewPaste(){
     html+=`</tbody></table></div>`;
   });
   preview.innerHTML=html;
-  const warnTxt=warnRows>0?` — ${warnRows} warning${warnRows!==1?'s':''} flagged`:'';
+  const warnTxt=warnRows>0?` â€” ${warnRows} warning${warnRows!==1?'s':''} flagged`:'';
   document.getElementById('confirmBarMsg').textContent=`${totalRows} rows ready to import${warnTxt}. Review above then confirm.`;
   bar.classList.add('visible');
 }
@@ -1754,8 +2137,15 @@ function confirmImport(){
     const{dept,month,year,rows}=sec;
     if(!S.depts.includes(dept)){S.depts.push(dept);newDepts.push(dept);}
     rows.forEach(r=>{
-      if(!r.itemId||r.qty<=0) return;
+      if(!r.itemId||r.out<=0) return;
       const cost=r.pastedCost!==null?r.pastedCost:r.masterCost;
+      // Blank In = still waiting for stock return â†’ goes to Open Requests
+      if(r.inQ===null){
+        S.pendingEntries.push({id:S.nid++,dept,itemId:r.itemId,out:r.out,day:1,month,year,notes:'From paste import'});
+        ok++;
+        return;
+      }
+      if(r.qty<=0) return;
       const existing=S.entries.find(e=>e.year===year&&e.month===month&&e.dept===dept&&e.itemId===r.itemId);
       if(existing){existing.out=r.out;existing.in=r.inQ;existing.qty=r.qty;existing.unitCost=cost;}
       else S.entries.push({id:S.nid++,year,month,dept,itemId:r.itemId,out:r.out,in:r.inQ,qty:r.qty,unitCost:cost});
@@ -1777,7 +2167,7 @@ function clearPaste(){
   parsedPreviewData=null;
 }
 
-/* ── DEPT HISTORY ─────────────────────────────────────────────────*/
+/* â”€â”€ DEPT HISTORY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€*/
 function renderDeptSelects(){document.getElementById('dSel').innerHTML=S.depts.map(d=>`<option>${d}</option>`).join('');}
 function setDeptMeasure(m){
   dMeasure=m;
@@ -1800,7 +2190,7 @@ function renderDept(){
   const dc=getDeptColor(dept);
   document.getElementById('dKpis').innerHTML=`
     <div class="kpi navy"><div class="kpi-label">Total spend ${yr}</div><div class="kpi-value">R ${fmt(total)}</div></div>
-    <div class="kpi" style="border-left-color:${dc};"><div class="kpi-label">Highest spend item</div><div class="kpi-value" style="font-size:15px;color:${dc};">${topItem?topItem.name:'—'}</div><div class="kpi-sub">${topItem?'R '+fmt(topSpend)+' total':''}</div></div>
+    <div class="kpi" style="border-left-color:${dc};"><div class="kpi-label">Highest spend item</div><div class="kpi-value" style="font-size:15px;color:${dc};">${topItem?topItem.name:'â€”'}</div><div class="kpi-sub">${topItem?'R '+fmt(topSpend)+' total':''}</div></div>
     <div class="kpi"><div class="kpi-label">Months recorded</div><div class="kpi-value">${months}</div></div>`;
   const ms=Array(12).fill(0);
   ents.forEach(e=>{ms[e.month]+=e.qty*e.unitCost;});
@@ -1822,7 +2212,7 @@ function renderDept(){
   }).forEach(it=>{
     const row=activeMths.map(m=>{
       const val=ents.filter(e=>e.itemId===it.id&&e.month===m).reduce((s,e)=>s+(isSpend?e.qty*e.unitCost:e.qty),0);
-      return val>0?(isSpend?`R ${fmt(val)}`:val.toLocaleString()):'—';
+      return val>0?(isSpend?`R ${fmt(val)}`:val.toLocaleString()):'â€”';
     });
     const tot=ents.filter(e=>e.itemId===it.id).reduce((s,e)=>s+(isSpend?e.qty*e.unitCost:e.qty),0);
     if(tot>0) tbody+=`<tr><td>${it.name}</td>${row.map(r=>`<td>${r}</td>`).join('')}<td><strong>${isSpend?'R '+fmt(tot):tot.toLocaleString()}</strong></td></tr>`;
@@ -1830,7 +2220,7 @@ function renderDept(){
   document.getElementById('dItemTable').innerHTML=thead+`<tbody>${tbody||'<tr><td colspan="20" style="text-align:center;padding:16px;color:#555;">No data.</td></tr>'}</tbody>`;
 }
 
-/* ── TRENDS ───────────────────────────────────────────────────────*/
+/* â”€â”€ TRENDS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€*/
 function populateTrendsFilter(){onTGroupChange();}
 function onTGroupChange(){
   const grp=document.getElementById('tGroupBy').value;
@@ -1851,10 +2241,27 @@ function renderTrends(){
     const pool=fv==='all'?S.items.filter(it=>ents.some(e=>e.itemId===it.id)):[S.items.find(i=>i.id===parseInt(fv.slice(1)))].filter(Boolean);
     series=pool.map(it=>({label:it.name,data:MN.map((_,m)=>{const e2=ents.filter(e=>e.itemId===it.id&&e.month===m);return isSpend?R2(e2.reduce((s,e)=>s+e.qty*e.unitCost,0)):e2.reduce((s,e)=>s+e.qty,0);})}));
   } else {
-    const pool=fv==='all'?S.depts.filter(d=>ents.some(e=>e.dept===d)):[decodeURIComponent(fv.slice(1))];
-    series=pool.map(d=>({label:d,data:MN.map((_,m)=>{const e2=ents.filter(e=>e.dept===d&&e.month===m);return isSpend?R2(e2.reduce((s,e)=>s+e.qty*e.unitCost,0)):e2.reduce((s,e)=>s+e.qty,0);})}));
+    if(!isSpend&&fv==='all'){
+      // Dept + qty with no dept selected â€” show prompt and bail
+      document.getElementById('tTitle').textContent='Quantity by item â€” select a department from the filter';
+      if(tChartInst){tChartInst.destroy();tChartInst=null;}
+      document.getElementById('tLegend').innerHTML='<span style="font-size:12px;color:#aaa;">Select a specific department in the Filter dropdown to see item quantities.</span>';
+      document.getElementById('tTable').innerHTML='';
+      return;
+    }
+    if(!isSpend&&fv!=='all'){
+      // Dept + qty + specific dept â€” show items for that dept as separate lines
+      const selDept=decodeURIComponent(fv.slice(1));
+      const dEnts=ents.filter(e=>e.dept===selDept);
+      const activeItems=S.items.filter(it=>dEnts.some(e=>e.itemId===it.id));
+      series=activeItems.map(it=>({label:it.name,data:MN.map((_,m)=>{const e2=dEnts.filter(e=>e.itemId===it.id&&e.month===m);return e2.reduce((s,e)=>s+e.qty,0);})}));
+    } else {
+      const pool=fv==='all'?S.depts.filter(d=>ents.some(e=>e.dept===d)):[decodeURIComponent(fv.slice(1))];
+      series=pool.map(d=>({label:d,data:MN.map((_,m)=>{const e2=ents.filter(e=>e.dept===d&&e.month===m);return isSpend?R2(e2.reduce((s,e)=>s+e.qty*e.unitCost,0)):e2.reduce((s,e)=>s+e.qty,0);})}));
+    }
   }
-  document.getElementById('tTitle').textContent=`Monthly ${isSpend?'spend (R)':'quantity'} by ${grp==='item'?'item':'department'}`;
+  const trendDeptQty=grp==='dept'&&!isSpend&&fv!=='all';
+  document.getElementById('tTitle').textContent=trendDeptQty?`Monthly quantity by item â€” ${decodeURIComponent(fv.slice(1))}`:`Monthly ${isSpend?'spend (R)':'quantity'} by ${grp==='item'?'item':'department'}`;
   document.getElementById('tTableTitle').textContent=`Annual ${isSpend?'spend':'quantity'} summary`;
   const ds=series.map((s,i)=>({label:s.label,data:s.data,borderColor:COLS[i%COLS.length],backgroundColor:COLS[i%COLS.length]+'22',tension:0.35,pointRadius:4,borderWidth:2}));
   if(tChartInst) tChartInst.destroy();
@@ -1874,7 +2281,7 @@ function renderTrends(){
   document.getElementById('tTable').innerHTML=head+`<tbody>${body||'<tr><td colspan="14" style="text-align:center;padding:16px;color:#555;">No data.</td></tr>'}</tbody>`;
 }
 
-/* ── ITEMS ────────────────────────────────────────────────────────*/
+/* â”€â”€ ITEMS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€*/
 function renderItems(){
   const cats=[...new Set(S.items.map(i=>i.cat))].sort();
   const container=document.getElementById('iCatSections');
@@ -1888,10 +2295,10 @@ function renderItems(){
       return `<tr id="irow-${it.id}">
         <td style="font-weight:500;">${it.name}</td>
         <td>R ${it.cost.toFixed(2)}</td>
-        <td>${it.supplier||'—'}</td>
-        <td>${it.target?'R '+it.target.toFixed(2):'—'}</td>
+        <td>${it.supplier||'â€”'}</td>
+        <td>${it.target?'R '+it.target.toFixed(2):'â€”'}</td>
         <td style="text-align:center;">${pctInput}</td>
-        <td><span style="color:${sv>0?'#2E7D32':'#888'};font-weight:600;">${sv>0?'R '+sv.toFixed(2):'—'}</span></td>
+        <td><span style="color:${sv>0?'#2E7D32':'#888'};font-weight:600;">${sv>0?'R '+sv.toFixed(2):'â€”'}</span></td>
         <td class="admin-only" style="white-space:nowrap;">
           <button class="edit-btn" onclick="editItem(${it.id})">Edit</button>
           <button class="edit-btn del" onclick="delItem(${it.id})">Remove</button>
@@ -1901,7 +2308,7 @@ function renderItems(){
     return `<div style="margin-bottom:10px;">
       <div class="cat-header" onclick="toggleCat(this)">
         <span class="cat-title">${cat} <span style="font-weight:400;font-size:11px;color:#555;">(${items.length})</span></span>
-        <span style="font-size:11px;color:#888;">▼</span>
+        <span style="font-size:11px;color:#888;">â–¼</span>
       </div>
       <div class="cat-body">
         <div class="ovx"><table>
@@ -1916,7 +2323,7 @@ function toggleCat(el){
   const body=el.nextElementSibling;
   const icon=el.querySelector('span:last-child');
   const collapsed=body.classList.toggle('collapsed');
-  icon.textContent=collapsed?'▶':'▼';
+  icon.textContent=collapsed?'â–¶':'â–¼';
 }
 function updateItemPct(itemId,pct){
   const it=S.items.find(x=>x.id===itemId);
@@ -1972,7 +2379,7 @@ function addDept(){
   renderDeptList();
 }
 function renderDeptList(){
-  document.getElementById('deptList').innerHTML=S.depts.map(d=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:0.5px solid rgba(0,0,0,0.08);font-size:12px;">${d}<button onclick="removeDept('${d.replace(/'/g,"\\'")}') " style="padding:2px 7px;font-size:10px;color:#A32D2D;border-color:rgba(240,149,149,0.53);">✕</button></div>`).join('');
+  document.getElementById('deptList').innerHTML=S.depts.map(d=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:0.5px solid rgba(0,0,0,0.08);font-size:12px;">${d}<button onclick="removeDept('${d.replace(/'/g,"\\'")}') " style="padding:2px 7px;font-size:10px;color:#A32D2D;border-color:rgba(240,149,149,0.53);">âœ•</button></div>`).join('');
 }
 function removeDept(n){
   if(!confirm(`Remove "${n}"?`)) return;
@@ -1982,7 +2389,7 @@ function removeDept(n){
   renderDeptList();
 }
 
-/* ── EXPORT / IMPORT ──────────────────────────────────────────────*/
+/* â”€â”€ EXPORT / IMPORT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€*/
 function exportData(){
   const payload={version:1,exportedAt:new Date().toISOString(),items:S.items,depts:S.depts,entries:S.entries,nid:S.nid};
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
@@ -1998,17 +2405,17 @@ function importData(evt){
     try{
       const d=JSON.parse(e.target.result);
       if(!d.version||!d.items||!d.entries) throw new Error('Unrecognised file format.');
-      if(!confirm(`Import "${file.name}"?\n\n• ${d.items.length} items\n• ${d.depts.length} departments\n• ${d.entries.length} entries\n\nThis will replace all current data for everyone.`)) return;
+      if(!confirm(`Import "${file.name}"?\n\nâ€¢ ${d.items.length} items\nâ€¢ ${d.depts.length} departments\nâ€¢ ${d.entries.length} entries\n\nThis will replace all current data for everyone.`)) return;
       S.items=d.items;S.depts=d.depts;S.entries=d.entries;S.nid=d.nid||Math.max(...d.entries.map(e=>e.id),0)+1;
       persist();
-      alert(`Import successful — ${d.entries.length} entries saved to the cloud.`);
+      alert(`Import successful â€” ${d.entries.length} entries saved to the cloud.`);
     } catch(err){alert('Import failed: '+err.message);}
   };
   reader.readAsText(file);
   evt.target.value='';
 }
 
-// ── Start ──────────────────────────────────────────────────────────
+// â”€â”€ Start â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 initFirebase();
 </script>
 </body>
