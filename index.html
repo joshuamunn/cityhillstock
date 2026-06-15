@@ -254,7 +254,7 @@ body.viewer .admin-only{display:none!important;}
     <div class="fin-divider" style="margin:0 6px;"></div>
     <!-- Green group: Recharges + Open Requests + Dept History -->
     <button class="tab grn" onclick="showPage('recharges',this)">Monthly recharges</button>
-    <button class="tab grn admin-only" onclick="showPage('pending',this)">Open requests<span id="pendingBadge" class="pending-count" style="display:none;"></span></button>
+    <button class="tab grn" onclick="showPage('pending',this)">Open requests<span id="pendingBadge" class="pending-count" style="display:none;"></span></button>
     <button class="tab grn" onclick="showPage('departments',this)">Department history</button>
     <div class="fin-divider" style="margin:0 6px;"></div>
     <!-- Neutral group: Add entries + Items & suppliers -->
@@ -263,8 +263,8 @@ body.viewer .admin-only{display:none!important;}
     <div class="fin-divider" style="margin:0 6px;"></div>
     <!-- Amber group: financial -->
     <button class="tab fin" onclick="showPage('reconciliation',this)">&#9654; Reconciliation</button>
-    <button class="tab fin admin-only" onclick="showPage('purchases',this)">&#9654; Purchases</button>
-    <button class="tab fin admin-only" onclick="showPage('inventory',this)">&#9654; Inventory</button>
+    <button class="tab fin" onclick="showPage('purchases',this)">&#9654; Purchases</button>
+    <button class="tab fin" onclick="showPage('inventory',this)">&#9654; Inventory</button>
   </div>
 </div>
 
@@ -364,12 +364,12 @@ body.viewer .admin-only{display:none!important;}
 </div>
 
 <!-- OPEN REQUESTS -->
-<div class="page admin-only" id="page-pending">
+<div class="page" id="page-pending">
   <div style="display:flex;gap:8px;align-items:center;margin-bottom:14px;flex-wrap:wrap;">
     <span style="font-size:11px;color:#555;">Period:</span>
     <select id="pendMonth" onchange="renderPending()" style="width:auto;"></select>
     <select id="pendYear" onchange="renderPending()" style="width:auto;"><option value="2025">2025</option><option value="2026" selected>2026</option></select>
-    <button onclick="togglePendForm()" style="font-size:11px;padding:5px 12px;margin-left:8px;">+ Log new open request</button>
+    <button onclick="togglePendForm()" class="admin-only" style="font-size:11px;padding:5px 12px;margin-left:8px;">+ Log new open request</button>
   </div>
   <div id="pendFormCard" class="card" style="display:none;margin-bottom:14px;">
     <h2>Log new open request</h2>
@@ -500,7 +500,7 @@ body.viewer .admin-only{display:none!important;}
 </div>
 
 <!-- PURCHASES -->
-<div class="page admin-only" id="page-purchases">
+<div class="page" id="page-purchases">
   <div style="display:flex;gap:8px;align-items:center;margin-bottom:14px;flex-wrap:wrap;">
     <span style="font-size:11px;color:#555;">Month:</span>
     <select id="pMonth" onchange="renderPurchases()" style="width:auto;"></select>
@@ -509,7 +509,7 @@ body.viewer .admin-only{display:none!important;}
     </select>
   </div>
   <div class="kpi-grid" id="pKpis"></div>
-  <div class="card">
+  <div class="card admin-only">
     <h2>Add purchase</h2>
     <div class="form-row">
       <div class="fg"><label>Day</label><input type="number" id="pDay" min="1" max="31" placeholder="1–31"></div>
@@ -533,15 +533,15 @@ body.viewer .admin-only{display:none!important;}
 </div>
 
 <!-- INVENTORY -->
-<div class="page admin-only" id="page-inventory">
+<div class="page" id="page-inventory">
   <div style="display:flex;gap:8px;align-items:center;margin-bottom:14px;flex-wrap:wrap;">
     <span style="font-size:11px;color:#555;">Snapshot month:</span>
     <select id="invMonth" onchange="renderInventory()" style="width:auto;"></select>
     <select id="invYear" onchange="renderInventory()" style="width:auto;">
       <option value="2025">2025</option><option value="2026" selected>2026</option>
     </select>
-    <button onclick="copyPrevInventory()" style="font-size:11px;padding:5px 10px;margin-left:8px;">Copy from previous month</button>
-    <button onclick="toggleMoveSnapshot()" style="font-size:11px;padding:5px 10px;background:#f5f5f5;border:0.5px solid rgba(0,0,0,0.25);border-radius:8px;cursor:pointer;">&#9998; Move snapshot to different month</button>
+    <button onclick="copyPrevInventory()" class="admin-only" style="font-size:11px;padding:5px 10px;margin-left:8px;">Copy from previous month</button>
+    <button onclick="toggleMoveSnapshot()" class="admin-only" style="font-size:11px;padding:5px 10px;background:#f5f5f5;border:0.5px solid rgba(0,0,0,0.25);border-radius:8px;cursor:pointer;">&#9998; Move snapshot to different month</button>
   </div>
   <div id="moveSnapshotPanel" style="display:none;background:#fffbf0;border:1px solid #e6c96a;border-radius:10px;padding:12px 16px;margin-bottom:14px;display:none;gap:10px;align-items:center;flex-wrap:wrap;">
     <span style="font-size:12px;color:#7a5a00;font-weight:600;">Move this snapshot to:</span>
@@ -576,7 +576,7 @@ body.viewer .admin-only{display:none!important;}
     </div>
   </div>
   <div class="inv-total-bar" id="invTotalBar"><div><div class="label">Total inventory value</div><div class="value" id="invTotalVal">R 0.00</div></div><div style="font-size:11px;opacity:0.7;" id="invItemCount"></div></div>
-  <div class="card" id="invPasteCard">
+  <div class="card admin-only" id="invPasteCard">
     <h2 style="cursor:pointer;user-select:none;" onclick="toggleInvPaste()">&#8597; Paste stock count sheet <span style="font-size:11px;font-weight:400;color:#888;">(click to expand)</span></h2>
     <div id="invPasteBody" style="display:none;margin-top:10px;">
       <p style="font-size:12px;color:#555;margin:0 0 10px;">Copy your physical stock count sheet from Excel and paste below. Expected columns: <strong>Item name &nbsp;|&nbsp; Quantity</strong> (tab-separated, one row per item).<br>This will be saved as <strong>closing stock</strong> for the selected month and automatically set as <strong>opening stock</strong> for the following month.</p>
@@ -598,7 +598,7 @@ body.viewer .admin-only{display:none!important;}
       <div id="invPasteMsg" style="font-size:12px;margin-top:6px;"></div>
     </div>
   </div>
-  <div class="card"><h2>Stock on hand — edit quantities to update</h2><div class="ovx"><table><thead><tr><th>Item</th><th>Category</th><th>Unit cost (R)</th><th>Qty in stock</th><th>Total value (R)</th></tr></thead><tbody id="invBody"></tbody></table></div></div>
+  <div class="card"><h2 id="invTableTitle">Stock on hand</h2><div class="ovx"><table><thead><tr><th>Item</th><th>Category</th><th>Unit cost (R)</th><th>Qty in stock</th><th>Total value (R)</th></tr></thead><tbody id="invBody"></tbody></table></div></div>
 </div>
 
 </div><!-- end content -->
@@ -1052,13 +1052,12 @@ function buildPendTable(recs,dId,yr,mv){
       <td style="font-weight:500;padding-left:16px;">${it?it.name:'Unknown item'}</td>
       <td>${String(r.day).padStart(2,'0')} ${MN[r.month]} ${r.year}</td>
       <td><strong>${r.out}</strong></td>
-      <td><input class="inline-input" type="number" id="pin-${r.id}" min="0" step="any" placeholder="qty returned" style="width:100px;" oninput="updatePendNet(${r.id})"></td>
+      <td>${isAdmin?`<input class="inline-input" type="number" id="pin-${r.id}" min="0" step="any" placeholder="qty returned" style="width:100px;" oninput="updatePendNet(${r.id})">`:'<span style="font-size:11px;color:#aaa;">view only</span>'}</td>
       <td id="pnet-${r.id}" style="font-weight:600;color:#555;">—</td>
       <td style="color:#777;font-size:11px;">${r.notes||''}</td>
-      <td style="white-space:nowrap;">
+      <td style="white-space:nowrap;">${isAdmin?`
         <button class="edit-btn save" onclick="closePendingEntry(${r.id})">&#10003; Close &amp; move to recharges</button>
-        <button class="edit-btn cancel" onclick="deletePendingEntry(${r.id})">Delete</button>
-      </td>
+        <button class="edit-btn cancel" onclick="deletePendingEntry(${r.id})">Delete</button>`:''}</td>
     </tr>`;
   }).join('');
   return `<table style="font-size:12px;">
@@ -1174,7 +1173,7 @@ function renderPurchases(){
       <td>R ${fmt(p.actualTotal)}</td>
       <td>R ${fmt(expected)}</td>
       <td class="${vc}">${vsign}R ${fmt(Math.abs(variance))}${variance!==0?(variance>0?' (overpaid)':' (saving)'):''}</td>
-      <td><button class="edit-btn del" onclick="deletePurchase(${p.id})">Remove</button></td>
+      <td>${isAdmin?`<button class="edit-btn del" onclick="deletePurchase(${p.id})">Remove</button>`:''}</td>
     </tr>`;
   }).join('');
   const totalVar=R2(totalActual-totalExpected);
@@ -1365,11 +1364,13 @@ function renderInventory(){
       <td style="font-weight:500;">${it.name}</td>
       <td><span class="badge bb">${it.cat}</span></td>
       <td>R ${it.cost.toFixed(2)}</td>
-      <td><input type="number" min="0" step="any" value="${q}" onchange="setInvQty(${it.id},parseFloat(this.value)||0,${yr},${month})" style="width:80px;padding:4px 7px;font-size:12px;border:0.5px solid rgba(0,0,0,0.3);border-radius:6px;"></td>
+      <td>${isAdmin?`<input type="number" min="0" step="any" value="${q}" onchange="setInvQty(${it.id},parseFloat(this.value)||0,${yr},${month})" style="width:80px;padding:4px 7px;font-size:12px;border:0.5px solid rgba(0,0,0,0.3);border-radius:6px;">`:`<span style="font-size:13px;font-weight:600;">${q}</span>`}</td>
       <td style="font-weight:600;color:${val>0?'#0B2545':'#aaa'};">${val>0?'R '+fmt(val):'—'}</td>
     </tr>`;
   }).join('');
   document.getElementById('invBody').innerHTML=rows;
+  const th=document.getElementById('invTableTitle');
+  if(th) th.textContent=isAdmin?'Stock on hand — edit quantities to update':'Stock on hand';
   const tv=document.getElementById('invTotalVal');
   const ic=document.getElementById('invItemCount');
   if(tv) tv.textContent='R '+fmt(total);
