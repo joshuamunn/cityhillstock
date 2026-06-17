@@ -985,7 +985,8 @@ function addPendingEntry(){
   const year=parseInt(document.getElementById('pendYear').value);
   const notes=document.getElementById('pendNotes').value.trim();
   if(!dept||!itemId||out<=0){setMsg('pendMsg','Please fill in department, item and qty sent out.','#A32D2D');return;}
-  S.pendingEntries.push({id:S.nid++,dept,itemId,out,day,month,year,notes});
+  const pendIt=S.items.find(i=>i.id===itemId);
+  S.pendingEntries.push({id:S.nid++,dept,itemId,out,day,month,year,notes,unitCost:pendIt?pendIt.cost:0});
   persist();
   document.getElementById('pendOut').value='';
   document.getElementById('pendDay').value='';
@@ -1083,7 +1084,7 @@ function closePendingEntry(id){
   const inQty=inRaw===''?0:parseSANum(inRaw)||0;
   const netQty=Math.max(0,rec.out-inQty);
   const it=S.items.find(i=>i.id===rec.itemId);
-  const unitCost=it?it.cost:0;
+  const unitCost=rec.unitCost!=null?rec.unitCost:it?it.cost:0;
   if(!S.depts.includes(rec.dept)) S.depts.push(rec.dept);
   const existing=S.entries.find(e=>e.year===rec.year&&e.month===rec.month&&e.dept===rec.dept&&e.itemId===rec.itemId);
   if(existing){existing.out=(existing.out||0)+rec.out;existing.in=(existing.in||0)+inQty;existing.qty=(existing.qty||0)+netQty;}
@@ -1138,7 +1139,8 @@ function addPurchase(){
   const qty=parseFloat(document.getElementById('pQty').value)||0;
   const actual=parseFloat(document.getElementById('pActual').value)||0;
   if(qty<=0||actual<=0){setMsg('pMsg','Enter quantity and actual total.','#A32D2D');return;}
-  S.purchases.push({id:S.nid++,year,month,day,itemId,qty,actualTotal:actual});
+  const pIt=S.items.find(i=>i.id===itemId);
+  S.purchases.push({id:S.nid++,year,month,day,itemId,qty,actualTotal:actual,unitCost:pIt?pIt.cost:0});
   persist();
   setMsg('pMsg','Purchase saved.','#3B6D11');
   document.getElementById('pDay').value='';
@@ -1161,7 +1163,7 @@ function renderPurchases(){
   let totalActual=0,totalExpected=0;
   const rows=purch.map(p=>{
     const it=S.items.find(i=>i.id===p.itemId);
-    const expected=R2(p.qty*(it?it.cost:0));
+    const expected=R2(p.qty*(p.unitCost!=null?p.unitCost:it?it.cost:0));
     const variance=R2(p.actualTotal-expected);
     totalActual+=p.actualTotal;totalExpected+=expected;
     const vc=variance>0?'var-pos':variance<0?'var-neg':'';
@@ -1555,7 +1557,7 @@ function renderReconciliation(){
   if(mv!=='all') purchRecs=purchRecs.filter(p=>p.month===month);
   const purchaseTotal=R2(purchRecs.reduce((s,p)=>s+p.actualTotal,0));
   // Expected purchases at master cost prices
-  const expectedPurchases=R2(purchRecs.reduce((s,p)=>{const it=S.items.find(i=>i.id===p.itemId);return s+p.qty*(it?it.cost:0);},0));
+  const expectedPurchases=R2(purchRecs.reduce((s,p)=>{const it=S.items.find(i=>i.id===p.itemId);return s+p.qty*(p.unitCost!=null?p.unitCost:it?it.cost:0);},0));
   const purchaseVariance=R2(purchaseTotal-expectedPurchases);
   // Closing at standard (master) prices
   const closingAtStd=R2(openingVal+expectedPurchases-rechargeTotal);
@@ -1608,7 +1610,7 @@ function renderReconciliation(){
   // Purchases breakdown
   const purchRows=purchRecs.map(p=>{
     const it=S.items.find(i=>i.id===p.itemId);
-    const exp=R2(p.qty*(it?it.cost:0));
+    const exp=R2(p.qty*(p.unitCost!=null?p.unitCost:it?it.cost:0));
     const vari=R2(p.actualTotal-exp);
     return `<tr><td>${String(p.day).padStart(2,'0')} ${MN[p.month]}</td><td>${it?it.name:'—'}</td><td>${p.qty}</td><td>R ${fmt(p.actualTotal)}</td><td>R ${fmt(exp)}</td><td class="${vari>0?'var-pos':vari<0?'var-neg':''}">${vari>0?'+':''}R ${fmt(Math.abs(vari))}</td></tr>`;
   }).join('');
@@ -2350,8 +2352,15 @@ function saveItem(id){
   const it=S.items.find(x=>x.id===id);if(!it) return;
   const name=document.getElementById('ii-name-'+id).value.trim();
   if(!name){alert('Item name cannot be empty.');return;}
+  const newCost=parseFloat(document.getElementById('ii-cost-'+id).value)||it.cost;
+  // If cost is changing, freeze the old cost onto any existing records that don't have one stored
+  if(newCost!==it.cost){
+    S.purchases.forEach(p=>{if(p.itemId===id&&p.unitCost==null) p.unitCost=it.cost;});
+    S.pendingEntries.forEach(p=>{if(p.itemId===id&&p.unitCost==null) p.unitCost=it.cost;});
+    S.entries.forEach(e=>{if(e.itemId===id&&e.unitCost==null) e.unitCost=it.cost;});
+  }
   it.name=name;it.cat=document.getElementById('ii-cat-'+id).value;
-  it.cost=parseFloat(document.getElementById('ii-cost-'+id).value)||it.cost;
+  it.cost=newCost;
   it.supplier=document.getElementById('ii-sup-'+id).value.trim();
   it.target=parseFloat(document.getElementById('ii-tgt-'+id).value)||0;
   persist();
