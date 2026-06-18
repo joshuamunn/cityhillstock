@@ -380,7 +380,7 @@ body.viewer .admin-only{display:none!important;}
       <div class="fg"><label style="font-size:11px;display:block;margin-bottom:4px;">Qty sent out</label><input type="number" id="pendOut" min="0" step="any" placeholder="0" style="font-size:12px;padding:5px 8px;border-radius:7px;border:0.5px solid rgba(0,0,0,0.3);width:90px;"></div>
       <div class="fg"><label style="font-size:11px;display:block;margin-bottom:4px;">Day</label><input type="number" id="pendDay" min="1" max="31" placeholder="1–31" style="font-size:12px;padding:5px 8px;border-radius:7px;border:0.5px solid rgba(0,0,0,0.3);width:64px;"></div>
       <div class="fg"><label style="font-size:11px;display:block;margin-bottom:4px;">Notes (optional)</label><input type="text" id="pendNotes" placeholder="e.g. sent to Business Morning" style="font-size:12px;padding:5px 8px;border-radius:7px;border:0.5px solid rgba(0,0,0,0.3);width:180px;"></div>
-      <button onclick="addPendingEntry()" style="padding:7px 16px;font-size:13px;font-weight:600;background:#0B2545;color:#fff;border:none;border-radius:8px;cursor:pointer;align-self:flex-end;">+ Log request</button>
+      <button onclick="addPendingEntry()" style="padding:7px 16px;font-size:13px;font-weight:600;background:#0B2545;color:#fff;border:none;border-radius:8px;cursor:pointer;align-self:flex-end;">+ Log item</button>
     </div>
     <div id="pendMsg" style="font-size:12px;margin-top:8px;"></div>
   </div>
@@ -991,7 +991,7 @@ function addPendingEntry(){
   document.getElementById('pendOut').value='';
   document.getElementById('pendDay').value='';
   document.getElementById('pendNotes').value='';
-  setMsg('pendMsg','Open request logged.','#3B6D11');
+  setMsg('pendMsg','Item logged.','#3B6D11');
   renderPending();
 }
 function getPendYM(){
@@ -1008,36 +1008,41 @@ function renderPending(){
   const empty=document.getElementById('pendEmptyMsg');
   const list=document.getElementById('pendDeptList');
   const kpis=document.getElementById('pendKpis');
+  // Remember which accordions are currently open so we can restore them after re-render
+  const openDepts=new Set([...document.querySelectorAll('#pendDeptList .dept-detail.open')].map(el=>el.id.replace('detail-','')));
   if(!recs.length){list.innerHTML='';kpis.innerHTML='';empty.style.display='';return;}
   empty.style.display='none';
-  // KPIs
   const depts=[...new Set(recs.map(r=>r.dept))];
   const totalOut=recs.reduce((s,r)=>s+r.out,0);
   kpis.innerHTML=`
     <div class="kpi navy"><div class="kpi-label">Open requests</div><div class="kpi-value">${recs.length}</div><div class="kpi-sub">awaiting stock return</div></div>
     <div class="kpi teal"><div class="kpi-label">Departments</div><div class="kpi-value">${depts.length}</div><div class="kpi-sub">with open stock</div></div>
     <div class="kpi"><div class="kpi-label">Total qty out</div><div class="kpi-value">${totalOut}</div><div class="kpi-sub">units not yet reconciled</div></div>`;
-  // Accordion by dept — same structure as recharges
-  const openSet=new Set([...(document.querySelectorAll('.dept-detail.open')||[])].map(el=>el.id.replace('detail-','pend-')));
   let html='';
   depts.forEach(dept=>{
     const dId='pend_'+dept.replace(/[^a-z0-9]/gi,'_');
-    const wasOpen=openSet.has(dId)||true; // default open
     const dc=getDeptColor(dept);
     const dRecs=recs.filter(r=>r.dept===dept);
     html+=`
-    <div class="dept-row${wasOpen?' open':''}" id="row-${dId}" onclick="toggleDeptPend('${dId}')" style="border-left-color:${dc};">
-      <div class="dept-name"><span class="dept-color-dot" style="background:${dc};"></span><span class="dept-chevron${wasOpen?' open':''}" id="chev-${dId}">▼</span>${dept}</div>
+    <div class="dept-row" id="row-${dId}" onclick="toggleDeptPend('${dId}')" style="border-left-color:${dc};">
+      <div class="dept-name"><span class="dept-color-dot" style="background:${dc};"></span><span class="dept-chevron" id="chev-${dId}">▼</span>${dept}</div>
       <div style="display:flex;align-items:center;gap:12px;">
         <span style="font-size:11px;color:#888;">${dRecs.length} item${dRecs.length!==1?'s':''} open</span>
         <span class="status-open">OPEN</span>
       </div>
     </div>
-    <div class="dept-detail${wasOpen?' open':''}" id="detail-${dId}" style="border-left-color:${dc};">
+    <div class="dept-detail" id="detail-${dId}" style="border-left-color:${dc};">
       ${buildPendTable(dRecs,dId,yr,mv)}
     </div>`;
   });
   list.innerHTML=html;
+  // Restore previously open accordions
+  openDepts.forEach(dId=>{
+    const d=document.getElementById('detail-'+dId);
+    const r=document.getElementById('row-'+dId);
+    const c=document.getElementById('chev-'+dId);
+    if(d){d.classList.add('open');r.classList.add('open');c.classList.add('open');}
+  });
 }
 function toggleDeptPend(dId){
   const d=document.getElementById('detail-'+dId);
@@ -1052,22 +1057,38 @@ function buildPendTable(recs,dId,yr,mv){
     return `<tr id="pendrow-${r.id}">
       <td style="font-weight:500;padding-left:16px;">${it?it.name:'Unknown item'}</td>
       <td>${String(r.day).padStart(2,'0')} ${MN[r.month]} ${r.year}</td>
-      <td><strong>${r.out}</strong></td>
+      <td>${isAdmin?`<input class="inline-input" type="number" id="pout-${r.id}" min="0" step="any" value="${r.out}" style="width:80px;" onchange="updatePendOut(${r.id})">`:`<strong>${r.out}</strong>`}</td>
       <td>${isAdmin?`<input class="inline-input" type="number" id="pin-${r.id}" min="0" step="any" placeholder="qty returned" style="width:100px;" oninput="updatePendNet(${r.id})">`:'<span style="font-size:11px;color:#aaa;">view only</span>'}</td>
       <td id="pnet-${r.id}" style="font-weight:600;color:#555;">—</td>
       <td style="color:#777;font-size:11px;">${r.notes||''}</td>
-      <td style="white-space:nowrap;">${isAdmin?`
-        <button class="edit-btn save" onclick="closePendingEntry(${r.id})">&#10003; Close &amp; move to recharges</button>
-        <button class="edit-btn cancel" onclick="deletePendingEntry(${r.id})">Delete</button>`:''}</td>
     </tr>`;
   }).join('');
+  const dept=recs[0].dept;
+  const safeDept=dept.replace(/'/g,"\\'");
+  const itemOpts=S.items.map(i=>`<option value="${i.id}">${i.name}</option>`).join('');
+  const addRow=isAdmin?`<tr class="add-item-row" id="pendaddrow-${dId}" style="display:none;">
+    <td style="padding-left:16px;"><select id="padd-item-${dId}" style="width:150px;">${itemOpts}</select></td>
+    <td></td>
+    <td><input class="inline-input" type="number" id="padd-out-${dId}" placeholder="Qty out" min="0" step="any" style="width:80px;"></td>
+    <td><input class="inline-input" type="number" id="padd-day-${dId}" placeholder="Day" min="1" max="31" style="width:50px;"></td>
+    <td><input class="inline-input" type="text" id="padd-notes-${dId}" placeholder="Notes" style="width:110px;"></td>
+    <td style="white-space:nowrap;">
+      <button class="edit-btn save" onclick="savePendAddRow('${dId}','${safeDept}',${yr},'${mv}')">Add</button>
+      <button class="edit-btn cancel" onclick="document.getElementById('pendaddrow-${dId}').style.display='none'">Cancel</button>
+    </td>
+  </tr>`:'';
+  const addItemBtn=isAdmin?`<button class="edit-btn" onclick="document.getElementById('pendaddrow-${dId}').style.display=''; document.getElementById('padd-out-${dId}').focus()">+ Add item</button>`:'';
+  const adminFooter=isAdmin?`<div class="month-total-row" style="display:flex;align-items:center;gap:8px;padding:10px 16px;">
+    ${addItemBtn}
+    <button class="edit-btn save" onclick="closeAllForDept('${safeDept}',${yr},'${mv}')">&#10003; Close all &amp; move to recharges</button>
+    <button class="edit-btn cancel" onclick="deleteAllForDept('${safeDept}',${yr},'${mv}')">Delete all</button>
+  </div>`:`<div class="month-total-row"><span style="color:#555;">Fill in qty returned for each item, then close the whole request</span></div>`;
   return `<table style="font-size:12px;">
     <thead><tr>
-      <th style="padding-left:16px;">Item</th><th>Date</th><th>Qty out</th><th>Qty returned (In)</th><th>Net recharged</th><th>Notes</th><th style="width:200px;"></th>
+      <th style="padding-left:16px;">Item</th><th>Date</th><th>Qty out</th><th>Qty returned</th><th>Net recharged</th><th>Notes</th>
     </tr></thead>
-    <tbody>${rows}</tbody>
-  </table>
-  <div class="month-total-row"><span style="color:#555;">Fill in qty returned then click Close to move to recharges</span></div>`;
+    <tbody>${rows}${addRow}</tbody>
+  </table>${adminFooter}`;
 }
 function updatePendNet(id){
   const rec=S.pendingEntries.find(r=>r.id===id);
@@ -1075,27 +1096,58 @@ function updatePendNet(id){
   const inRaw=document.getElementById('pin-'+id).value;
   const inQ=inRaw===''?null:parseSANum(inRaw);
   const netEl=document.getElementById('pnet-'+id);
-  if(netEl) netEl.textContent=inQ!==null?Math.max(0,rec.out-inQ)+'  units':'—';
+  if(netEl) netEl.textContent=inQ!==null?Math.max(0,rec.out-inQ)+' units':'—';
 }
-function closePendingEntry(id){
+function updatePendOut(id){
   const rec=S.pendingEntries.find(r=>r.id===id);
   if(!rec) return;
-  const inRaw=document.getElementById('pin-'+id)?document.getElementById('pin-'+id).value:'0';
-  const inQty=inRaw===''?0:parseSANum(inRaw)||0;
-  const netQty=Math.max(0,rec.out-inQty);
-  const it=S.items.find(i=>i.id===rec.itemId);
-  const unitCost=rec.unitCost!=null?rec.unitCost:it?it.cost:0;
-  if(!S.depts.includes(rec.dept)) S.depts.push(rec.dept);
-  const existing=S.entries.find(e=>e.year===rec.year&&e.month===rec.month&&e.dept===rec.dept&&e.itemId===rec.itemId);
-  if(existing){existing.out=(existing.out||0)+rec.out;existing.in=(existing.in||0)+inQty;existing.qty=(existing.qty||0)+netQty;}
-  else S.entries.push({id:S.nid++,year:rec.year,month:rec.month,dept:rec.dept,itemId:rec.itemId,out:rec.out,in:inQty,qty:netQty,unitCost});
-  S.pendingEntries=S.pendingEntries.filter(r=>r.id!==id);
+  const val=parseSANum(document.getElementById('pout-'+id).value)||0;
+  if(val<=0){document.getElementById('pout-'+id).value=rec.out;return;}
+  rec.out=val;
+  persist();
+  updatePendNet(id);
+}
+function closeAllForDept(dept,yr,mv){
+  const month=mv==='all'?null:parseInt(mv);
+  let batch=S.pendingEntries.filter(r=>r.dept===dept&&r.year===yr);
+  if(month!==null) batch=batch.filter(r=>r.month===month);
+  if(!batch.length) return;
+  batch.forEach(rec=>{
+    const inRaw=document.getElementById('pin-'+rec.id)?document.getElementById('pin-'+rec.id).value:'0';
+    const inQty=inRaw===''?0:parseSANum(inRaw)||0;
+    const netQty=Math.max(0,rec.out-inQty);
+    const it=S.items.find(i=>i.id===rec.itemId);
+    const unitCost=rec.unitCost!=null?rec.unitCost:it?it.cost:0;
+    if(!S.depts.includes(rec.dept)) S.depts.push(rec.dept);
+    const existing=S.entries.find(e=>e.year===rec.year&&e.month===rec.month&&e.dept===rec.dept&&e.itemId===rec.itemId);
+    if(existing){existing.out=(existing.out||0)+rec.out;existing.in=(existing.in||0)+inQty;existing.qty=(existing.qty||0)+netQty;}
+    else S.entries.push({id:S.nid++,year:rec.year,month:rec.month,dept:rec.dept,itemId:rec.itemId,out:rec.out,in:inQty,qty:netQty,unitCost});
+  });
+  const ids=new Set(batch.map(r=>r.id));
+  S.pendingEntries=S.pendingEntries.filter(r=>!ids.has(r.id));
   persist();
   renderPending();
 }
-function deletePendingEntry(id){
-  if(!confirm('Delete this open request permanently?')) return;
-  S.pendingEntries=S.pendingEntries.filter(r=>r.id!==id);
+function deleteAllForDept(dept,yr,mv){
+  if(!confirm(`Delete all open items for ${dept}? This cannot be undone.`)) return;
+  const month=mv==='all'?null:parseInt(mv);
+  S.pendingEntries=S.pendingEntries.filter(r=>{
+    if(r.dept!==dept||r.year!==yr) return true;
+    if(month!==null&&r.month!==month) return true;
+    return false;
+  });
+  persist();
+  renderPending();
+}
+function savePendAddRow(dId,dept,yr,mv){
+  const itemId=parseInt(document.getElementById('padd-item-'+dId).value);
+  const out=parseSANum(document.getElementById('padd-out-'+dId).value)||0;
+  const day=parseInt(document.getElementById('padd-day-'+dId).value)||1;
+  const notes=document.getElementById('padd-notes-'+dId).value.trim();
+  const month=mv==='all'?new Date().getMonth():parseInt(mv);
+  if(!itemId||out<=0){alert('Please select an item and enter a qty greater than 0.');return;}
+  const it=S.items.find(i=>i.id===itemId);
+  S.pendingEntries.push({id:S.nid++,dept,itemId,out,day,month,year:yr,notes,unitCost:it?it.cost:0});
   persist();
   renderPending();
 }
